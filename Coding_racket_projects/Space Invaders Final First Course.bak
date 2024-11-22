@@ -1,0 +1,258 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname |Space Invaders Final First Course|) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+;;Requires
+(require 2htdp/universe)
+(require 2htdp/image)
+
+;;Constants
+(define SCREEN-WIDTH 500)
+(define SCREEN-HEIGHT 700)
+(define TANK-SPEED 5)
+(define MISSILE-SPEED 7)
+(define INVADER-SPEED 3)
+
+;;Data Definitions HtDD
+
+;;Tank
+; A Tank is represented as an x-coordinate.
+; Range: 0 to SCREEN-WIDTH
+(define TANK-INITIAL-POS (/ SCREEN-WIDTH 2))
+;;Missile
+; A Missile is a structure (make-missile x y)
+(define-struct missile (x y))
+; Represents the position of the missile on the screen.
+;;Invader
+; An Invader is a structure (make-invader x y dx dy)
+(define-struct invader (x y dx dy))
+; x, y: position of the invader
+; dx, dy: direction and speed of movement
+;; Initial World State
+(define-struct world [tank missiles invaders]) ; Removed game-over? field
+
+
+;;Functions
+
+;;Tank Movement stub
+; tank-move : Tank String -> Tank
+; Moves the tank left or right based on the key input.
+(define (tank-move tank key)
+  tank) ; stub
+;;Missile movement stub
+; missile-move : Missile -> Missile
+; Moves the missile upward over time.
+(define (missile-move missile)
+  missile) ; stub
+;;Invader movement stub
+; invader-move : Invader -> Invader
+; Moves the invader at a 45-degree angle, bouncing off walls.
+(define (invader-move invader)
+  invader) ; stub
+
+
+;; Game Display with helpers
+; draw-tank : Number -> Image
+; Draws the tank at the given x-coordinate.
+(define (draw-tank tank-x)
+  (place-image
+   (overlay/align "center" "bottom"
+     ; Tank turret
+     (overlay/xy (rectangle 10 30 "solid" "darkgreen") 0 -30
+       ; Tank base
+       (overlay/xy (rectangle 50 20 "solid" "green") 0 0
+         ; Left track
+         (overlay/xy (circle 7 "solid" "black") -15 10
+           ; Right track
+           (overlay/xy (circle 7 "solid" "black") 15 10
+             empty-image))))) ; Corrected here
+   tank-x (- SCREEN-HEIGHT 30)
+   empty-image)) ; Corrected here
+
+; draw-missiles : List of Missiles -> Image
+; Draws all the missiles on the screen.
+(define (draw-missiles missiles)
+  (cond
+    [(empty? missiles) empty-image] ; Corrected here
+    [else
+     (if (and (>= (missile-x (first missiles)) 0)
+              (<= (missile-x (first missiles)) SCREEN-WIDTH)
+              (>= (missile-y (first missiles)) 0)
+              (<= (missile-y (first missiles)) SCREEN-HEIGHT))
+         (overlay/xy
+          ; Missile represented as an upward-pointing triangle
+          (triangle 10 20 "solid" "red")
+          (missile-x (first missiles))
+          (missile-y (first missiles))
+          (draw-missiles (rest missiles)))
+         (draw-missiles (rest missiles)))]))
+
+(define (draw-invaders invaders)
+  (cond
+    [(empty? invaders) empty-image] ; Base case for the empty list
+    [else
+     (if (and (>= (invader-x (first invaders)) 0)
+              (<= (invader-x (first invaders)) SCREEN-WIDTH)
+              (>= (invader-y (first invaders)) 0)
+              (<= (invader-y (first invaders)) SCREEN-HEIGHT))
+         (overlay/xy
+          (overlay/align "center" "center"
+            ; UFO dome
+            (overlay/xy (circle 15 "solid" "lightblue") 0 -10
+              ; UFO base
+              (overlay/xy (ellipse 40 20 "solid" "gray") 0 0
+                ; Left light
+                (overlay/xy (circle 5 "solid" "yellow") -15 10
+                  ; Right light
+                  (overlay/xy (circle 5 "solid" "yellow") 15 10
+                    empty-image)))))
+          (invader-x (first invaders))
+          (invader-y (first invaders))
+          (draw-invaders (rest invaders)))
+         (draw-invaders (rest invaders)))]))
+
+
+; render-world : World -> Image
+; Draws the game state, including the tank, missiles, and invaders.
+(define (render-world world)
+  (overlay
+   (draw-tank (world-tank world))
+   (draw-missiles (world-missiles world))
+   (draw-invaders (world-invaders world))
+   (empty-scene SCREEN-WIDTH SCREEN-HEIGHT)))
+
+
+
+;;Initial world statement
+(define initial-world
+  (make-world TANK-INITIAL-POS
+              empty                  ; No missiles at the start
+              (list (make-invader 50 0 3 3) ; Sample invader positions
+                    (make-invader 150 0 -3 3)
+                    (make-invader 250 0 3 -3))))
+
+
+;;Handle Key function
+; handle-key : World KeyEvent -> World
+; Handles the key press events to move the tank or fire a missile.
+(define (handle-key world key)
+  (cond
+    [(string=? key "left") 
+     (make-world (max 0 (- (world-tank world) TANK-SPEED)) ; move tank left
+                 (world-missiles world)
+                 (world-invaders world))]
+    [(string=? key "right") 
+     (make-world (min SCREEN-WIDTH (+ (world-tank world) TANK-SPEED)) ; move tank right
+                 (world-missiles world)
+                 (world-invaders world))]
+    [(string=? key " ") 
+     (make-world (world-tank world) ; fire a missile from the tank's position
+                 (cons (make-missile (world-tank world) (- SCREEN-HEIGHT 40))
+                       (world-missiles world))
+                 (world-invaders world))]
+    [else world])) ; if any other key is pressed, no change
+
+
+
+
+
+;; Update World with helpers
+; update-world : World -> World
+; Updates the state of the world on each tick by moving missiles and invaders.
+(define (update-world world)
+  (make-world (world-tank world)              ; Keep the tank in the same position
+              (move-missiles (world-missiles world)) ; Move all missiles
+              (move-invaders (world-invaders world)))) ; Move all invaders
+; move-missiles : List of Missiles -> List of Missiles
+; Moves each missile upward by a fixed speed using recursion.
+(define (move-missiles missiles)
+  (cond
+    [(empty? missiles) empty]
+    [else
+     (if (< (- (missile-y (first missiles)) MISSILE-SPEED) 0)
+         (move-missiles (rest missiles)) ; Remove missile if off-screen
+         (cons (make-missile (missile-x (first missiles))
+                             (- (missile-y (first missiles)) MISSILE-SPEED))
+               (move-missiles (rest missiles))))]))
+; move-invaders : List of Invaders -> List of Invaders
+; Moves each invader diagonally and bounces them off the walls if necessary.
+(define (move-invaders invaders)
+  (cond
+    [(empty? invaders) empty]
+    [else
+     (cons (update-invader (first invaders))
+           (move-invaders (rest invaders)))]))
+; Helper function to update a single invader
+(define (update-invader inv)
+  (make-invader
+   (new-invader-x inv)
+   (new-invader-y inv)
+   (new-invader-dx inv)
+   (new-invader-dy inv)))
+; Compute new x-coordinate
+(define (new-invader-x inv)
+  (+ (invader-x inv) (invader-dx inv)))
+; Compute new y-coordinate
+(define (new-invader-y inv)
+  (+ (invader-y inv) (invader-dy inv)))
+; Compute new x-direction
+(define (new-invader-dx inv)
+  (if (or (< (new-invader-x inv) 0)
+          (> (new-invader-x inv) SCREEN-WIDTH))
+      (- (invader-dx inv))
+      (invader-dx inv)))
+; Compute new y-direction
+(define (new-invader-dy inv)
+  (if (or (< (new-invader-y inv) 0)
+          (> (new-invader-y inv) SCREEN-HEIGHT))
+      (- (invader-dy inv))
+      (invader-dy inv)))
+
+
+
+
+
+
+;;Game over function with helper
+; tank-hit? : Invader Number -> Boolean
+; tank-hit? : Invader Number -> Boolean
+; Checks if an invader has hit the tank.
+(define (tank-hit? invader tank-x)
+  (and (>= (invader-y invader) (- SCREEN-HEIGHT 40)) ; Close to the bottom
+       (<= (abs (- (invader-x invader) tank-x)) 20))) ; Within tank's width
+
+; missile-hit-tank? : Missile Number -> Boolean
+; Checks if a missile has hit the tank.
+(define (missile-hit-tank? missile tank-x)
+  (and (<= (missile-y missile) SCREEN-HEIGHT) ; Ensuring missile is in visible area
+       (<= (abs (- (missile-x missile) tank-x)) 20))) ; Within tank's width
+; invader-collides? : List of Invaders Number -> Boolean
+; Returns true if any invader in the list has collided with the tank.
+(define (invader-collides? invaders tank-x)
+  (cond
+    [(empty? invaders) #false] ; No invaders left to check
+    [(tank-hit? (first invaders) tank-x) #true] ; An invader hit the tank
+    [else (invader-collides? (rest invaders) tank-x)])) ; Check the rest of the invaders
+; missile-collides? : List of Missiles Number -> Boolean
+; Returns true if any missile in the list has collided with the tank.
+(define (missile-collides? missiles tank-x)
+  (cond
+    [(empty? missiles) #false] ; No missiles left to check
+    [(missile-hit-tank? (first missiles) tank-x) #true] ; A missile hit the tank
+    [else (missile-collides? (rest missiles) tank-x)])) ; Check the rest of the missiles
+
+; game-over? : World -> Boolean
+; Returns true if any invader or missile has collided with the tank.
+;(define (game-over? world)
+;  (or (invader-collides? (world-invaders world) (world-tank world))
+;      (missile-collides? (world-missiles world) (world-tank world))))
+
+(define (game-over? world)
+  (invader-collides? (world-invaders world) (world-tank world)))
+
+;;HtDW Big Bang
+(big-bang initial-world
+  (on-tick update-world)
+  (to-draw render-world)
+  (on-key handle-key)
+  (stop-when game-over?))
+
