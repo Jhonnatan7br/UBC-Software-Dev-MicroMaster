@@ -1,0 +1,68 @@
+
+REID HOLMES: So one property of testability that's really interesting
+is controllability.
+Controllability is all about the extent of our ability
+to execute the system under test with the kinds of state and parameters
+that we need to invoke the code within the system that we care about.
+So sometimes in a system it can be impractical or fully impossible
+to write the kinds of test cases that we actually want in practice.
+And if a developer has to go and write a huge test case, 50 or 100 lines, just
+to get the system spun up in the configuration they
+need to invoke a test, they're not going to want to do it.
+So controllability is all about refactoring our code
+in a way that makes the test cases that we're writing more affordable.
+It makes them shorter, it makes them more succinct
+and ultimately makes the system easier to understand for the developer
+as well.
+What we're really trying to do when we're
+trying to make our code more controllable
+is make it so we can set up the state in our objects
+to exactly the specification that we care about for our test cases.
+A red flag in terms of controllability is
+whenever a constructor has new statements,
+in particular, because when a constructor is creating
+all its own objects, you don't as the test writer have the opportunity
+to change those objects.
+So let's take a look at a concrete example from Mario in this space.
+So here we have the constructor for the gauge class.
+And we can see that it takes a bunch of parameters and sets all of their state
+down below.
+Now, just a second ago, I said new values were the things
+that we need to worry about.
+And here we can see there actually aren't any new methods--
+new objects instantiation happening.
+But there is one other thing that is quite similar,
+and this is this jQuery method call.
+It looks like new hash plus ID.
+And what's happening in this code, this is going out to jQuery,
+querying the Dom and returning the element
+that is associated with this ID back into the object
+that we can see is being set to view.
+And what this hamstrings us from, from a testability point of view,
+is that we now have no control over what this doc
+view is when we're testing gauge.
+We can point to different elements in the Dom,
+but it's always going to need to be in the Dom.
+And if we wanted to test this code without using the Dom, which
+would be really beneficial because the Dom is slow to start
+and is more problematic from a testing point of view,
+we don't have any choice.
+We're really stuck with this.
+So what we can do is we can refactor this signature,
+so instead of taking this ID as a string parameter,
+we can instead pass into view as a jQuery object right from the beginning.
+So here we can see the new signature for the gauge constructor,
+where we've changed the ID from being a string to a view that's
+a jQuery object.
+Now, you might say, hey, this is exactly the same thing, right?
+All we're doing is passing in this jQuery object,
+whereas before we were querying for it directly.
+But what we can do now is in our test, we
+can go and write code that passes in a fake jQuery object, one that's
+not bound to the Dom, maybe one that we've written ourselves
+that only has a few key methods on it that respond in the way
+that we care about for the rest of the gauge class.
+And this is a way for us to make the testability of this code
+considerably more controllable.
+We can now invoke the code with all of the kinds of state
+that we actually care about to write these tests.

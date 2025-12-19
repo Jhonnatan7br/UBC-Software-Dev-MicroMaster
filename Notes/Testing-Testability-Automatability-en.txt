@@ -1,0 +1,88 @@
+
+REID HOLMES: The whole discussion we've been having here about testing
+really revolves around being able to execute our tests in a programmatic way
+very, very quickly.
+Because if a developer has to go through and manually test their system,
+it's going to be slow, it's going to be error prone,
+and they're just not going to want to do it.
+At the same time, a common pushback over automation
+is that it also takes time to set up the machinery
+and the mechanisms required to be able to execute tests in an automated way.
+And this is true.
+Because if you think of what the setup cost for manual testing run,
+it's really zero.
+There's nothing that you have to do.
+But each time that you want to go through and test your system,
+it might take 30 minutes.
+Whereas in contrast for an automated system
+you might have to spend an afternoon.
+It might take you five hours in order to get
+those tests to work, to get the machinery in place that you can
+actually run an automated test suite.
+But a single run might only cost you one minute.
+So it will run very, very quickly.
+And this is great from a regression testing point of view,
+because when we want to run our tests over and over and over again,
+it's really important that that per run cost
+is really low, because we don't want to just run our tests 10 times,
+where we'd see the break even point here.
+We really want to run our tests thousands upon thousands of times.
+Because in an ideal world, regression testing
+is all about running the test suite on every single individual change.
+Now in practice, with really large systems,
+this actually starts to break down.
+But this is an ideal that we can strive for with our system
+so we can gain a really ongoing and immediate understanding
+of the quality of our system.
+Because as soon as we introduce a change that causes a test to fail,
+we can go back and quickly fix it.
+And regression testing is our best mechanism for doing that.
+One other nice thing that regression testing allows
+is it makes testing a globally visible property,
+because we have a regression test suite, it probably runs on an external server.
+And that suite will run.
+And everyone will be able to see the quality of the system
+at any given time.
+And no developer wants to be responsible for breaking the build
+and making some test fail that passed before.
+It also helps developers understand what's going on within the system
+when they make a change themselves.
+If all the tests were passing, you introduce a change,
+and now there are failures, it's probably going to end up being
+your fault rather than someone else's.
+So having a globally visible understanding
+of the quality of a system can be really impactful in practice.
+So here we take a concrete look at how Mario has actually
+been designing a really nice way to enhance automated testing.
+So here we have the keys interface that defines the keys
+that a user might be pressing in the game
+as they're trying to control Mario.
+So we can see that there's accelerate, left, right, up and down.
+These are the main keys on the keyboard within the Mario game.
+And we can also see the interface that within Mario itself that
+interprets these keys.
+So it's just the input method that takes a keys object.
+Now why is this good?
+We could totally imagine another alternative
+where we bind to methods within the DOM, which
+would require a user to actually play the game in order to test.
+But instead, we can just do something like this.
+So here we have said mario.input.
+And we've passed an instance of the keys interface.
+And we can see that only the right method has been set to true.
+So we can make sure that Mario moves right and does the right thing.
+Alternatively here, we have another test.
+So here we say mario.input.
+And we're passing another keys object.
+In this case, Mario is moving right and down at the same time.
+So Mario is crouching.
+And in this case, we want to test to make sure
+that Mario doesn't actually move right.
+Because when Mario is crouching, he can't actually move.
+So at this interface allows us to do, or this keys interface really
+gives us is the ability to quickly and automatically test
+that Mario does the right thing when he's given different key inputs rather
+than requiring a developer or a user to play the game manually to make sure
+Mario does the right thing.
+And this type of really small and subtle design decision
+really improves the automated ability of the test within the system.

@@ -1,0 +1,632 @@
+Start of transcript. Skip to the end.
+REID HOLMES: Another type of equivalence class partitioning
+can take place on the outputs rather than the inputs.
+So in this example for humanize, we'll look
+at the expected outputs rather than the parameters being
+passed into the function and design or test cases
+to make sure that we exercise the range of outputs that we expect to see.
+So what humanize does is, it takes a duration of milliseconds
+and turns it into a string.
+And from this spec, we can see that if we're
+dealing with a number milliseconds less than a thousand,
+we want to return milliseconds.
+But if we're going from one thousand milliseconds to up to one minute,
+we return it in seconds.
+And above a minute to an hour, we return it in minutes and seconds.
+And above and hour, we add an hour parameter.
+Let's take a look at how this output specification can
+inform the kinds of inputs that we want to provide.
+Because providing it our prior input, we were looking at minus 5,
+minus 1, 0, 1, and 5.
+This is what we saw for number previously.
+It's not a great set of inputs for this function.
+Instead, we want to choose something that actually
+tests these different output classes.
+So in this case, we're interested in 0, 1,000, 60,000, and 3.6 million.
+All right, so what we want to do is, we want
+to make sure that we test from each of these domains
+rather than from these other ones from before.
+Because these will exercise all of the output classes for the humanize
+function.
+Let's take a look at a concrete example from Mario
+in the output partitioning domain as well.
+So here we have the set velocity function
+that takes the vx and vy for a figure and returns
+whether or not that figure is moving right or left.
+All right, and this is relevant because we
+need to know if the sprite for that figure
+should be facing right or facing left based on the direction
+that the physics engine has them traveling.
+So on its surface, this looks just like is greater from before,
+where we have two number inputs.
+All right, so let's draw this out in the table.
+So we have vx and vy.
+And if we drew this out exhaustively, again, we'd
+have 1.28 times 10 to the 617 power.
+Right, there are a lot of options in this space.
+But in this case, from the specification,
+we can see that we only actually care about vx.
+Because whether or not Mario is moving up or down
+doesn't matter for the sprite.
+They're the same, there's just left or right.
+All we care what is left or right.
+So in this case, all we really care about is a subset of this table.
+And the subset that we care about is right here.
+So we only care about the first row.
+From the specification, we know that we only care about vx.
+Because this impacts left or right.
+And really, this is all that we care about when we're testing this thing,
+whether or not we have left or right.
+So for output partitioning, we're just interested in these two test cases.
+So really, all we care about is minus 1 and 1
+to make sure that the right sprite is returned if you're moving left
+or you're moving right.
+And in this case, using output partitioning
+can cut the state space down from this huge number
+down to just two test cases quickly and effectively.
+
+Start of transcript. Skip to the end.
+REID HOLMES: Our discussion thus far has all
+been about valid inputs and valid outputs.
+We're just focusing on valid values.
+But valid values aren't what programs always encounter,
+and we want to make sure that our systems are
+robust to invalid inputs as well.
+So the primary technique used to test invalid inputs
+is known as boundary value analysis.
+Let's go back to the HTML audio manager again.
+So recall that we were testing one MP3 file
+and one AUG file-- these were two valid files to make sure that the HTML
+audio manager actually works.
+But what happens when the HTML audio manager is given an invalid file?
+So what happens when we go and we give an all sound file, a sound file
+of some other type, say FLAC or VP9?
+So what happens when we send one of those?
+What will happen?
+So we might have to choose one or two of those other sound files
+that we don't actually support to make sure that the program doesn't crash
+or that it behaves in a way that's specified.
+It could actually be that this isn't specified,
+and we need to think about what should happen when this actually occurs.
+There's also another case.
+There are some AUG files that actually contain video.
+So you might also want to try an AUG file that's a video file
+to see what happens as well because what we probably wouldn't want to happen
+is for that video file to play over the top of Mario.
+That's going to interfere with the game.
+We need to think about these other cases as well.
+So when we are looking at boundary value analysis,
+we're really trying to push outside these boundaries
+to see what types of problems could occur in practice.
+So really, we're going to be testing near this edge.
+We've already tested inside, so we need to make sure that we test outside.
+Fortunately this point is outside of the MP3 edge as well.
+So this point takes care of the boundary for both of these cases.
+So in TypeScript it turns out that null and undefined are in the type
+domain of every single type.
+So if you have a Boolean that you think is just true or false--
+it turns out there are two other options, null and undefined.
+So these are our four options, in practice, for Boolean.
+So if we think about our function before it is valid,
+we would have to try instead of just true and false,
+we'd also want to try with null and undefined
+to make sure that the function actually works.
+And one thing you might wonder is, what should happen if invalid
+is faced with a null or undefined?
+If valid is faced with a null or undefined?
+And that might not actually be specified in the function specification.
+And so what you're thinking about this is
+that the right time to revisit the spec and see if that should be updated?
+Should it throw an exception?
+Should it always be false?
+If it's not specified, it should be, and this is a great time to do that.
+Let's take a look at the same thing for our is greater function from before.
+Because, recall, we have these two parameters, a
+and b, that are both numbers.
+So what is the possible range that could exist there in practice?
+Because before we said we would try minus 5, minus 1, 0, 1, and 5.
+But if we wanted to try unexpected inputs what other things should
+we look at?
+Numeric types can be challenging for programming languages, in general,
+because they can't encode from negative infinity
+to positive infinity in a finite number of bytes.
+And in TypeScript that number bytes is 53.
+So what this does is it limits us to our largest number being
+1.79 times 10 to the 308th power.
+And the smallest number we can deal with is the negative of this is.
+It's negative 1.79 times 10 to the 308th power.
+Smaller than the smallest number is negative infinity, and larger
+than the largest number positive infinity.
+And these limits can be important in practice.
+For instance, if you increment a number above the max value or decrement
+a number below the smallest value, you can cause an integer roll over--
+or a number roll over--
+and this actually was the cause of the Ariane 5 rocket explosion--
+for the first test of the Ariane 5 rocket--
+because they made this exact mistake.
+So testing these in high-stress or high-safety critical situations
+can be really important.
+And again, of course, we have undefined and null.
+And this is something that strictNullChecks in TypeScript
+will actually validate for you.
+If you try to set a or b to undefined or null
+and you have strictNullChecks enabled, the TypeScript compiler
+would actually complain and say, no, no, you can't do that.
+You can only send a number.
+And this is why this is a great compiler flag to have on in your program.
+Revisiting our figure hit code from earlier,
+we also see that we need to consider null and undefined in this case
+as well.
+So we want to try turtle.hit[undefined], turtle.hit[null], boss.hit[undefined],
+and boss.hit[null].
+So these four options we need to add to our test suite
+as well to make sure that the hit code is robust to getting
+an unexpected input at runtime.
+Ultimately, we know that we can't exhaustively test our program.
+There are just far too many inputs and outputs for any non-trivial program
+to make exhaustive testing a practical possibility.
+So what we want to be able to do is to partition the input and output
+space in a reasonable way so that we can sample from these partitions
+and feel like we've tested our implementation effectively.
+So here, we can imagine having a whole state space,
+and we can split it into smaller regions.
+And what we want to do in our testing strategy
+is to make sure that we try an item or two in each partition
+that we care about.
+So here we have the pink partition and the orange partition.
+At the same time, we also want to be able to take a look at whether or not
+unexpected inputs work.
+If we only care about supporting pink and orange,
+we might also want to try values from the other partition as well.
+Also, boundary value analysis is one technique for us
+to really think about what the invalid inputs for a program are.
+And this is where we want to test really carefully right on this boundary.
+So we can test the boundary itself in some cases--
+for instance, in number where we tried 0 in addition
+to positive and negative numbers.
+We want to make sure that we test on and near this boundary.
+The same thing with orange.
+Now, when we're thinking about partitioning,
+it's also important to remember that we can think about partitioning
+both in terms of the inputs--
+so these are the things that go into the partitions that we care about--
+but also in terms of the outputs.
+So we can partition on the input or output space.
+Or you might design tests that use both.
+What you want to do is take a look at the specification,
+and figure out which gives you the most reasonable and usable partitioning
+for the input and output space of your program
+so you can most effectively write tests for your code.
+So boundary value analysis is really important for making sure
+that our code is not only correct, but is robust to unexpected inputs.
+And that's why testing these boundaries is so important
+because, in addition to our code performing correctly
+when it's getting the right inputs and outputs,
+we also want to make sure that it isn't crashing unexpectedly.
+And these are two really important ways, and effective ways,
+that we can test programs in a black-box fashion
+and write tests without looking at the code itself.
+
+
+# assertions
+
+Start of transcript. Skip to the end.
+REID HOLMES: So far, we've talked a lot about executing our system,
+but what we really care about is how it behaves.
+So how do we get from execution to behavior?
+Because execution alone is not sufficient for evaluating
+the behavior of our system, except in one important class of defects,
+and that's crashing bugs.
+If an execution causes your system to crash, it's probably a defect.
+But in most cases, what we really want to do is we want a reason about
+whether or not that execution was correct or not, and the way
+we do that is by asserting on the behavior of the execution.
+Now, when we design our assertions, what we're
+really looking at is the specification for the system
+and determining whether or not an execution is correct or incorrect.
+So once again, we're going back to the specs.
+Now, this works for both valid and invalid inputs.
+So when we're designing our assertions, we're going to be looking at both.
+Test suites generally have a high-level organization to them.
+One of the most popular of these, which was really started by JUnit,
+is called Four Phase Test.
+And in Four Phase Test, what we really want to do
+is we want to set up the test fixture--
+and this happens using a before or before each type method or annotation--
+run some tests, and then within each of those tests,
+you're going to have a series of assertions
+that actually checks the behavior.
+And after each test is done, you'll have an after or after each method
+that cleans up the test fixture.
+Another high-level categorization for tests is called Given When Then.
+And this was really popularized by behavioral driven programming, or BDD.
+So in Given When Then tests, there is a strong emphasis on test
+readability, because we want the test to form
+part of the executable specification for the system.
+So we want the test to be really easy to understand.
+So the way BDD tests work in given when then-- we
+take some given state of a program, we apply some test behavior,
+and then we assert that that behavior is correct.
+So here's a concrete example for Mario.
+And when we look at this code, we can really easily read and understand
+what it's saying.
+It's saying Mario should be able to jump when he is on the ground.
+So just by looking at the test, we can really
+understand what the developer was trying to do when they were writing this test.
+And within the test itself, we see that the setup is relatively
+straightforward-- they make Mario jump, and then we
+assert that that behavior is correct.
+One useful technique for helping our test
+to really form this type of executable specification
+is to concretely and explicitly capture the expected and actual values that
+are being evaluated within the test.
+So what we want to do is to concretely write down
+what the expected value is and then compute the actual value by executing
+the code under test.
+And then we can just write our assertion in a simple format like this
+that is extremely easy to read.
+So we expect that the actual value to equal the expected value.
+And in this way, it's really easy to read the test
+and understand what the developer was trying to do when they wrote this test.
+Now, a simple critique for structuring tests
+this way is if the actual or expected values are complicated and can't
+actually be evaluated with a simple assertion like two
+equals, running a test this way can be really awkward.
+And this is why test frameworks all provide a flexible variety of test
+primitives to enable us to write different types of assertions
+in a flexible and easy manner.
+We're going to talk about a bunch more of those today.
+
+
+Start of transcript. Skip to the end.
+REID HOLMES: So let's step back and take a concrete look
+at how we can actually use assertions to validate
+that a program is correct in practice.
+So what we're going to do here is we're going
+to step through a concrete example of a survey system.
+So let's take a look at the high-level interfaces for this system.
+So here we have survey question, which maintains an index number, a question,
+and then an answer to that question.
+And we have a multiple choice question, which
+extends survey question to add a little bit more options for multiple choice
+questions.
+And here's our main class that we need to implement-- survey.
+And survey maintains this list of questions and this pointer
+to the current question.
+And what we want to do is you want to step through and make sure
+that all of this code is actually correct to ensure
+that it does what the specification says it's supposed to do.
+And looking at the structure of this class, there really isn't a lot to it.
+There's these two properties that we talked about before, a constructor,
+and a series of methods.
+So we just want to step through and make sure all of this works correctly.
+Let's start by creating the test for this system, OK?
+So let's make a new file called SurveySpec.ts.
+In the behavioral-driven development world, tests are often called specs,
+so we're just going to call this survey Spec.
+So first thing we need to do is to actually import the Mocha library,
+because that's what we're going to be doing
+to actually provide the mechanism for performing these tests.
+And next we need to go and start to describe the test that we
+want to do and create the test cases.
+So in the BDD world, we talked earlier about having this Given-When-Then style
+test.
+All right, so here we say, describe the basic test for survey.
+That's the given, right?
+Our basic test.
+And now we want to go and create individual test cases
+that correspond to the when clause.
+These it clauses correspond to our individual test cases.
+So one of the first things we might want to test for this survey system
+is that we should be able to get to the next question.
+And that's what we're going to test here.
+So given a basic survey system, we should
+be able to get to the next question.
+That's really what we're trying to test.
+Before we can actually do anything, what we need
+is some surveys to actually run some tests against.
+So that's what we're going to do next.
+So essentially before any test case, what we want to do
+is we want to create a survey that we can then go and validate.
+And we want to do this for every test case.
+Because as we manipulate these object instances in the test itself,
+we're going to be changing their internal state.
+So we're going to use this special feature called beforeEach.
+And essentially in this beforeEach function,
+what we're going to do is we're going to set up a survey,
+s, with some members and a second list of members.
+And before each test we'll actually go and repopulate
+these three fields with fresh new values.
+So we can make sure that the tests don't interact with one other.
+Because tests should really be independent,
+and this is one way to check for that for sure.
+We also need to make sure that we import the types that we're actually
+going to be validating.
+So that's what we're going to do here.
+We'll import the survey, and we'll import multiple choice answer
+and survey question from their respective files.
+And what we've done here is just pasted in some initialization
+code for members and members 2, so that these fields are available for testing.
+So they'll be repopulated on every single test case that gets run.
+Ultimately, in every single test we want to check some actual behavior
+against an expected behavior.
+So here we've gone and declared a variable called actual
+that's the response to ask.getQuestion.
+And then our expected value, what we expect
+the answer to be, we've set it to an explicit variable called expected.
+And this makes reading the assertion really natural.
+We can say, "expect actual to equal expected."
+And this makes it really easy to understand
+what's going on in this test.
+Oops, it looks like I forgot to import expect itself.
+So we had a compilation error.
+But we can go and ignore that.
+Right, it's pretty straightforward to fix.
+OK, so now we have an actual test case here.
+And let's see what happens when we run it.
+All right, so when we run this, we can see
+that the test returns a green value, right?
+This means it worked.
+But what if it just passed by accident?
+What if the test wasn't running correctly?
+So let's pass in a fake value here, just to make sure that it fails.
+It's always a nice idea to do a sanity check
+to make sure that your tests have the opportunity
+to fail, or can possibly fail, before we can consider them finished.
+All right, so let's go through and try to extend this test case a little bit
+further.
+One thing you might want to do is you might
+want to make sure that a property that you don't expect a return
+object to have isn't actually present.
+So here we're going to go and check a negative expectation.
+So here we say, expert actual to not have property right answer.
+Right, so this is no prop here.
+And we want to be able to run this and make sure that this property doesn't
+actually exist in the output.
+And since we're checking that some random property doesn't exist,
+maybe we should go through and make sure that all the right properties do exist.
+So here we could say, all keys.
+Here are all the keys that we expect actual to have.
+So we expect there to be num, answer, and question.
+And what we want to do is we want to make sure that all of those properties
+actually exist.
+And we can do this really naturally, too.
+We can say expect actual to have all keys.
+All keys.
+And what that means is that all of those keys
+are present in the returned object.
+And then we can go and run this test.
+And again, we see that it passes, which is great.
+It's exactly what we want to happen.
+When we talked about white box testing earlier,
+we said that measuring the actual lines of code that are executed by a test
+is a good way to see what portions of the system
+have been run by a test suite.
+So here we can just run NPM run cover, and take a look
+at what the results end up being.
+One handy thing about most coverage tools is,
+they'll actually generate an HTML report that you can use to see and understand
+what parts of your system have been run by a test,
+and what parts of your system haven't.
+And when we look at this report, we see that getNextQuestion isn't actually
+being tested by our existing test suite, nor is getAllQuestions.
+Now it would be really tempting to go and write
+tests for getNextQuestion and getAllQuestions,
+because we can see that they're uncovered in the coverage report.
+But looking at the getQuestions API specification,
+I actually think that we haven't tested this function sufficiently enough.
+Because when you look at the expectation for this method, what the spec says,
+there's an extra case that should happen here
+if current question does not exist.
+There should be an error thrown.
+And we definitely don't test this.
+So before we get distracted by the coverage,
+let's take a look at writing another test to make sure
+that getQuestion is doing the right thing.
+So here we're going to write a test that checks
+to make sure that an error is indeed thrown when a question does not exist.
+Since our local survey that's set up for each method
+has some questions associated with it, we'll
+actually create a new survey here that we know doesn't have any questions.
+Because really, in this case, we're trying
+to make sure that we get an error when no questions are being set
+and we asked for the next one.
+One thing that's going to be a little bit weird here,
+too, is to check for exceptions being thrown or not.
+We need to use this funny syntax.
+So we'll go and step through this here.
+This is using fat arrow notation.
+So here we'll create this inner function called getActual,
+and we'll call test.getQuestion from within it.
+And here we can actually write our expectation.
+We can say expect getActual to throw--
+and we've provided with the error message that we expect to see.
+And in this case, that's no questions.
+Now we had to use this fat arrow notation
+so that we were able to actually capture the exception that was thrown.
+That's a little bit less natural than the expectations we had earlier.
+But it still works pretty well.
+Right, so let's run this test and see what happens.
+So let's give a run here.
+And when we run the test, we actually see that it fails, right?
+And why is that?
+It says expect null to be undefined.
+What's going on there?
+If current question does not exist, there should be an error.
+But when we look at the implementation here,
+we can see that the implementation for getQuestions isn't actually right.
+So let's go and take a look at how we can fix this
+so that we can make the test pass.
+Because this is definitely a bug.
+So let's go and write a proper implementation for this.
+So here we could say, hey, let val equals the current question that we
+expect to have.
+And then we want to make sure that val isn't undefined, right?
+And if val isn't undefined, we'll return it.
+Because that's the right question that we want to return.
+And if it doesn't, we want to say, hey, throw an error
+with this message, "no questions."
+Now when we go and we run the tests again,
+here we will see that the test actually passes.
+And that's perfect.
+That means we fixed the bug.
+And the implantation actually meets the spec now.
+So by going through this process of adding a new test,
+we found a bug in our implementation and we were able to fix it.
+And let's just go and take a quick peek at the coverage for getQuestion now.
+So here we can see when we look at it that even though the code got bigger,
+our tests actually managed to cover both halves of this function.
+So we feel like we're covering this pretty well.
+And having read through this spec again, as we wrote the tests,
+we could feel pretty good about the tests
+that we've written for getQuestionNow.
+So let's move on to getNextQuestion, which
+we identified earlier as being something we need
+to look at from the coverage report.
+OK, so let's make sure that this iterator works.
+So we'll say again, we have actual, which is getNextQuestion.
+This is the result of our operation.
+And then we want to specify our expected value.
+So again, we'll set another local variable
+to be expected, which is member's one.
+The default should start on member 0.
+So after we iterate, we should be on member's one.
+Let's just write our basic expectation here.
+Expect actual to equal expected.
+And then we can go and run the test and make sure that it passes.
+And here we can see that it does pass.
+So this implementation is right.
+So let's take a look at the coverage report from the last run.
+And here we can see, getNextQuestion isn't actually run.
+This is before we've regenerated the coverage report.
+So let's run the coverage report again, and take another look
+at the coverage to see what happens.
+And here we can say, yeah, look, we now cover this case, right?
+This is exactly what we expect to happen.
+But oh, look, we don't cover this else clause.
+We need to check this no next question error as well.
+All right, so we want to check this error case for this function,
+just like we checked it with the last one.
+So we'll go and create a new test case here.
+Now since this looks really similar to our prior test case, what we're just
+going to do is copy the old test to the new one, and then adapt it as required,
+right?
+So instead of calling getQuestion, we're going to call getNextQuestion.
+And then the error message is also slightly different.
+So we'll go and check what that is supposed to be.
+And the answer is no next question instead of no questions.
+All right, so we'll go and adapt the string here, as well.
+And now we can run the test and see what happens.
+And as we were hoping, the test passes.
+So that's great.
+So let's just go and quickly regenerate the coverage report, just as
+a sanity check to make sure that that block is now covered.
+So here we were missing the error block before.
+And when we refresh, we can see that the error block is covered.
+So that's perfect. getNextQuestion also seems to be tested fairly adequately.
+Now we've mostly been talking about checking keys and checking equality.
+But sometimes you want to check properties
+that are a little bit more challenging to validate in practice.
+So let's take a specific example for a numerical type, here.
+And what we're going to do is we're going to go and compare
+the value of a division operation.
+So here we'll say, dividing 22 by 7.
+And just try to evaluate what it actually equals to.
+So we'll go and set up our survey and answer a question with this 22 over 7.
+And we'll take a look at performing an expectation on this.
+Now 22 over 7 is approximately pi.
+So we might say, expect the answer to equal 3.14, right?
+To equal pi.
+Now when we go and run this test, what's interesting
+is that the test will actually fail.
+Because it says hey, look, 3.14 doesn't equal 3.142, right?
+It's not the same value.
+So we need to look at doing this in a different way.
+So for a numerical type like this, we can just say hey,
+we want to expect the answer, q.answer, to be within a certain tolerance,
+within a bounds.
+So we're just going to say, we want it to be above 3.141 and below 3.143.
+And then we can go and run this test again and take a look at the output.
+And in this case, we can see that the test actually passes.
+Right, so this works.
+So this provides a more natural way for us
+to test that a numerical type is within a tolerance that we care about.
+All right, so let's run the coverage report now and see where we stand.
+OK, so take a look.
+So open up the view here.
+We scroll down and we say, oh yeah, we're missing getAllQuestions.
+There's a few little blocks here and there.
+But these are pretty big blocks that we don't have.
+So if we're going to cover something, we might as well
+cover something big like this.
+So let's take a look at this function here
+and write a test that works for this.
+Now, one thing to note here that this is an asynchronous function.
+It's returning a promise.
+So this is going to make our testing process a little bit trickier.
+So let's talk a little bit about what that looks like in practice.
+So here we go, just like before, we'll go and set up our it clause that
+will actually encompass our test.
+And we can start writing our function here.
+Even though this is a asynchronous function,
+let's just go and try and do it the straightforward way,
+as if it was synchronous.
+So let's just go and say s.loadQuestionsFromFile.
+We have a sample file here called sample.txt
+that we know contains three questions.
+And we'll go and load that up and make this work.
+We have to be careful here, because we don't actually
+want to load questions from file into s, into our local survey.
+We want to create a new survey instance here within this test,
+so that we're not using the ones that have
+been pre-populated with other values.
+So we're going to have to go and create a new survey instance first.
+And then what we want to go and do is check to make sure it actually works.
+So let's go and call test.getAllQuestions.
+Let's get all the questions and check its length.
+So our actual value is going to be the length of the number of questions
+that have been returned.
+And because we know that the sample file has three questions in it,
+we'll just hard code 3 as the expected length of this array.
+And then we could just expect that actual equals expected,
+just like we've been using previously.
+And when we go and we run this test, we're
+actually going to see that it fails.
+And this is kind of weird, right?
+Actual length is 0, and the expected is 3.
+So what's actually going on here?
+This is probably an asynchronous problem that's causing us pain.
+And what's really happening is that we're checking the length of the array
+before it's actually done loading.
+If we treat it synchronously, we're not going
+to wait for the loading to finish before we do that expectation.
+So we need to do this in a different way.
+Let's promise-ify this test now.
+So one thing that we're doing here that's really important,
+is you can see that we're returning the promise in this call, here.
+When we return the promise, it tells Mocha
+that this is actually a promise-ified function.
+So it will wait for it to finish, either to invoke the then clause
+or to invoke the catch.
+Let's go ahead and move our previous check up
+into within the body of this then clause.
+And when we go and we run this test, we can see that it actually passes.
+So that's perfect, that's doing exactly what we want.
+And if we go back and check the coverage report now,
+we'll have to regenerate it of course.
+We regenerate the coverage report and take a look.
+We can see that this function is now covered.
+And of course, there's this clause that we've missed.
+And if we wanted to go and add more tests to the rest of this class
+to make this test suite complete, we'd have
+to go back and fill in the rest of these uncovered bits of code.
+So there's an error case here, and there's a few other individual lines
+of code that need to be looked at.
+Hopefully this concrete example has given you
+some understanding of the process that's involved in creating tests for a file.
+You don't think of everything up front.
+You go and you iterate through the tests one at a time.
+And some idea of some of the mechanical operations that you'll also go through,
+in terms of running the tests, making sure they both pass and fail,
+and checking the coverage reports so that you can do this effectively
+in the future.

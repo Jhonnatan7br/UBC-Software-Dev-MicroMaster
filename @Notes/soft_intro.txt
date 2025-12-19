@@ -1,0 +1,50 @@
+# Software Engineering Condensed Summary
+
+## 1. Core Concepts
+- **Programming Languages**: Bridge human ideas to computer execution, balancing **syntax** (structure) and **semantics** (meaning).
+- **Execution Models**:
+  - **Interpreted**: Executes top-down.
+  - **Compiled**: Translates code to a lower level before execution, enabling optimizations.
+- **Typing**:
+  - **Statically Typed**: Types are declared and checked at compile time (e.g., Java).
+  - **Dynamically Typed**: Types are tied to runtime values (e.g., JavaScript).
+- **Concurrency vs. Asynchronous**:
+  - **Concurrency**: Manages multiple simultaneous tasks, often with threads and shared memory (e.g., Java).
+  - **Asynchronous**: Handles long-running tasks without blocking the main thread, using an **event loop**, callbacks, and promises (e.g., JavaScript/TypeScript).
+
+## 2. Software Processes
+- **Traditional Models**:
+  - **Waterfall**: Linear, sequential phases (Requirements -> Design -> Implement -> Verify -> Maintain). Inflexible.
+  - **Spiral**: Iterative, with a focus on risk analysis in each cycle.
+- **Agile Methodologies**: Prioritize flexibility, customer collaboration, and rapid iterations.
+  - **Extreme Programming (XP)**: Focuses on communication, simplicity, feedback, courage, and respect.
+  - **Test-Driven Development (TDD)**: A core XP practice. Follows a **Red-Green-Refactor** cycle: write a failing test (Red), write minimal code to pass (Green), and then clean up the code (Refactor).
+  - **Scrum**: The most common Agile framework. Work is done in **sprints** (1–3 weeks) by a self-organizing **Team**.
+    - **Roles**: **Product Owner** (defines what), **Scrum Master** (facilitates how), **Team** (builds).
+    - **Artifacts**: **Product Backlog** (all work), **Sprint Backlog** (work for one sprint).
+    - **Ceremonies**: Sprint Planning, Daily Stand-ups, Sprint Retrospective.
+
+## 3. Requirements Engineering
+- **Types**:
+  - **Functional**: What the system must *do*.
+  - **Non-functional**: System properties like performance, usability, or security.
+- **User Stories**: A common format for requirements: "As a [role], I want [goal] so that [benefit]."
+- **INVEST Principles for User Stories**:
+  - **I**ndependent: Can be developed in any order.
+  - **N**egotiable: Not a rigid contract; open to discussion.
+  - **V**aluable: Delivers clear value to the stakeholder.
+  - **E**stimable: Can be sized by the development team.
+  - **S**mall: Can be completed within a single iteration.
+  - **T**estable: Has clear acceptance criteria.
+
+## 4. Software Testing
+- **Goal**: To find the most impactful bugs within given constraints; not to prove the absence of bugs.
+- **Testing Approaches**:
+  - **White Box**: Uses knowledge of the internal code structure to design tests.
+  - **Black Box**: Tests based on the specification without seeing the code. Relies on **Equivalence Class Partitioning (ECP)** to reduce the input space to representative samples.
+- **Testing Levels (The Test Pyramid)**:
+  - **Unit Tests**: Test individual functions or components in isolation. Fast and numerous.
+  - **Integration Tests**: Verify that multiple components work together correctly.
+  - **System Tests**: Test the entire application as a whole, often with synthetic data.
+  - **Acceptance Tests**: User-driven validation to confirm the system meets business requirements.
+- **Coverage**: A metric indicating how much of the code is executed by tests (e.g., line, branch, path). It helps identify untested code but does not guarantee correctness. Assertions are required to verify behavior.

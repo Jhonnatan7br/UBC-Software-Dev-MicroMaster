@@ -1,0 +1,76 @@
+# Software Engineering Condensed Summary
+
+## 1. Core Concepts
+- **Programming Languages**: Bridge human ideas to computer execution, balancing **syntax** (structure) and **semantics** (meaning).
+- **Execution Models**:
+  - **Interpreted**: Executes top-down.
+  - **Compiled**: Translates code to a lower level before execution, enabling optimizations.
+- **Typing**:
+  - **Statically Typed**: Types are declared and checked at compile time (e.g., Java).
+  - **Dynamically Typed**: Types are tied to runtime values (e.g., JavaScript).
+- **Concurrency vs. Asynchronous**:
+  - **Concurrency**: Manages multiple simultaneous tasks, often with threads and shared memory (e.g., Java).
+  - **Asynchronous**: Handles long-running tasks without blocking the main thread, using an **event loop**, callbacks, and promises (e.g., JavaScript/TypeScript).
+
+## 2. Software Processes
+- **Traditional Models**:
+  - **Waterfall**: Linear, sequential phases (Requirements -> Design -> Implement -> Verify -> Maintain). Inflexible.
+  - **Spiral**: Iterative, with a focus on risk analysis in each cycle.
+- **Agile Methodologies**: Prioritize flexibility, customer collaboration, and rapid iterations.
+  - **Extreme Programming (XP)**: Focuses on communication, simplicity, feedback, courage, and respect.
+  - **Test-Driven Development (TDD)**: A core XP practice. Follows a **Red-Green-Refactor** cycle: write a failing test (Red), write minimal code to pass (Green), and then clean up the code (Refactor).
+  - **Scrum**: The most common Agile framework. Work is done in **sprints** (1–3 weeks) by a self-organizing **Team**.
+    - **Roles**: **Product Owner** (defines what), **Scrum Master** (facilitates how), **Team** (builds).
+    - **Artifacts**: **Product Backlog** (all work), **Sprint Backlog** (work for one sprint).
+    - **Ceremonies**: Sprint Planning, Daily Stand-ups, Sprint Retrospective.
+
+## 3. Requirements Engineering
+- **Types**:
+  - **Functional**: What the system must *do*.
+  - **Non-functional**: System properties like performance, usability, or security.
+- **User Stories**: A common format for requirements: "As a [role], I want [goal] so that [benefit]."
+- **INVEST Principles for User Stories**:
+  - **I**ndependent: Can be developed in any order.
+  - **N**egotiable: Not a rigid contract; open to discussion.
+  - **V**aluable: Delivers clear value to the stakeholder.
+  - **E**stimable: Can be sized by the development team.
+  - **S**mall: Can be completed within a single iteration.
+  - **T**estable: Has clear acceptance criteria.
+
+## 4. Software Testing
+- **Goal**: To find the most impactful bugs within given constraints; not to prove the absence of bugs.
+- **Testing Approaches**:
+  - **White Box**: Uses knowledge of the internal code structure to design tests.
+  - **Black Box**: Tests based on the specification without seeing the code. Relies on **Equivalence Class Partitioning (ECP)** and **Boundary Value Analysis** to reduce input space.
+- **Testing Levels (The Test Pyramid)**:
+  - **Unit Tests**: Test individual functions or components in isolation. Fast and numerous.
+  - **Integration Tests**: Verify that multiple components work together correctly.
+  - **System Tests**: Test the entire application as a whole, often with synthetic data.
+  - **Acceptance Tests**: User-driven validation to confirm the system meets business requirements.
+- **Coverage**: A metric indicating how much of the code is executed by tests (e.g., line, branch, path). It helps identify untested code but does not guarantee correctness.
+
+### 4.1. Assertions
+- **Purpose**: To verify program behavior against specifications. Not just execution, but correctness.
+- **Four Phase Test**: Setup (before/beforeEach), Test (with assertions), Cleanup (after/afterEach).
+- **Given-When-Then (BDD)**: Emphasizes readability. "Given a state, When an action occurs, Then assert the outcome."
+- **Practical Assertions**: Using `expect(actual).to.equal(expected)`, checking properties (`not.have.property`, `have.all.keys`), and handling errors (`to.throw`).
+- **Numerical Assertions**: Use tolerance-based checks for floating-point numbers (e.g., `to.be.above` and `to.be.below`).
+- **Asynchronous Testing**: Return promises from test cases so the framework waits for resolution.
+- **Coverage Reports**: Tools generate HTML reports to show executed code, guiding where more tests are needed, but should not be the sole driver of testing.
+
+### 4.2. Testability Properties
+- **Definition**: Modifying a system to facilitate the five testing steps: **Reach** code, **Trigger** defects, **Propagate** results, **Observe** faults, **Interpret** as defect. TDD naturally promotes testability.
+- **Automatability**:
+  - **Importance**: Enables fast, programmatic execution essential for efficient regression testing. Low per-run cost despite initial setup.
+  - **Regression Testing**: Crucial for continuous feedback on quality and quick bug fixing.
+  - **Design for Automatability**: Interfaces that allow programmatic input simulation (e.g., Mario's `Keys` interface).
+- **Controllability**:
+  - **Definition**: The ability to set up the system in specific states required for testing.
+  - **Improving Controllability**: Refactor code to avoid direct dependencies on external resources or complex object creation within constructors. Use dependency injection (e.g., passing pre-configured objects).
+- **Isolateability**:
+  - **Definition**: The ability to quickly pinpoint the cause of a test failure.
+  - **Improving Isolateability**: Break down complex methods or components into smaller, independently testable units. This simplifies debugging by narrowing down failure sources.
+- **Observability**:
+  - **Definition**: The extent to which program behavior (including triggered faults) can be verified.
+  - **Improving Observability**: Modify method signatures to return key computed values or states. This allows internal state to remain private while still being verifiable, improving information hiding.
+- **Challenges in Testing**: Tests themselves can have defects (up to 26% of failures). Non-determinism can lead to inconsistent test results.

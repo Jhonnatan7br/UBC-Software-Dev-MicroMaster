@@ -1,0 +1,63 @@
+
+REID HOLMES: Let's take a step back here and reflect a little bit about why
+we're trying to test our systems.
+What we're trying to do is we're trying to gain confidence
+in the correctness of our implementation with regards to our software
+specification.
+So testing involves executing the system and actually
+trying to find defects in the code.
+And there are five key steps that we follow
+when we're trying to accomplish this.
+The first is that we want to reach the code that we're trying to test.
+This involves writing a test case that is actually
+able to execute the code that we care about.
+The second is obviously we're trying to debug the system and find defects.
+What we want to be able to do is trigger those defects.
+So we want to build a trigger--
+
+trigger the defect.
+Next once the defect's been triggered, we
+need to be able to propagate the result to somewhere
+where we can actually observe it.
+
+This ends up being important when we're dealing with a large system
+because when we have code that's down many, many layers deep in the system,
+it can be hard to get that defect that you've triggered up to some place
+where you can actually see that it's happened.
+And that is the next and fourth step is we need to build observe the fault.
+And finally, once we've gotten this result-- once we observed the result--
+we need to be able to take a look at it and know that it's actually incorrect.
+So what we want to be able to do is we want
+to interpret that result as a defect.
+
+And at a high level, these are the five steps
+that we're trying to accomplish while we're testing our software systems.
+We want to reach the code, trigger a defect,
+propagate that incorrect behavior to somewhere where we can observe it,
+and we want to interpret that result to know that this is aberrant behavior.
+Now it's totally natural to be thinking about the functional
+correctness of our systems while we're writing our code.
+Ultimately, we really care about our software working the way
+that this specification says.
+But in practice there are a whole bunch of nonfunctional properties
+like we discussed earlier in the course that matter and influence
+the overall perception of quality for a software system.
+Now one of those that we should keep in mind
+and that we're going to talk about today is testability.
+So testability is the practice of building your system
+and modifying it so that you're able to accomplish
+these five steps in a meaningful way.
+So we can reach, trigger, propagate, observe, and interpret faults
+in a way that gives us an understanding that there are problems or not
+problems within our systems.
+So testability is really a big refactoring process
+where we take an existing system and we modify it so that we
+are able to do these steps more easily.
+Now in test-driven development, TDD, this happens naturally.
+Because we're writing the test from the beginning,
+we're always writing our code in a way that's reachable.
+We're always writing our code in a way that the faults
+are observable because we are writing the assertions before we
+write the code itself.
+But in a legacy system, this is more problematic
+and becomes a larger refactoring based task.
