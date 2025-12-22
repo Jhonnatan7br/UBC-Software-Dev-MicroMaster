@@ -1,0 +1,31 @@
+REID HOLMES: We often want to reason about the appropriateness
+of the abstractions that we've devised for our systems.
+Cohesion, which we've seen before, is one
+of these key measures for evaluating how tightly focused
+the responsibilities of a unit of execution are.
+Now in our case, we'll think about the units of execution being classes.
+So what cohesion measures is how well-focused are
+the methods and fields within a class.
+I'm performing a single cohesive task.
+Cohesion ultimately measures how well the elements within a class
+belong together.
+Classes that have low cohesion, end up being relatively large,
+and are responsible for a diverse set of actions.
+This can make it really hard for a developer to look at a class
+and really understand what its responsibilities are.
+It also impedes software maintenance and evolution.
+Because when you go and change one aspect of a class,
+the chance of it impacting other parts of that class
+are much higher when the class is bigger.
+Cohesive classes generally have a small set of private fields,
+and the methods within the class will act on those fields.
+If a method uses more than one or even all of the fields,
+it's probably tightly cohesive with the overall goals of the class.
+Conversely though, if there's a method that doesn't use any fields at all,
+it probably isn't related with the overall goals of the class,
+and should probably be moved somewhere else.
+This naturally drives us at having larger numbers of smaller classes,
+which is really great for program understanding point of view
+because it means that developer can move quickly, hone in on the classes
+that they care about, and help to isolate changes, which makes
+it maintenance and evolution easier.

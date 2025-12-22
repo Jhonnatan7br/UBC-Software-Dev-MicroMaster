@@ -1,0 +1,206 @@
+
+REID HOLMES: OK, so in terms of low level API design,
+what are we going to do?
+What should we try to avoid?
+So one of the first things we want to avoid
+are long parameter lists where the parameters all have the same type.
+Because this makes it really easy for the developer
+to transpose two different arguments in a way that makes it for easy errors
+to be introduced into a system.
+
+All right, so let's take a look at a concrete example of this.
+So say we have an add user method.
+So imagine we have this method.
+Add user takes last name, first name, initial, user name, and email.
+And they're all strings.
+And as a developer, you know that when you encounter this method,
+you're going to forget what order these parameters are supposed to be in.
+And it's really easy to imagine that you send
+the first name before the last name.
+Or you'd skip the initial and put the user name in that field,
+in that parameter.
+So you really want to make sure you get this right.
+So one of the easiest ways to deal with this
+is to change this to use more well-defined types.
+We're going to, instead, take a user object.
+And, in this way, we can transform this long parameter list into something
+that the user can actually interact with.
+So now this user type will have a well-defined set of fields within it
+that they can set in a named fashion, rather than just providing
+a comma-separated list of strings.
+And they can build this properly and then pass that to add user.
+So this is one way that we can design an API that is much more easy to use.
+The next low-level API design goal is to return descriptive objects.
+So, often, when we're building our systems,
+it can be really tempting to return primitives and rely on the client
+to parse those primitives in some way so that they
+can understand what those types are.
+So we want to avoid that.
+So let's take a look at what that means.
+
+So from our example before, you can just take the get user example.
+So we have get user data.
+
+So imagine we have a get user data that returns a string.
+And this method is a documentation that says, hey, this returns
+a string with a specific format.
+So what this method is saying is it returns
+a string that is the first name, last name, initial, user name, and email
+all in one big long string separated by commas.
+And it relies on the user of the API to parse this string
+to make sense of what this data is.
+What this does as the API producer is it ties you to this format going forward.
+Well, what happens if someone doesn't have a middle name?
+Do you have an empty string, or do you just have a gap?
+What happens if someone doesn't actually have an email?
+How do you handle these cases?
+So what we can do, instead, is transform this to return a descriptive object.
+
+So, in this way, the client of the API can just say, yeah,
+I'm going to get a user back.
+I can inspect the user object.
+I can see what all those yields are, and I can deal with that appropriately.
+It also makes it easy for the API producer to go and say,
+hey, I can add new fields to this user object if I want to.
+I can't take any away, but I can add new ones.
+And that can give me flexibility going forward.
+It also makes it a lot easier for me to document,
+because I can document the individual fields within this object
+rather than just having to add more detail to this string here.
+So as much as possible, we want to return descriptive objects,
+and that can make it easier for people to understand and use
+our APIs correctly.
+What we design or APIs, we also need to think
+about how the API consumers will interpret
+the results that they're getting back.
+When we do that, we want to think about what are they going
+to be doing to that result object.
+So if we're returning a collection, it's often
+tempting to return null if there's nothing in the collection.
+We want to avoid that as much as possible.
+So this piece of low-level API design advice
+is called avoid exceptional returns.
+
+So let's take a look at a concrete example of this case.
+So what this says is we have a method called
+get users that returns a user array if there are some,
+or null if there are no users at all.
+So let's think about why this is a problem from a client's point of view.
+So let's take a look at a concrete piece of code.
+
+So in this code snippet here, if get users has users,
+it will return a length, an array of some length,
+and console.log(u.length) will print out the length of the array.
+But if there are no users and it returns null,
+this will actually fire a null pointer exception and will fail.
+So what every client of this API would actually do
+is they'd add a guard around the u results.
+So they'd check it before they try to print something to screen
+or to use it for something else.
+
+So they add this guard.
+And this is just boilerplate that all clients of this API
+are going to have to do.
+What when you think about our APIs, we want to avoid this as much as possible.
+We want to avoid treating these exceptional returns
+in this type of way.
+So the easiest way to do that is just not return null.
+If the result is empty, just return an empty list,
+and that will solve our problem.
+And we see the same problem with strings as well.
+So if we were to return null instead of the empty string,
+if we asked the string for its length, we're
+also getting null pointer problems.
+So we want to avoid that as much as possible.
+So, really, we need to think about the exceptional circumstances
+around our return types really carefully from the client's perspective.
+When we're designing our APIs, we also need
+to handle exceptional circumstances in a robust way.
+And one thing that we need to keep in mind
+is that when we encounter exceptional circumstances,
+we need to communicate what went wrong to the client of the API.
+And the reason we need to communicate that information
+is so that they can recover if possible.
+Or if they're using the API incorrectly, they can learn from the error
+and improve their code.
+So we need to make sure that we handle these exceptional circumstances
+in an effective way.
+
+So let's take a look at a concrete example.
+So let's look at an explicit error message that could be thrown in code.
+
+So here's an exception that could have been
+thrown by an API, my internal error message internal error.
+Now, this message isn't very descriptive for the user,
+so they're not going to want to know what's going on.
+But also my internal error exposes the nature of the internal implementation
+itself.
+And this is something that frequently happens
+when we encounter exceptional circumstances,
+that we start to leak the details of our internal implementation
+through our API via exceptions.
+And we want to be really careful to make sure this isn't the case.
+At the same time, though, we want to help the user of this API
+to use it correctly.
+So a refactored version of this API might look more like this.
+
+So in this exception, when we get this back
+in this new error, when we don't have this information
+about the internal error--
+it's just a generic error--
+it provides this code 215, which, to be honest, as a developer,
+doesn't mean anything to me.
+But when I talked to the IPA producer, if I have a problem,
+I can say, hey, look I encountered error 215.
+And they can provide more information to me.
+It also provides a more useful error message.
+So rather than saying internal error, it gives me
+a hint about what I've done wrong.
+It says bad off parameter.
+And, finally-- and this is a really nice property of great APIs
+that you'll see on the web, today especially--
+there's this info link at the bottom.
+It will say, hey, for more info, see dev.foo.com/e/215.
+It's the error code that we have here.
+And there will be a web page there that describes the error in either how
+we can fix it or how this has arisen.
+So it gives us more information as the developer so we
+know what should do going forward.
+So when we're handling exceptional circumstances,
+we really want to make sure that we're not leaking
+internal details about our abstraction.
+We do not want to have a leaky abstraction via exceptions.
+And we want to help the developer who's encountered these problems overcome
+them within their code.
+OK.
+So there are two final low-level design principles that
+are really important to keep in mind.
+So the first is that we want to favor immutability.
+
+Now, we talked about immutability earlier,
+but it's really key in this context as well,
+because we want to make sure that when we return
+an object to a client of an API, any further changes that we
+make to that object won't be reflected in the client's copy themselves.
+And, also, we want to make sure that the clients can mess with us either.
+We want to make sure when we give an object to a client
+and they modify that object, it won't change our internal representations
+as well.
+So favoring immutably is really key for enforcing
+that separation between the API producer and the API consumer.
+And the final piece is that we want to make our code as private as possible.
+
+Because when we create an API, if we expose any part of that service
+to a client, they will start to use it, whether we've documented it
+or not, and whether we intended them to use it or not.
+So if we don't want clients of our APIs to use them,
+it is really, really important that we make them private.
+And this is fundamentally important.
+No matter what you do, people will inspect your API service,
+and they will use anything they can get their hands on.
+So unless we have a really important reason, a well-thought-out reason
+for making something public, they should always be made private.
+And this is something that we should have in mind right from the get go.
+The default visibility on all members within our systems
+should always be private when there's a chance that some external customer
+could have access to it.

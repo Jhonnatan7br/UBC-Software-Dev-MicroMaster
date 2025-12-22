@@ -1,0 +1,87 @@
+
+REID HOLMES: We've previously seen sequence diagrams
+as a mechanism for capturing the dynamic interaction within a system.
+But another useful representation in this space is the state machine.
+State machines allow us to reason about the core states a system will be in
+and how we transition from one to one state to the next.
+This is extremely useful in event-based systems,
+but is also really natural when we're dealing with user interfaces,
+because we think about the users in this state.
+And now they're in this state.
+And then they're in this state.
+Or think about the pages within the application.
+I'm in this page.
+And then I can transition to this page, and this page.
+And from the state machine, we can tell what
+pages are reachable from our current state at all times.
+And this is a really nice way to manage the complexity of our systems.
+So let's take a look at a concrete example.
+State machines are represented as graphs where
+the nodes are the states the system can be in
+and the edges are the transitions between those states.
+Now the starting point of a state machine
+is always represented as a solid circle, like this.
+So we have a solid circle coming in to our first state that's
+valid within our system.
+Now in this case, the example we're going to look at
+is Mario, and how Mario can jump.
+So the first state that we'll look at is actually the idle state.
+
+So this captures Mario when he's just standing there, not doing anything.
+Now when the user goes and makes Mario move, Mario goes into a movement state.
+
+So now we have Mario moving.
+So after we're in the move state, when the user presses jump,
+we want to make it so Mario can jump.
+
+Now here we're faced with a small dilemma.
+What happens if the user presses jump again when Mario is already
+flying through the air?
+What we don't want to happen is for Mario
+to be able to successively jump higher and higher without actually touching
+the ground.
+So in this case, we need to add an extra state which
+captures Mario being in the air.
+
+So once Mario lands, where does he go?
+Well in this case, since we jumped from the movement state,
+we want to be able to go back from in air to move.
+So we could capture that with an explicit edge backwards.
+And to add a little bit more detail here,
+we can also add a specialization that explains what's going on.
+So here we can say landed.
+
+So here we're able to capture that.
+Once Mario lands from being in the air, he goes back into the movement state.
+So if he was running to the side and jumps,
+he should go back to moving and doing the same thing again.
+Now is this the only way we can get to the jump state?
+If we think about it, it really isn't, because when
+you're idle if you just press the jump key right away,
+Mario should also be able to jump.
+So we want to capture that too.
+
+And again, since we're able to jump from idle,
+we need to be able to return to idle afterwards.
+
+What the state machine really has allowed us to do though,
+is it allowed us to really think about how jumping works within the game.
+And when we go to implement the jump functionality,
+we can make sure that we correctly account for the states
+that Mario can initiate a jump from, and what happens after he finishes jumping.
+And this gives us a nice way to think about the dynamic aspect
+of the system at runtime.
+One thing to keep in mind here is that this
+is an abstraction of the complete set of states that Mario can be in.
+So let's take a look at move itself.
+When Mario's moving, he could be moving left, or he could be moving right.
+He could also be crouching, or walking, or running.
+There's a lot of detail that is abstracted away by this move state.
+And similarly, once Mario was in the air,
+he could also change his orientation from left to right.
+He can't initiate new jumps, but he can change that orientation.
+These details aren't specifically present in this diagram.
+So if you're trying to push on those details specifically,
+you'd have to go and augment the details here in conjunction with, for instance,
+the game designer to make sure that you're
+capturing those states effectively.

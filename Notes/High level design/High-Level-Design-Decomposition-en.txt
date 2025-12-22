@@ -1,0 +1,111 @@
+
+REID HOLMES: Decomposition is the process
+of breaking down a high-level, complex description of a system
+into more manageable pieces.
+The goal of the decomposition process is to make common tasks simple
+and exceptional tasks still be possible.
+We want to make sure that those unusual tasks are still
+supported by our system, but they're not our dominant concern.
+There are many different ways to decompose a system,
+but the two most common are to decompose a system from the top down,
+by going from a high-level description down to more concrete units,
+or to compose a system by starting at the bottom level
+and working your way from the bottom up to compose the system at a high level.
+In top down decomposition, we'll take a high level, abstract description
+of what we're trying to build and successively
+add more and more detail to it.
+If you imagine you had a system description
+and you broke it up into two main modules,
+and then you broke those modules each up into a few submodules each, and then
+again into classes, and then individual methods and fields, right?
+You're breaking up your system into more and more fine levels of granularity.
+This is great because you could have an overall high level
+understanding of the architecture of our system
+because we started from one coherent element
+and we broke up the system successively.
+But at the end, our low-level leaf nodes often
+end up conflicting with one another because you'll
+have made some decisions over here that might
+be a little bit different than those decisions
+over here, which require us to go back and add more detail.
+There are both pros and cons of top down decomposition.
+Let's take a look at a concrete example.
+Imagine we're building a game, and this game could be Mario
+and we want to split this game up.
+We're starting from the top level and we're working our way down.
+If we're building Mario with this game, we
+are going to end up splitting this into level
+and then we have some figures, like some figures that run around levels.
+
+But that's not enough.
+We can't just go and build Mario with just level and figure alone.
+Let's break them up further.
+So we think about figures, we need to add the concept of Mario
+and the concept of an enemy.
+
+If we're thinking about the level, we need to split this up as well.
+Levels contain items and maybe they do other things, like they play sounds.
+
+Then we have other concerns we want to think about as well, right?
+For a level, how do we add input?
+Where should that go?
+Should it go on level or should it go on Mario?
+I don't actually know, but Mario is the one that's moving so let's
+put input here.
+
+Then we want to handle collisions as well.
+
+In this way, we've gone and taken this notion of a game
+and we split it up into several different concrete elements.
+If we think about it, one thing that stands out here is input.
+So input we've put off Mario, but remember
+from our prior discussion, input was actually
+something that happened to a level.
+Input flowed through the level class.
+This is one place where when we start top down,
+we can go and have our blinders on and come up
+with a design or a decomposition that might not
+match the best design in practice.
+In this case, we need to go back and think about what's
+the best way to handle input.
+And that's something we would need to think about.
+This is just an example of how you could take a high-level concept
+and break it down into more concrete elements.
+And alternative approach is to compose our systems from the bottom up.
+When we do this, what we're doing is we're
+thinking about concrete low-level elements
+that we're building at the low level and we're slowly
+going to build our system by putting them together at successively higher
+levels of abstraction.
+This is great because it gets us building our systems early
+and it helps us to focus really well on building reusable code.
+It can be problematic in that once we get to high levels of abstraction,
+we realize that we might have made low-level implementation details up
+front that cause high-level inconsistencies that
+are challenging to overcome in the end.
+Here's a concrete example of bottom up composition.
+Say we're designing a system and we know that we
+need two primary data structures, a HashSet and an array list.
+
+Over time, we realized that we needed more and more specialized
+versions of these HashSets an ArrayLists,
+so we're going to add a vector and a tree set.
+
+Now we have these four low-level concrete types,
+but we realize that there are some commonalities here.
+Tree set and HashSet are indeed both sets.
+
+Array list and vector are both instances of lists.
+
+In this way, we've managed to bubble up.
+We've come up one level of abstraction on the low-level concrete types.
+Again, list and set are both instances of collection
+so we can have a higher level layer of abstraction here as well.
+
+In this way we've managed to take our two initial types, HashSet
+and ArrayList, which we built out to be more concrete types later and find
+two layers of abstraction above them.
+We've managed to compose this entire type
+hierarchy by just looking at the commonalities between the code elements
+that we actually have.
+And this is an example of how bottom up composition can work in practice.

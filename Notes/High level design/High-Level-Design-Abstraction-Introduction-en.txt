@@ -1,0 +1,74 @@
+
+REID HOLMES: Abstraction is a fundamental concept
+used by all software engineers to manage the complexity of their applications.
+What abstraction allows us to do is it allows
+us to focus on the key aspects of information that
+are required for a given task and a given stakeholder.
+So the level of abstraction that we use will vary task to task,
+and stakeholder to stakeholder.
+So if I'm talking about, for instance, the design of my application
+to a user experience designer, I am going
+to be talking about it more from a usability point of view,
+and how you would interact with the application, rather than
+its back in architecture.
+And that viewpoint will shift if I'm talking to a quality assurance
+engineer.
+I will talk about it in terms of the low-level, testable aspects
+within the system.
+So the viewpoint is going to change-- the level of abstraction will change--
+again from stakeholder to stakeholder, and task to task.
+One thing to keep in mind is that there is an inherent cost with abstractions.
+If we add too many layers of abstraction to our systems,
+they can be extremely hard to understand.
+At the same time though, systems that lack sufficient layers of abstraction
+can be really hard to understand and evolve.
+So trying to balance that trade between too much abstraction and too little
+abstraction is really an iterative process
+that takes time to develop as an engineer or an architect.
+But it plays a fundamental role in the overall evolvability
+and understandability of our systems.
+Let's look at an example of abstraction in practice.
+OK, so say our task is to make a course video.
+
+All right, so this is a high-level description of a task.
+But what are the individual steps?
+What kinds of detail are being abstracted away here?
+So let's think about what's involved.
+So the first thing we need to do is we need to choose a topic.
+
+And then, once we have a topic, we need to develop some material.
+
+All right, so once we have a topic and we have some material,
+we need to go to the studio and record.
+
+And I'm sure, as you've noticed, we make mistakes sometimes.
+So there's a lot of reshoots that are involved.
+So we have to do those, too.
+
+And then once we have all of our raw video, we need to do post-production.
+And then we need to post those videos online.
+
+So these are seven concrete steps that are
+involved in the process of making a course video.
+So different stakeholders who are involved in making a course video
+will care about different subsets of these steps.
+So as a faculty member, as a prof, I care about steps 1 to 5,
+whereas the studio, they care about a different subset.
+The studio, they really care about steps 3 to 5.
+This is where they are involved.
+
+And the producers who help with these videos
+are most involved in steps 3 to 7.
+
+Now, as a prof, I abstract away step 6 and 7.
+To me, these are magic and they get taken care of.
+And to the studio, they just assume that I come in with some content,
+and someone else takes care of the post-production.
+And the same thing with the producer.
+The producer counts on me to get the content ready,
+but they make sure that I actually shoot it in a way that's usable for you.
+So to all of us, we look at different subsets
+of these tasks we abstract away this process to really focus on the parts
+that we care about.
+And that's really what abstraction is all about,
+finding the viewpoint that makes sense for each individual stakeholder.
