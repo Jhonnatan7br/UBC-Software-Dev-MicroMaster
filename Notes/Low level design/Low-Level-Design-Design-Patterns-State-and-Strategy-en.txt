@@ -1,0 +1,39 @@
+
+REID HOLMES: Structurally, the state and strategy design patterns
+are extremely similar.
+So if you think about their main way of enabling extension,
+both use inheritance.
+The strategy design pattern uses this strategy interface,
+which encapsulates an algorithm, which you can extend by adding
+new implementations for new algorithms.
+The state pattern uses the state interface to capture states.
+So if you want to add a new state to your system,
+you just implement this interface and you can add more states.
+They both isolate the clients, also, from these future changes.
+So if you add a new strategy, the context
+doesn't change within the strategy design pattern,
+nor does it change within the state design pattern if you add a new state.
+At the same time, though, their intents are entirely different.
+So the state design pattern is all about enabling the states within the system
+to dynamically change at runtime.
+So we can transition from state 1 to state 2 back to state 1 to state 2,
+all as the program is running.
+And that's using this context reference, this context field,
+to call a set state.
+So this is really about enabling dynamic state change.
+In contrast, though, the strategy design pattern
+isn't about enabling that kind of dynamic change.
+The algorithm is set at the beginning of execution,
+and it is used throughout the execution of the system.
+And, in this way, we really want to be able to take a step back and not
+get too hung up on the overall structure of these patterns,
+but to remember what their intents are.
+Because it is the intent that really drives us
+at the kinds of design problems that they're trying to solve.
+So by thinking about the problem that you have,
+you can help to reason about whether or not
+a state makes more sense because you need more transitions,
+or a strategy pattern makes more sense because you
+know you'll end up using the same strategy throughout an execution.
+So it really forces you to take that step back
+and think objectively about what you're trying to add within your system.

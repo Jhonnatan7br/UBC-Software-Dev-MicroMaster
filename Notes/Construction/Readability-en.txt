@@ -1,0 +1,152 @@
+REID HOLMES: When we think of properties we want to control in our systems,
+we most often think of complexity and performance.
+But you might also be thinking about security, usability, portability,
+and scalability.
+These are all other valuable properties as well.
+But one we don't want to underestimate is the importance
+of source code being readable.
+People, other engineers like ourselves, will have to read and understand
+our code after we're done with it.
+By making our code readable, we make it easier for other engineers
+to understand the intent behind our code, which will make it easier
+for them to understand the changes they need to make themselves
+and reduces the chances of their changes introducing new faults into the code we
+wrote.
+What we really want to avoid is being frustrated by an opaque bit of code
+and asking ourselves who wrote it.
+And after checking the version control system,
+finding out that it was ourselves six months ago.
+Readability is so important that Janice Singer at the National Research
+Council of Canada coined the term, Code is king.
+The reason she came up with this notion is that readable code
+is documentation itself.
+This is especially important because documentation can become out of date,
+but the code that runs within the system is the ultimate spec
+of what the system is doing.
+There are a number of readability anti-pattern and goals.
+Let's talk about a few of them by looking at some concrete code examples.
+The first anti-pattern is deep nesting.
+So let's go back to look at the level tick method to take a peek at this.
+So here if we scroll down through this method,
+we can see that there is a lot of nesting going on.
+In fact, if you go at its deepest point here,
+we're down into six levels of nesting.
+And this makes it really hard to understand
+what's going on within this method.
+Also up above here, we have an instance where we're five levels deep,
+and we have this return that's happening where
+we're short-circuiting the execution.
+So what is it about this figure being an instance of Mario
+that makes it worth skipping the whole rest of this loop, where
+there's a lot of other interesting functionality going on?
+Why is this so important?
+This return statement is really a problem.
+So deep nesting makes your code much harder to understand.
+Another example is within the audio code.
+Let's take a look at the audio constructor.
+So we scroll up here, it's the constructor for the audio class.
+And looking at this, we also are six levels deep.
+We're setting the current time to zero and calling this stop play.
+And to make this even worse, this code is actually
+happening inside an anonymous callback.
+So in a callback, in a constructor with six levels of nesting,
+we're calling this functionality.
+Really understanding why this is here and what's going on
+is really challenging from looking at this code alone.
+And it's really the nesting that makes this worse than anything else.
+If this was in a method that had a reasonable name,
+we'd know what is going on.
+Which leads us to the next anti-pattern, which is itself bad naming.
+So going back to level, like we were looking at the level here,
+you might have noticed this call to figure q2q.
+I don't know what that means.
+And from the name alone, I can't figure it out.
+It doesn't give me any useful information.
+So to figure that out, I actually have to go to the q2q implementation
+and read the code.
+And after I read through all of this code,
+I can tell you that if two figures are far enough away from each other,
+either horizontally or vertically, we return false.
+Otherwise we return true.
+But really, we shouldn't have to read the implementation
+to understand what this method is doing.
+This terrible name, q2q, is not helping out
+any future developer who wants to understand
+what's going on within all [? callees ?] of this method.
+We see a similar thing within Mario if we're
+taking a look at the death method.
+We're trying to understand how it works.
+Because here within this method, we can see all kinds of references to death
+begin weight, death end weight, deathDir, deathFrames, deathCount.
+I don't know what these things are.
+And if they had better names, it would be much easier
+to understand what's actually going on within this method.
+You can see these fields being all lumped together up here in the field
+declaration section of the class.
+And again, if we had much clearer names here,
+it would be easier to understand how this functionality works
+for anyone else who is trying to fix this in the future.
+Another anti-pattern for software is when the code
+shows a lot of individual style.
+And this is one thing that Mario is great at.
+If we look through this code, we can see that it
+looks like it has been all written by the same person.
+The style is consistent across the entire codebase.
+And this really makes it easier for new people
+to make modifications to the system that really fit in
+with what is there before.
+Or we might want to think that individualization
+is a good thing, right?
+Having our software seem cohesive and written
+by a single person or a focused team is always better
+because it makes the code easier to understand and modify.
+Another anti-pattern within this code, though,
+is the complete and utter lack of comments.
+There really should be some documentation within the code
+to help us understand what the key types and methods are within this system.
+One goal for readable code is we want the code to read like natural language.
+So if we take a look at star, and read the hit method here,
+it is really a readable method.
+Because hey, if this star is not taken, and it is active,
+and it's been hit by a Mario, then Mario becomes invincible, and the star dies.
+The star goes away.
+This is extremely readable.
+And it's super clear what is going on within this method.
+If you just came upon this method yourself,
+it would not take you any time at all to really understand what's happening.
+We also want our code to be structured in terms of digestible chunks, kind
+of like paragraphs within a book.
+So if we take a look at figure move here,
+we can see that this method is coordinating eight different fields
+and a few different objects.
+And it's really not super digestible.
+It's not easy to look at this code and have a complete understanding of what's
+going on.
+This code would definitely benefit from being broken down
+into more digestible pieces.
+And here we can see that this seems to be
+a significant block, as is this loop.
+And this final check here, right?
+It's easy to imagine this code being broken down into four or five
+individual steps that would be much easier for a future engineer
+to understand.
+Another thing we want to do is, we want to write
+our code in a way that explains itself.
+So if we take a look at the death method here within Mario,
+we have this line, return, bang, bang, minus, minus this. death and wait.
+I have absolutely no idea what this means.
+And if you're a new developer who is trying to fix some problem with the way
+that Mario dies within the game, this is going to be a challenge for you.
+Finally, we want our code to be able to tell a story.
+So if we take a look at the grow method here, within the Mario class,
+we can see that this code really explains.
+It acts as a spec for this functionality.
+So if the state of Mario is size state small,
+then we're going to play the grow sound.
+We're going to set the state to be big, and we're going to blink three times.
+And if, for instance, Mario is in size state big, nothing's going to happen.
+The code here really explains the spec of what's going on.
+This is really a clear story of how the grow functionality
+works within the game, and is a great example of what
+happens when we write our code in a way where it tells its story clearly
+and succinctly.

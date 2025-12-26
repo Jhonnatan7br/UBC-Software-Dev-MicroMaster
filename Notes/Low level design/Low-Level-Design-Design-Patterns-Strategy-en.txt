@@ -1,0 +1,217 @@
+
+REID HOLMES: Being able to vary the behavior of an application
+based on new requirements is a common evolutionary request, and one
+that the strategy design pattern was explicitly designed for.
+The problem that the strategy design pattern is trying to solve
+is that we don't often know all possible variations in advance,
+so we want to provide a mechanism for encapsulating algorithms
+to allow future extension.
+This drives us at having explicit interfaces
+that we can plug in new algorithms for as we add new requirements.
+Strategy's solution for enabling this type of extension
+is a classic example of a design being open for extension,
+but closed to modification.
+The way it enables extension is by providing a strategy interface
+that new, concrete classes can implement to add new functionality to the system.
+The way that it's closed for modification
+is that the client code itself doesn't have to change.
+Since it depends only on the strategy interface,
+it doesn't interact directly with the concrete instances.
+The canonical depiction of the strategy design pattern is shown here.
+So one thing to note here about the strategy
+interface and its concrete implementations
+is that they really are a classic example of using polymorphism
+to hide concrete types behind more abstract interfaces, right?
+So in this way, what we're really doing is hiding information
+about the concrete implementations of these concrete algorithms
+from the context and any clients that we might define in the future.
+So here we have the strategy interface, and what it does
+is it declares the structure of all the algorithms
+that we want to encapsulate within this one strategy instance.
+And the concrete algorithms are the things that actually do the work,
+and all the algorithms have to input the public methods that
+are defined in the strategy interface.
+Now, there's a context that helps to wire this to the clients,
+and the context is here.
+So what the context does is it uses composition
+in the form of this field called alg, which is of type strategy, right?
+So the context knows it has an instance of one of these concrete types,
+and it will forward any requests that come from a client
+onto the correct strategy.
+So the clients of this context can vary, right?
+And they end up just looking like this.
+
+And we don't often just have one client.
+We might have many clients.
+And the point of the strategy design pattern
+is to go and insulate these clients from any changes
+in the underlying algorithms that happen within the system, right?
+And they're all hidden within this one field instance
+that is of type strategy, right?
+The composition here is what adds the power to this design pattern,
+in terms of closing the client to modification.
+Well, at the same time, this strategy interface
+is what makes the design pattern open for extension.
+Let's take a look at a concrete example of how we can apply the strategy design
+pattern to our own code.
+To do this, we'll refer to an example we talked about earlier in terms
+of the solid design principles.
+In this example, we were using different types of algorithms
+to control how NPC characters would move throughout the Mario game, right?
+So these were examples where we had an AI or a deep learning AI,
+or maybe a naive AI.
+All right, so you might have something that looks like this in your code,
+right?
+So we have some kind of notion of the algorithm that's
+going to be doing our work, and it's captured in this field called npckind.
+So if npckind is naive, we're going to make the characters
+move in this particular way by evoking a specific algorithm,
+or if npckind equals AI, we're going to make it work in a different way.
+But if npckind is deep learning, again, we'll make it work in a third way.
+The problem with this type of code block is
+if you have lots of clients in your system,
+you're going to have big conditional statements like this
+that you're going to need to modify every time you
+want to add a new algorithm, right?
+So if we had some new, fancy algorithm that we wanted to add here,
+we'd have to add another else if and a check,
+and we'd have to encapsulate it here.
+But this bit of code probably wouldn't exist just in this one point
+within our system, It would be scattered all over the place.
+So to avoid this problem, we can use the strategy design pattern.
+OK, so here we have the movement strategy,
+which defines how a NPC character should handle a move event.
+And the concrete implementations for that
+are these three classes right now-- deep learning, naive, and AI.
+And if we wanted to add new algorithms to this interface,
+all we would need to do is, again, implement the interface
+and add the new algorithm.
+The contacts and clients would be completely insulated
+from these new interfaces.
+But the next important step is, what goes and uses the movement strategy?
+And for that, we need this notion of the context.
+We need to bring our context object back into the figure.
+OK, so now we have the example fully fleshed-out in terms
+of how movement strategy will work within Mario.
+Now, the main thing that we've added here is this notion of context,
+and that's in terms of this abstract class called AbstractNPC.
+Now, just in the interest of space, what we haven't shown
+are all the concrete types that extend AbstractNPC, right?
+These are the enemy figures, in particular.
+One thing that you'll notice about AbstractNPC
+is that it has this field called agent.
+This is a private field of type movement strategy.
+And what's going to happen is whenever a move request comes
+in from a client into this move method, it's going to use delegation to go
+and forward that request onto the right agent, right?
+So this move method will go in and vote this agent's handleMove method, right?
+And in that way, it's going to forward the request onto the strategy,
+and then the right strategy-- whichever strategy
+is associated with this agent-- will go and figure out
+how the movement is to happen.
+And in that way, the client doesn't really
+know anything about the movement strategy that's happening here.
+And again, the context also doesn't need to know.
+All of the code within the context isn't going
+to be checking, hey, if it's a deep learning movement strategy
+or if it's a naive movement strategy or if it's a AI movement strategy--
+so the parts are all hidden, right?
+So that's what this pattern looks like.
+So one problem that you'll note here is that we
+have this issue with the constructor taking this parameter of type movement
+strategy.
+So where does that parameter come from?
+It turns out, the way that we've designed this,
+it can only come from one place, and that's MarioGame.
+Well, that's not strictly true.
+It can come from any client of AbstractNPC, right?
+So remember, there can be many of these.
+But in this case-- in this example--
+it can only come from MarioGame.
+And that means that MarioGame has an explicit dependency on all three
+of these types.
+Well, in practise, it'll be on the only one that instantiates, but potentially,
+on all three of these types.
+So that means that there will be a link here that comes down from MarioGame
+to deep learning to naive and to AI, right?
+So these three links together will go and be explicitly encoded
+within MarioGame.
+So one advanced problem that we need to think
+about, in terms of the strategy design pattern,
+is what to do about these links, because this really is problematic.
+This breaks the encapsulation that everything is
+hiding within this movement strategy.
+So what can we do?
+One way we can deal with this is by introducing the concept of a factory.
+So now what we've done is we've added a dependency between MarioGame
+and MovementFactory.
+And the only thing MovementFactory has to do
+is to implement this getStrategy method, right?
+So getStrategy is going to go and make sure it
+instantiates the right type of strategy for the current game session.
+In this way, MarioGame doesn't know about these three types anymore,
+and it's great.
+It's going to say, hey, give me a strategy,
+and it'll return as a return type, and then
+it can provide it as the constructor here to the context, right?
+And in that way, the client now doesn't know anything about these three types,
+right?
+Because the return type of getStrategy is just
+going to be the MovementStrategy interface.
+An alternative design here is to change who
+has the dependency on MovementFactory.
+So what we can do here is instead, have this dependency come here--
+from the context down to the factory.
+And what this also does is it means we no longer need this parameter,
+because when we create the object, it's just going to go and ask for this
+strategy and set the strategy to be the agent type [? you ?] [? need, ?] right?
+So it'll be taken care of in this way.
+This is really good, because it goes and removes
+the dependency between MarioGame and MovementFactory.
+And MovementFactory, again, had all of these dependencies
+on the concrete types.
+So it makes it even simpler for the client implementations.
+Now, an important thing to keep in mind here in the strategy design pattern
+is that the instance object associated with this agent is fixed.
+The expectation isn't that as the game is running,
+we'll change from deep learning to naive back to deep learning
+into an AI movement strategy.
+The idea is that we will have just one agent,
+and it'll be used for the lifetime-- the execution lifetime-- of the program.
+What the strategy pattern is really about
+is about being able to add new types, as a developer,
+over time, but not about changing these types as the program is run.
+Now, one other important thing to note is
+this notion around the MovementFactory.
+You really need to think hard about how you're
+going to instantiate these types.
+And this is something that's important to not overlook,
+because if you go and use a strategy design pattern
+but you still make the client instantiate the objects,
+you lose many of the benefits of the pattern itself.
+So taking an extra minute or two to really think about this instantiation
+pattern really is important.
+Wrapping up the strategy design pattern, we
+have the high-level strategy interface, which
+declares the structure of the concrete algorithms that are
+going to be implemented by the pattern.
+And if we wanted to add new algorithms to our system, all we would need to do
+is implement this interface, right?
+And that gives us a really clear extension point
+for adding new algorithms.
+Now, that's not of any use if the rest of the system
+needs to change along the way, right?
+Because we also want to be close to modification.
+And the way that we enable this is through this context object.
+So the context object has a field that references the movement strategy,
+and the intent is that this field won't change at runtime.
+And as requests come in from clients, they
+go and get forwarded through the field onto the appropriate strategy.
+Now, one thing that's very important to keep in mind in this whole pattern
+is how you're going to instantiate your concrete strategy objects, right?
+In this case we're using a factory, but there's lots of different options here.
+But it's really important to have a technique in mind,
+because if you don't insulate the context and the client
+from these new strategies, you'll have to violate the closed to modification
+part of open for extension and closed for modification in order
+to add new types to the system, and you really don't want to do that.

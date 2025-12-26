@@ -1,0 +1,8 @@
+
+REID HOLMES: The next solid design principle
+is the Liskov Substitution Principle.
+And what this says is that any object in a program
+should be interchangeable with any other object that has the same parent type.
+Now, we've previously covered this in depth in other courses.
+So if you want to refresh your memory about this solid design principle,
+I suggest you go take a look at that material now.
