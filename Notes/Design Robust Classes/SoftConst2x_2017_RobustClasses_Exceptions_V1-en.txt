@@ -1,0 +1,56 @@
+
+ELISA BANIASSAD: When we introduced exceptions
+at the beginning of this topic, you noticed
+that when you threw an exception the compiler would complain and say
+that in a calling method you had not handled that exception.
+And then you had to make a decision about,
+are you going to catch the exception or are
+you going throw it on or do whatever?
+But remember, you've seen exceptions thrown when
+you weren't doing anything like that.
+So when we had that out of bounds exception for our array,
+you had not said that you were going to be catching that exception,
+you hadn't said that you were going to be throwing that exception.
+The exception just got thrown back to you, and then your program crashed.
+So what's the difference exactly?
+Well, there are actually two kinds of exceptions.
+Some exceptions the compiler will check-up on for you
+and make sure that you're handling.
+And the others, it will just sort of let exist, and then
+let you deal with it at runtime.
+So these are the two kinds of exceptions.
+We have what are called checked exceptions,
+and these are the ones that the compiler will check for you, it will say,
+hey, you have to deal with this somewhere down the call chain.
+And then there are unchecked exceptions like the array out-of-bounds exception
+which are all subtypes of the runtime exception.
+On a runtime exception, the compiler will not
+chase you down as you're editing your code and remind you to catch.
+Let's make a runtime exception called messy error.
+And we'll throw it from inside the keeper whenever the keeper notices
+that the animal has a messy stall.
+The keeper has high standards and is always
+going to complain that the stall is messy.
+So notice that this time intelliJ actually
+isn't complaining that we're not catching this exception because this
+is an unchecked exception.
+So if we run our code, we're not seeing the messy error.
+Why?
+Oh, right, we're never getting to that part of the code
+because we're not throwing a not-hungry exception.
+So let's just change these booleans so no didn't eat exceptions are thrown.
+And now if we run it, we see these stack traces
+because we haven't caught our messy error.
+But notice, we still see these two printouts
+at the end from these finally clauses because they execute no matter what.
+And if we had another line of code after the finally that printed out
+and everything goes on as normal, we will not
+see that print out because the messy error has killed the program.
+So if we want to keep our program from dying,
+we could catch the messy error maybe right
+after we catch the broke exception.
+And we can run it one last time and see that the messy exception was thrown.
+It says, keeper, you're fired because the manager
+is tired of hearing from the keeper.
+But then our program recovers, and we see at the very end
+everything goes on as normal.

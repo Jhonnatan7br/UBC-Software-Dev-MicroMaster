@@ -1,0 +1,162 @@
+
+ELISA BANIASSAD: Now we're ready to look at a design, and from that,
+derive an implementation.
+So here we have a very, very minimal version
+of a design for a self-driving car.
+So our self-driving car has four wheels and one speedometer.
+Now, we're going to take a look at all these associations
+and turn them into code.
+Now, we look at each association, and from that, we
+derive a field that belongs to the class which it originates.
+So here we can see that self-driving car needs
+to have a field of type speedometer.
+Next, we look at each association and decide whether it is just
+an individual field--
+for instance, self-driving car only has one speedometer--
+or if it should perhaps be stored as a collection.
+So self-driving car has four wheels.
+We could store those as four individual fields, front left, front right,
+et cetera or we could choose to store them as a collection.
+So if we've decided that our field is a collection, ,
+then we have a couple of options for how to implement that collection.
+The Java collection interface has several subtypes
+that are pretty useful, and they have really different characteristics.
+So you'll want to think carefully about which one you pick.
+The list interface does keep an ordering of elements
+and does allow duplicate elements.
+So that means that if you need to maintain an order for things as you've
+inserted them, and don't mind if you have the same thing in there
+twice, then a list is a great choice.
+The set interface, however, does not keep in order,
+but it also makes sure that you don't have duplicates.
+So if you want everything in your set individually and unique,
+then a set is a good choice for you to use.
+Any class that implements the collection interface
+has to implement certain methods, including add, remove, and contains.
+The implementations of these operations might be faster or slower,
+depending on the data structure that is being used.
+So for instance, with array list, you get very fast adding most of the time,
+but if you are adding on the end of the list,
+then it has to allocate a whole bunch more memory, which is a slow operation.
+If you're trying to add into the middle of the list,
+the array list has to shuffle all the elements over, which is also slow.
+If you're trying to get a particular element in the list,
+however, you can do that really quickly, because you
+know exactly where it's sitting.
+But again, if you're trying to remove a particular element from the list,
+it's going to have to shuffle everything back down,
+so that's going to make things slow again.
+In computing, we call this the order of operations.
+So when something only takes one step, we say that that is order 1.
+If something takes the number of steps that are potentially in the collection,
+then we would say that is order n.
+The linked list data structure keeps track of the head of the list
+and of the tail of the list, and that makes certain things really quick.
+So adding an element to the list is very, very fast,
+and it will never be slow, the way it's sometimes slow with an array,
+because you can always just add one more tiny piece of memory.
+Regardless of where it is, you can always put a pointer
+to that little piece in memory.
+However, adding at a particular spot is slow,
+because you have to walk your way over to that spot
+before you can add something.
+Any time that you see one of these high indices for a linked list operation,
+it's going to be slow, because you have to walk the list.
+The list is potentially n large, and that's as many steps
+as you might have to take.
+So each of these operations might end up being order n,
+whereas this one would be order 1.
+A good option when you need a set is the hash set implementation.
+So a hash set, when you instantiate it, gives you
+an array of, effectively, buckets into which you put your elements.
+So imagine if you had a person with a name field, and maybe in this case
+the name is Elisa.
+You would apply a hash function to that object to figure out
+which bucket to put it into.
+So maybe our hash function in this case would be,
+take the first letter of the name.
+So maybe there would be a bucket E, and we
+would put Elisa in the linked list that lives inside of this bucket.
+So here we would see Elisa.
+If we had a second object, also with someone whose name started with an E,
+like Erica, we would then add them also to the bucket
+at the end of that linked list.
+And of course, if somebody had an A name, then they would go up here.
+Now, usually the hash functions are more sophisticated than that
+so that things don't collide.
+Because if things collide, then your linked list
+can get very slow and very long, and then they
+degrade into the behavior of a linked list.
+So let's talk quickly about the order of operations for each
+of the operations for hash set.
+So a hash set is a really great choice if you need fast,
+fast, fast operations.
+It doesn't maintain an order of the elements.
+So if you need that, then this is not the right choice for you.
+But if you need to be able to access elements in random order quickly,
+then this is a great way to go.
+Look at this.
+Here we have an add operation, and all you do is apply the hash function
+and stick it into the hash set, which means it only takes one step.
+There's no iterating over the entire collection.
+Similarly, remove just involves applying the hash function
+to the element you want to remove, and that tells you
+exactly where to look for it.
+As you can see, the system is horribly broken,
+because it's missing all of its field declarations.
+So we're going to go and fill those in.
+The self-driving car class has a lot of fields.
+So let's go through and implement them.
+And we'll know if we got it right, because the class will
+start to compile.
+So now let's think about this wheels field.
+Do we want to keep this as an array, or a hash map,
+or even as four individual wheels?
+Well, in this case, I'm going to make the executive decision for simplicity
+and say that since each of the wheels are identical,
+we can keep them in a simple list rather than maintaining
+four individual fields.
+If we need to do something fancier and special, like front
+left or rear right as special wheels, then we
+might make a different design choice.
+And we want to think about where we're going to instantiate and initialize
+these wheels.
+By the time you get out of the constructor's execution,
+all of your fields should typically be instantiated and initialized
+so that they're valid.
+Some might come in as parameters to the constructor,
+and others might be instantiated right from inside the constructor.
+Others might have a temporary state waiting for more action later,
+and that's fine.
+But you want to think carefully about the work
+that constructor needs to do with respect to the fields in the class.
+So, since there are no wheels coming in as parameters,
+we know we're not getting these wheels from elsewhere.
+So we can look right into the constructor.
+And we can also see that the list, wheels, is not
+being instantiated in here either.
+So we should do it somewhere.
+We can do it right up by the declaration.
+And notice that inside the setup method, which
+is part of the constructor's execution, four individual wheels are also
+being instantiated and added to the wheels
+list, which finishes the instantiation and initialization of that field.
+And the brakes are actually really similar.
+We can have them as a collection again, so we just have a list of brakes,
+and we can initialize them right here next to the declaration as well.
+So what's next?
+OK, how about the speed regulator?
+So we say private speed regulator, speed regulator.
+And that's already being initialized and instantiated
+in the setup method that's called from the constructor.
+So we don't need to initialize it here.
+And the same is true of engine, speedometer, and front sensor.
+So all we need to do is declare them in the field section.
+Notice that we have a dependency from self-driving car
+to auto driver in our diagram.
+But we actually don't need a field to capture that,
+because we're just setting up a local variable of auto driver
+and then calling driveForward on that local object.
+So it doesn't need to be held as a field.
+Now, you should go through and add the fields to the rest of the classes,
+and be sure to think about where they're being initialized.
