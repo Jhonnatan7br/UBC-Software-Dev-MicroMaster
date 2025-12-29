@@ -1,0 +1,111 @@
+
+ELISA BANIASSAD: OK, great.
+So now, we have an inventory that has its own iterator
+method that's, at the moment, returning the ArrayList Iterator.
+However, what if we added another aspect to our inventory collection?
+Now, we have a backlog, and that backlog means
+that we're going to be wanting to maybe bounce even back
+and forth between the toys and the backlog--
+pushing toys, then pushing sale items, et cetera, et cetera.
+Who knows how we would actually want that to go?
+So instead of using the ArrayList Iterator, which would just
+walk across one collection, we want to implement our own inventory iterator.
+It would implement the iterator interface,
+and so it would provide the hasNext and getNext methods.
+It would also, of course, internally keep
+track of this little cursor that walks along the collections.
+So that's great.
+We can totally do that.
+However, because the inventory iterator needs
+to know so much about the intimate details of the inventory itself
+and these little collections that live inside it, the best place
+to put our inventory iterator is right inside the inventory as an inner class.
+So how do we do this?
+Once again, we need to say that inventory implements iterable over toy.
+And we, once again, implement those methods.
+But now, we have to ask ourselves, what are we
+going to actually use for an iterator?
+Because it doesn't seem quite as simple this time.
+I don't think there's an iterator that already
+exists that exactly meets our needs.
+So like I said, we have to make our own special iterator.
+We want to return a new inventory iterator.
+Now an inventory iterator doesn't exist yet.
+And InterlliJ is telling us that we might
+want to create an inner-class inventory iterator.
+And actually, that's exactly what we want
+to do because we want to access all that internal content from inventory.
+And we need an inner class to be able to see private data inside of inventory.
+So IntelliJ figured out that this is going to implement iterator over toy.
+And we need to implement the methods, of course,
+and we want just hasNext annexed.
+We're not going to worry about these optional methods.
+Before implementing the methods, let's set up our class with the field
+that it needs.
+Remember that we need a cursor to guide us
+through our iteration to keep track of where we are in our iteration process.
+Now, we're going to do something that might feel like cheating
+but it's actually really smart.
+We're going to use the iterators of each of the internal collections of toys
+and backlog to guide us through our own iteration
+because we really do not need to reinvent the wheel.
+So we'll say iterator, toys iterator, equals toys.iterator.
+And then also, iterator backlog iterator equals backlog.iterator.
+So now we have these two iterators.
+And we're going to be using these as our cursors.
+And this is the cursor that's going to guide us over our toys collection,
+and this is the one that's going to guide us over our backlog collection.
+Now we need to implement hasNext.
+And we want hasNext to return false if we've
+gone all the way through the toys and all the way through the backlog.
+So basically, if either of these two cursors has annexed itself,
+we do not want to return false.
+So we can return the result of toys iterator.hasNext or backlog
+iterator.hasNext.
+If either of those is true, hasNext will also return true.
+Now, we want to implement Next.
+We want Next to actually return the right toy.
+So we'll define a local variable toy and set it to null at the beginning.
+Now, we want to think about which object we'll be passing back.
+If there are more toys in the inventory, then we'll send back one of those.
+However, if there aren't any more toys in the main inventory,
+then we want to send back one from the backlog.
+Now, we could have chosen to do this in any order going back and forth,
+or whatever.
+It doesn't matter.
+But in this case, we're doing all the toys first and then all the backlog.
+So we will say, if toys iterator.hasNext,
+and then we'll set toy to toys iterator.Next.
+And this is going to be unhappy because this is actually really generic.
+It just returns an object.
+So we're going to have to cast this variable down, which
+basically just means that we're telling Java just suspend your disbelief.
+Even though you can't guarantee that this is a toy,
+we know that it's going to be a toy.
+Otherwise, we'll set the toy to be the one from backlog iterator.Next
+and then return the toy.
+Wonderful.
+And we don't even need to say equals null up here actually because it
+gets initialized no matter what.
+And just for now, because we want to watch what's going on,
+let's add some print statements.
+Now generally, you wouldn't actually want
+to add print statements to your iterator because that
+would broaden our iterators effects.
+And remember that that would make a sad face for our Listgov substitution
+principle.
+Remember, our iterator is substitutable for any iterator.
+So if the caller isn't expecting printouts,
+then it would really mess the caller up to get them.
+But let's just do some printouts anyway, just for the sake of illustration.
+And we'll take them out in a minute.
+So we'll say, we're checking that it hasNext, and we'll say here,
+premium item.
+And then, we'll say sale item.
+OK, now let's rerun it and watch our loop.
+We can see that all these premium items come through first
+and then our one-sale item blocks.
+And now, let's go in and clean out our print statements and rerun.
+And we can see, once again, our premium items
+coming through and then finally our blocks,
+even though blocks was added first.

@@ -263,3 +263,14 @@
 - **Fields & Collections**: Associations from the class diagram are implemented as fields. A to-many relationship is implemented using a collection like `List`, `Set`, or `Map`.
 - **`equals()` and `hashCode()`**: When using custom objects as keys in a `HashMap` or storing them in a `HashSet`, you **must** override `equals()` and `hashCode()`. Otherwise, the collection will not be able to find objects correctly, as it depends on these methods for value equality, not just reference equality (`==`).
 - **Bidirectional Relationships**: To avoid infinite loops when linking two objects (e.g., `student.addCourse(c)` which calls `c.addStudent(s)`), each `add` method must include a guard condition to check if the link already exists before proceeding (e.g., `if (!this.courses.contains(c))`).
+
+## 10. Design Principles & Patterns Summary
+- **Design Patterns**: Reusable, principled solutions for common object-oriented design problems. Key patterns include Iterator, Observer, and Composite.
+- **Iterator Pattern**: Abstracts the logic of traversing a collection into a separate `Iterator` object (`hasNext`, `next`). Allows iterating over custom collections without exposing their internal structure. Can be implemented as an inner class for access to private data.
+- **Observer Pattern**: Defines a one-to-many dependency where a `Subject` notifies multiple `Observers` of state changes. Java provides `Observable` (class) and `Observer` (interface). Notifications can be "pushed" (with data) or "pulled" (requiring the observer to fetch data).
+- **Composite Pattern**: Allows clients to treat individual objects (`Leaf`) and compositions of objects (`Composite`) uniformly through a shared `Component` interface. Simplifies handling of hierarchical structures like trees.
+- **Core Principles & Refactoring**:
+    - **Single Responsibility Principle (SRP)**: Each class should have high **cohesion** and a single, well-defined purpose.
+    - **Coupling**: Aim for **low coupling** between modules to minimize the impact of changes.
+    - **Liskov Substitution Principle (LSP)**: Subtypes must be fully substitutable for their parent types without altering program correctness.
+    - **Refactoring**: The practice of restructuring code to improve internal quality (readability, cohesion) without changing external behavior, enabled by a solid test suite.
