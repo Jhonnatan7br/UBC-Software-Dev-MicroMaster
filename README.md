@@ -5,6 +5,7 @@
 # Design Funtions
 HTDF Step-by-Step Explanation: (Signature, Purpose, Stub)
 
+
 # Design Data
 HtDD How to design Data - (Form, Representation, Interpretation, Example, Template rules)
 
