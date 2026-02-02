@@ -1,0 +1,34 @@
+
+ELISA BANIASSAD: The try-catch clause actually has three parts.
+It's actually try, catch, and finally.
+So first you try to run the method, if an exception is thrown somewhere
+in the execution of that method, then catch catches
+that exception and then finally runs whether the exception is caught or not.
+So basically, where it fits in our picture is kind of right here.
+It just sits underneath the catch clause such that right
+after the catch executes, or doesn't execute, it doesn't matter,
+the finally will run before we get down to the next method.
+So in manage, if the exception here was thrown,
+then the exception will be thrown, then we would hit the finally,
+and then the exception would be caught in main.
+If we put a finally clause underneath the catch clause in main,
+then the exception will be caught, the finally would run,
+and then the rest of the method would run.
+What we want to do now is have some finally behavior inside of our two try
+catches, so we write the word finally here.
+And remember that it's going to run regardless of whether the exception is
+caught or not.
+So in the finally, in manager.manage, we're
+just going to say regardless of what happens.
+And then in the zoo try-catch we'll add dot, dot, dot, profits.
+Great, now we can run this and watch our finally behavior come out.
+So we have everything we saw before, but we have these two new lines.
+Manager says, regardless of what happens,
+and that's being printed out from the try-catch block in manager.manage
+before the broke exception zooms up to zoo.main And dot, dot, dot,
+profits is being printed out from the try-catch in zoo.main.
+Now, let's change it so that the animal does not throw the exception.
+So we can rerun our code and see that no exceptional behavior is happening,
+but we can still see the two finally clauses being printed out.
+So we can see that the finally clause is run regardless
+of what happens with the exceptions.

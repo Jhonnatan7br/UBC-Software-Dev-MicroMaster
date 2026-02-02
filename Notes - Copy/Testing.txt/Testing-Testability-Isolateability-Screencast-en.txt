@@ -1,0 +1,46 @@
+
+REID HOLMES: All right, so let's look at this concretely for Mario.
+So let's take a look at the level class within Mario typescript.
+And within level, we can see that there's a method here called Tick.
+Now Tick as a complex method orchestrating its behavior
+using 5 private fields within the level class.
+Scrolling through this 39 line long method,
+we can see that there's a lot of functionality here
+that's quite complicated.
+So if we had a failure within this tic method,
+it would be hard to know what was actually
+causing the failure in practice.
+For instance, is the failure in this next cycle's piece?
+Is it in figures?
+Is it in items?
+Is it in coin gauge?
+Or is it in live gauge?
+All of these different fields all play an important role
+in making tic do the right thing.
+Just examining Tick, we can see that there's this one complex
+loop in particular in the middle that seems like it might be especially fault
+prone.
+So what we can do is extract this complex loop
+into its own private method, called Tick figures.
+So Tick figures now contains that complex loop.
+And we've gone and simplified Tick so that it
+doesn't contain that code anymore.
+So Tick used to be 39 lines long, but is now only 12 lines long.
+So cycle that-- oh oops, we got to of course reference this stuff Tick
+figures, not Tick figures directly.
+And now we can see that Tick is much simpler than it was before.
+And while Tick still does coordinate these four other fields,
+the more complex part of the code has been
+extracted into Tick figures itself.
+Now it's important to admit that Tick still does call Tick figures.
+So we can't completely isolate those methods from each other.
+But we can test Tick figures independently of Tick.
+So if the Tick test fails, and the Tick figures test fails,
+it's probably a problem within Tick figures itself.
+But if the Tick test fails and Tick figures passes,
+we know it's one of these other four fields that's causing the problems.
+So in this way we've helped to make Tick more testable than when
+it were one big method.
+Because when tests start to fail for Tick and Tick figures,
+it's going to be much easier for the developer
+to diagnose the root cause of the failure.

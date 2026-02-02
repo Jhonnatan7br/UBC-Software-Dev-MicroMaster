@@ -1,0 +1,110 @@
+
+ELISA BANIASSAD Now let's look inside one of these classes
+and see what's going on.
+Let's start with the shape class.
+A class can kind of be broken into pieces.
+First of all, we remember that the imports go at the top.
+And then we have the declaration of the class itself, which sets up its name.
+Then we see the body of the class between these curly braces.
+So these curly braces are always groups of statements.
+They delimit what we call a code block.
+So we saw a code block when we were looking at methods as well
+to collect all the statements that lived inside of a method.
+And control structures, which we'll see later, also contain code blocks.
+Inside the classes code block, we've basically got three groups of things.
+Constants, fields, and methods.
+Not all of these things will be present in every single class,
+but usually there's a fair representation of each of them.
+So let's look deeper at each of these now.
+So let's start with the name of the class.
+Names of classes are chosen to summarize the contents of what's
+going into the class.
+So you would never have a class just called "stuff".
+You always name the class after-- the grouping in behavior and data
+that are placed in there.
+So this class is called Shape, and so we can predict that everything inside it
+has to do with being a shape.
+All the operations and behavior must be centered around that one concept.
+Interestingly, we can't really say the reverse, that every single thing
+to do with shapes lives inside of here.
+Like we know that Drawing at least knows about shapes and uses
+them for something.
+But we do know that if anything is centrally related to shapes then
+it has to be here in the shapes class.
+Right beneath the name we see the class constants, bits of information
+about the class that don't change.
+These declarations need the keyword "final"
+which means that they are immutable.
+They also usually have the keyword "static"
+which just tells Java that they stay within the class
+rather than being instantiated with the object.
+They have a name, like Shadow Color, and they have a value that does not change.
+This is pretty much the same as what you've seen in previous courses
+just with a slightly different syntax.
+And in this case, we can see that the shadow
+color must define some kind of color.
+And we can even have a little color picker here.
+So IntelliJ is very, very smart.
+So we can change this to a lovely blue.
+And then, if we reran our drawing editor,
+we would see that something's changed.
+And so have about you do this?
+You can open up your code for drawing editor, change this color,
+and rerun it.
+And you'll see that the shapes are blue, or whichever color you've chosen.
+And again, all these names are chosen incredibly carefully
+to make it explicit to the reader what they are used for.
+So we didn't like a word like Shadow Color
+if we didn't think that was a meaningful name.
+We could instead call it something like Playing Color, after we
+discovered exactly what it does.
+But don't just change it in place yourself, you have to do it officially.
+So you would select it and click Refactor, Rename.
+And then that changes it absolutely everywhere that it's user-defined.
+So next, we have fields.
+And they are variable declarations.
+And we've looked at variables already, so you know what those look like.
+And every one of the fields has this additional piece of information.
+This public and private keyword, which we're mostly going to ignore for now.
+But we get into pretty deeply in a later video.
+Fields are basically the information that is stored about a class, the data.
+So here we can see that there are lots of fields.
+So we have x and y.
+And those are probably coordinates of the shape.
+And Width and Height.
+They are probably the width and height of the shape.
+And then we have Selected, which is a Boolean that must be
+whether the shape is selected or not.
+And then we have the instrument, and that's probably what plays.
+And then the line coordinate, which is also pretty simple.
+And then we have one field that doesn't use one of the Java types
+to declare itself.
+Instead, it's using one of the types within our project.
+Specifically the MIDI synth.
+So we can see that class over here if we look inside the sound package.
+This is why the drawing had to import the sound package,
+so that it could get at this code inside of the mini synth.
+So sometimes, classes have fields that are types
+defined within the project itself.
+And then the bulk of the class is usually
+the whole collection of methods or operations that the class provides.
+And there are lots and lots of methods in this class that's
+completely typical.
+So if we look at the structure panel, we can see all the methods
+and browse around them using that.
+So at the top of the methods is where the constructors live.
+Now, these other methods that are called when you call New, and then
+the name of the class.
+So like before, we said New Dog, and that call
+would then call the Dogs constructor.
+So as I said, these always live right at the top of the class
+and they're always named exactly the same thing as the class itself.
+So here we can look and see that there were actually two constructors.
+Later in this course, we'll see how it's completely fine
+to have methods of the same name as long as they have different parameter lists.
+And you can see here that these comply with that rule.
+They have different parameter lists.
+So we'll get more into the implementation of the constructors,
+and how they run really, really soon.
+But basically, what you need to know right now
+is that these set up all the necessary state for the object.

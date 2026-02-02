@@ -1,0 +1,81 @@
+
+GREGOR KICZALES: In this first video on how local works,
+I'm going to give you the basic intuitions for local expressions
+and also show you how to write well-formed local expressions.
+Well, it's graduation time once again.
+We're going to move on to a higher level learning language.
+So as before I go down to the lower corner here,
+and I click, and I get a menu that you can't see right now.
+I have to click on Choose language, and then I
+get to choose intermediate student under how to design programs languages.
+So now I'm in intermediate student.
+And it's yellow, because I haven't run yet.
+As soon as run, it won't be yellow anymore.
+So what we're going to do now-- the reason we switch to this new language
+is to get a new language construct called local.
+And our presentation of local is going to be broken up
+over several short videos.
+I'm sure you'll be glad to get a short video after some of last week's videos.
+So here's an example of using local.
+I won't type the whole thing out.
+I'll just put it here you for you to see.
+And in a minute, I'll talk about the rules for forming local.
+So I'll more precisely talk about the different parts of the local.
+But intuitively, for now, the local has two parts.
+It has the definitions-- which are here-- and the body-- which is here.
+And the way to think about the local is it says, hey, these definitions,
+they're valid only inside the local.
+They're not valid anywhere else.
+So if I run this program, you shouldn't be too surprised
+to get the result is three, because this says, hey, inside the local a is 1,
+b is 2, and this thing called the body is an expression, which is evaluated
+to produce the result of the local.
+So that's a local, where all of the locally defined definitions
+are constants.
+Here's local in which one of the locally defined definitions
+is a local constant.
+I'm putting those in lower case.
+And the other locally defined definition is a function definition.
+Local will let you have any definitions you want in this defined part.
+You could even put a defined struct, but we're not going to do that.
+So this says, hey, there's this locally defined constant p.
+The value is accio and hey, there's this locally defined function.
+And the body that function of that happens to refer to p.
+But that's OK, because p is defined as a constant inside this local.
+So if I say run this, then I get accio portkey.
+The way to think about is it's almost as if I had done this, only almost as if.
+It's different in important ways.
+But it's almost as if I had done this, where the definitions
+were what's called at top level.
+They weren't inside of local, and I just did that, but it isn't that.
+It's quite different in different important way,
+which is these definitions are only valid inside the local.
+So in particular, if I try to use a out here,
+it says there is no a, because the a is only defined inside the local,
+or If I try to use fetch out here, it's not valid out here,
+because it's only valid inside that local.
+So that's the way in which is different.
+Now in the next two videos, I'll talk more precisely
+about the exact way in which it's different, but let
+me now just talk more precisely about exactly how you form a local.
+We're going back now to the kinds of slides
+we saw way back in the first week of the course.
+The rule for forming a local is straightforward.
+Local is an expression.
+So you could put it anywhere you would put an expression.
+There's open paren, local.
+And then there's a bracket, and by convention we use a square bracket.
+And then there is a balancing square bracket.
+And in between those two brackets, there can be any number of definitions.
+
+One, two, however many you want.
+There could even be zero definitions, but in that case,
+it isn't very useful to have the local.
+So a local, the definitions, and then there's
+a thing called the body, which is an expression.
+And the intuitive way of understanding the local
+is that it sets up the definitions, it sets up
+a special world that has these definitions,
+and then evaluates the body and produces that result. So there you go.
+There's our initial intuitive understanding of local
+and how to form a local expression.

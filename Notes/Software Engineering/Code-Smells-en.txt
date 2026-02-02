@@ -1,0 +1,136 @@
+
+SPEAKER: The vast majority of software development
+is performed on existing systems.
+Software maintenance and evolution are the primary components
+of the system's total budget.
+Software changes can be split into four broad categories.
+The first are corrective changes, which fix defects and account
+for 21% of all changes.
+25% of changes are adaptive.
+That is, they help the system work to interoperate with external changes that
+modified its execution context.
+Perfective changes, which add or modify functionality,
+comprise 50% of all program changes.
+Finally, preventative changes improve program structure,
+and account for only 4% of program changes,
+although these changes have an outsized effect
+on enabling the other kinds of changes to be successful.
+Software maintenance is hard, because over time code
+can become complex and unstructured-- sometimes due to poor initial design,
+but more commonly due to a lack of preventative maintenance
+or churn as the project has evolved.
+Maintenance challenges can also be exacerbated
+when software engineers lack sufficient domain or historical knowledge
+about their projects.
+Finally, time pressures often push quick fixes
+over comprehensive ones, which can degrade the quality of the system.
+As code evolves, it often degrades to the point
+where fixing bugs and adding new features
+becomes harder than it used to be.
+Code smells negative traits that long-lived systems often
+exhibit within their code.
+Martin Fowler defined five main types of smells.
+The first is bloaters.
+These encompass smells whereby the size of the program elements
+make them harder to understand or change.
+Really long methods, large classes, and methods that have long parameter lists
+are all examples of bloaters.
+Because when you have a method that is 100 lines long,
+or a several hundred line long class, it becomes
+hard to just take a look at that class or method
+and really understand concretely about what it's doing.
+OO abusers are a class of smells that arise when object-oriented design is
+not leveraged.
+For instance, if we're using switch statements
+or we have refused bequest, where some subtypes don't honor other types'
+expectations, we have smells that indicate poor object-oriented design.
+Change preventers are a class of smells that
+make it harder to evolve your code.
+These include divergent changes, where you'll
+have to make the same change in multiple different parts of your system,
+or shotgun surgery, where you have a change that's spread
+across the breadth of your system.
+Dispensibles are smells that capture unnecessary complexity in the code.
+For instance, if you have duplicate code,
+dead code, or you have speculative generality.
+We've mentioned before that premature optimization can
+cause all kinds of problems, and the same thing
+happens when we have premature extensibility.
+Every time we add a new abstraction to our system,
+it can become harder to understand.
+And speculative generality really tries to capture the downside of that.
+Finally, couplers or smells that encompass code changes
+that exhibit unnecessary coupling.
+Examples of this include feature envy, where
+one method wishes it were another and acts as if it were another,
+or a middleman, where a method just coordinates
+the actions of other methods, but doesn't actually do anything itself.
+Now let's take a look at a few concrete smells within Mario.
+First, let's take a look at an example of a long method.
+I know that the LevelTick class is quite long, so let's take a look at that now.
+So here we have the tick implementation, and we can look at its major parts.
+So first we can see here that we're ticking on figures.
+And if we scroll down, we look a little bit further,
+we can see that here we're going to take on all of the items in the frame.
+And then finally we'll tick on the frame itself, the coin gauge and the life
+gauge.
+And this really is a lot of code.
+It starts up at line 157 and it goes all the way down to line to 206,
+and there's a lot to understand here.
+And one challenge that we have is that this tick figures part in the middle
+really dominates the rest of this method.
+So while these three major parts are cohesive,
+we might want to think about trying to do something with this large tick
+figure segment that exists in the middle and really overwhelms
+the rest of the functionality in the method.
+Let's take a look at an example now of an OO abuser.
+So let's go to the Mushroom class, specifically down in the hit method.
+So here we can see the hit implementation for Mushroom,
+and it has this if statement where it's checking the mode.
+So we say if mode MushroomMode.mushroom, or if mode MushroomMode.plant.
+And if it's a mushroom, it acts like a mushroom.
+It makes Mario grow.
+And if it's a plant, it actually acts like a flower not a mushroom at all,
+and it makes Mario become a shooter.
+And what we can see here is the developer almost certainly created
+the mushroom class, and then after a while
+realized they needed to add the flower functionality.
+But rather than making a flowers class, they just
+added it to Mushroom themselves.
+So this is an example where we're checking this mode flag
+and varying the behavior of the implementation.
+And this really is an example of an OO abuser.
+The correct functionality here would really
+be to have this be two different classes.
+And we can see that in the other methods,
+we also are doing the same switch, because we're
+spreading this checking for this field across the class.
+Really, it indicates that this should be a whole other implementation.
+Mushroom and flower should be separate from one another.
+Finally, let's take a look at an example of duplicate code.
+Let's take a look at the constructor inside GreenTurtle here.
+And when we're looking at the constructor,
+we can see that there's a lot of frame information around setting up the death
+frame, step up, step down, death direction, and death count.
+There's a lot of complexity here that really
+has to do with rendering the view of the turtle when they die.
+It's about the view of the turtle.
+And if we go and we take a look inside SpikedTurtle,
+we can see that the same code is also here.
+So if we changed how we wanted this to work for one turtle,
+we would actually have to change it for both.
+This is duplicate code.
+And if we forgot to change it from one, then you'd
+have GreenTurtle and SpikeTurtle behaving inconsistently--
+even though we know, because the code is the same,
+we want them to behave the same.
+So this is a smell where you have this risk of not making all of the changes
+if you fix the code in only one place.
+So we want to avoid that as much as possible.
+And again, this would suggest a refactoring
+that we could look at in the future to help improve this situation.
+These are just three simple smells from a catalog of over 20.
+They can be a handy rubric to keep in mind when
+you're looking at code that seems confusing,
+but you aren't quite sure why.
+Smells are usually fixable, most commonly through refactoring.

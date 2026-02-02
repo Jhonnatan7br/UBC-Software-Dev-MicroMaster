@@ -1,0 +1,249 @@
+
+ELISA BANIASSAD: OK, so now that a little bit about looking at Java code,
+you're going to want to actually start writing your own Java code.
+And as soon as you start writing your own code,
+you're going to run into problems.
+And you're going to want to know how to figure out why your code isn't working.
+It's important to have a set of skills and tools to help you debug your code.
+So I have fashioned this simple, little example
+to hone in on a couple of techniques that
+will help you investigate your code, so you can figure out
+what might be going wrong.
+We don't have a lot of Java knowledge right now.
+So the only things that we're going to focus on
+are the things you actually know to look for, because you know how those work.
+And in future debugging videos, we'll look at more complicated bugs
+using more interesting bits of Java.
+And we'll kind of build up your debugging knowledge as we go.
+So here we got a little system called Hair Salon.
+And just let's walk up to the system like the way
+we did with the drawing player and try to figure out what's going on.
+So we open it up.
+We find our source directory.
+And we see that it has two packages, the model, and the UI, which is great,
+because we kind of recognize those.
+The model has two little classes, customer and hair salon.
+And the UI has main.
+So I'm just going to open up main, and do the thing we always do,
+which is run it.
+And here we see that we have some kind of output.
+This is just printing stuff down the side of the screen, or down the bottom,
+depending on how your intelligence is set up.
+So in future, you're not going to examine the output of your programs
+in this way.
+Often what we do is we run programs from tests.
+But often you also kind of watch the output of your program.
+So we're going to do a little bit of a mix.
+Right now we're just looking at output, because we still
+haven't looked at testing in Java.
+And actually, this isn't that uncommon to do.
+So here's what we get when we run it.
+We have a new customer booked in at 12:00.
+And it looks like there's some kind of verification step.
+And so we can kind of start to relate where these things are going on
+over here in the code.
+So I made a customer called Elisa, to just name it after myself for fun.
+And we make a new booking.
+Then, we verify the booking.
+Then, we print the booking list.
+And over here we can see all the times of the day.
+And then, we do it again for someone called Reed,
+who you'll meet in a later course.
+So that's everything that happens when the code runs.
+It's a pretty simple little program.
+And now, I'm going to run away, and inject a couple of bugs.
+And then, I'm going to come back, and we're going to try and find them.
+And we're back.
+So now, we're going to rerun the code and see what it does now.
+So it says, making a new customer called Elisa, which sounds good.
+And then, it says, the customer null is booked in at 12:00.
+Well, that doesn't sound right, because before it's said Elisa.
+So now, what we do is we follow a really principled way of debugging code.
+We're going to use a hypothesis driven approach, as opposed
+to a haphazard way of investigating what's going on.
+We're going to form a really educated guess about what
+might be going wrong in our code.
+And then, we work out ways that we could invalidate or validate that guess.
+Then, we carry out those steps to invalidate or validate.
+And we rule out hypotheses as we go.
+And finally, find a bug.
+So let's deal with this problem before even
+looking at whether the rest of this code is working, because you can really
+only fix one bug at once.
+So one hypothesis is that it's not printing out the name correctly.
+So to investigate that hypothesis, we would
+have to look directly at the code that's printing out the name.
+And this is actually kind of a good place to start,
+because it's always a good option to look
+right at where you think the error is occurring,
+and see if that code is somehow wrong.
+But let's keep going with building up hypotheses,
+because we want to kind of collect as many theories as we can.
+So another hypothesis is that the name isn't stored correctly.
+And in that case, to prove that hypothesis, we would want
+to look at where the name gets stored.
+So we now have two hypotheses to prove or disprove.
+So the printing out is probably just coming from inside make new booking.
+So to find out what might be going wrong, we want to run our code,
+but we just don't want to run all the code,
+because that's just going to run the whole same thing again.
+But we also don't want to read all the code, because there's too much code.
+This is even a small system, and there is still too much code.
+So we want to run it, but we want to watch what's
+happening while we're running it.
+So we're going to use this wonderful thing called a debugger.
+The debugger lets us get what's called a breakpoint.
+A breakpoint does what you probably think it might,
+which is stop execution just before executing
+the line at which it's placed.
+So then, we can press this bug icon that says, debug main.
+So instead of run main, we have debug main.
+And if we click this it will run the code.
+And it will stop at the breakpoints.
+So the code has stopped running.
+And now, we can see these two structures that we have.
+We have the Elisa object.
+And the name is null.
+And we have La Belle Salon, which has a booking list.
+And all the elements are null.
+So that means that by the time we got to this line of code,
+the name was still equal to null.
+So we have two technical options here.
+We can step over a method, or we can step into the method,
+watching its execution.
+So to look inside to see what's happening inside this method,
+we want to step in.
+So we've stepped in to see what's going on.
+And all it's actually doing is printing out
+customer C.getName has been booked at this booking time.
+And if we look at customer C, we can see that the name is null.
+So it's not that this print statement is wrong.
+It's actually that the name is still null.
+So we have to discard our first hypothesis.
+The bug must be happening somewhere else.
+So we can stop our execution entirely, go back to Maine,
+and change where a breakpoint is to set it to the line
+above and see if anything there is the problem.
+So we hit our bug icon again.
+And we see that we have La Belle Salon.
+And it has some bookings.
+And all the elements are null, which makes sense,
+because we haven't actually called make new booking yet.
+But we want to figure out what's going on inside of here
+to see why this name isn't being stored.
+So we step in.
+And here we see the constructor for customer takes a name
+and prints out making new customer called name, which seems good.
+But if we keep going and step through here,
+the parameter comes in properly, the name's Elisa.
+And if we keep going, we see in this, that's
+this customer object, that the name is still null at the end of this method.
+And that means that we never actually set the value of this field.
+And this is a really common mistake.
+If something seems like it has the wrong value
+or especially if it has somehow kept its initial value, and in this case
+that value is null, then you're probably just forgetting
+to actually ever set it.
+We should have known this right from the start
+actually, because the field name is gray,
+which means it's values never set.
+This is IntelliJ's little hint.
+So all we need to do is add a line of code
+right here that does the actual work.
+We can just say this.name equals name.
+We'll get more into why you need the keyword this in the data flow video.
+So now we can hit stop and rerun our debugger.
+It brings us to the same spot.
+And if we step into our method we can see the print out happen.
+So we can see the current object.
+And the object now has the name Elisa.
+And IntelliJ is even really great, and tells us
+that all the way up in the fields.
+So we can resume our program.
+And it'll show us down here, making a new customer called Elisa.
+Customer Elisa has been booked at 12.
+And if we read it the normal way now, instead of using the debugger,
+we get the same thing up here.
+So we fix one bug.
+We forgot to set a field, silly us.
+We can look for that one while we're coding.
+Now, we're going to encounter the second type of bug
+that you might accidentally inject into your code.
+Here, we see there is no customer booked at this time.
+We literally just made a customer booked at that time.
+So what is going on?
+You can hear the frustration in my voice,
+and you will feel it too when you're debugging.
+So we just go back to main.
+And we make our two hypothesis about what is going wrong.
+The first possibility is that verify booking is reporting it incorrectly,
+that there is a booking but verify booking isn't telling us that.
+To validate that hypothesis, we would set a breakpoint inside
+of verify booking and watch to see if the verification
+step was working properly.
+The second hypothesis is that the booking agent actually being made.
+And for that, we would have to set a breakpoint inside of make new booking
+and watch the booking being made to validate
+that it is being done properly.
+OK, so let's look at the first hypothesis first.
+So here we are in verify booking.
+Let's put a breakpoint right where it says that there
+is no customer booked at that time.
+Even though we don't really know what's going on around it,
+there are these sort of ifs and things we have no idea about yet, that's OK.
+We can still put a break point at this line of code,
+because we know that, that's the one that's running.
+And we can take a look at what's going on in terms of variables and fields
+just to see that everything is kind of coming in correctly.
+So let's just debug from here.
+So we've run all our code up to here.
+And if we look at our console, we can see
+that we've gotten through that customer Elisa has been booked at 12.
+And we're about to print out there is no customer booked at that time.
+So what's going on?
+What are the local variables in the fields?
+So we're in the class Hair Salon.
+And we can see that the bookings are all null.
+So there are no bookings.
+C is our customer.
+And if we open this up, we can see that the name is Elisa, which seems fine.
+But it seems like there must have been a problem with this line.
+Booking.get came back with null.
+And sure enough, if we look up there, IntelliJ
+has remembered for us what the variables were at that point.
+And we can see that the booked customer was null.
+We got the booked customer out of the list bookings at the booking time.
+And we're seeing that even though we expect it to be taken by Elisa,
+it's actually null.
+So verifyBooking is behaving correctly.
+No one is booked at this booking time.
+So let's examine our second hypothesis.
+So let's stop and go back into main, and put our breakpoint earlier,
+and rerun the debugger.
+Great.
+Now, we're in main.
+We have La Belle salon.
+And all the bookings are null.
+And we have our Elisa customer.
+This all looks like it was created correctly.
+So now we want to step into our make new booking method.
+And we remember this from before.
+It's printing out that it's made the new booking.
+And then, the method ends.
+There are still no bookings, even though the effects clause, which tells us
+the purpose of the method says, it booked the customer
+into the requested time slot.
+So something should be going into a list.
+And it's not going into the list.
+This is actually a super common typo.
+So to fix this, all we need to do is write a line of code that says,
+booking.set at the booking time customer C.
+So now, we can stop and we can run again.
+And we can step over to see if La Belle salon actually
+got anything booked in it.
+And look at that.
+Inside our bookings at index number 12 we have our customer.
+And then, if we stopped this and ran the whole thing again,
+we would see that the behavior is exactly what we want it to be.
+So we've spotted these two bugs, forgetting to set a field
+and forgetting to modify the contents of an array correctly.

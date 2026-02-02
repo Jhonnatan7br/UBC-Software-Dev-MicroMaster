@@ -1,0 +1,16 @@
+
+REID HOLMES: Of course, we can actually execute a design on its own.
+Eventually, we need to build our systems.
+While this isn't a course on software construction,
+there are many soccer engineering aspects
+that should be taken into account when you're constructing your system
+to ensure it's long term evolvability.
+In this module, we'll take a look at the impact
+of nonstructural properties on the evolvability of the code that we write.
+We'll also take a look at the impact static analysis
+tools can have on our development pipeline
+to improve the quality of our changes.
+Next, we'll look at code smells, which indicate symptoms of design problems
+within our implementations, and how refactoring can address these symptoms.
+Finally, we'll take a look at the role of automation
+within the modern software development pipeline.

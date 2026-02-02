@@ -1,0 +1,40 @@
+
+ELISA BANIASSAD: So that's about as far as we
+could get without knowing anything about object orientation in general or Java
+in particular.
+So now let's take a closer look at both of those.
+We're going to start by thinking about this concept of a class, and remember,
+classes were the files that lived inside of the project structure.
+So you would have a class, and inside the class, you had two things.
+You had data and you had behavior, so operations.
+
+And this was the place where you could kind of store everything
+related to one concept.
+So if you had a concept like a dog, then you could put inside of this class
+file all of the operations and behavior related to dogs.
+So a dog might have an age, and it might have operations like bark and wagTail.
+
+So that was classes.
+Now, let's think about the objects in object orientation.
+Classes are this static structure that lets you describe one concept,
+and it kind of lets you do it in one place.
+The power of object orientation is using this class
+as a template for creating many instances of the same thing.
+So in prior courses, what you would have done
+is you would have used some predicate, like make-dog, to create
+lots of instances of a dog.
+And then you could call operations on those or set their data,
+and they would each be individual things.
+In object orientation, we have the same thing, and it's called construction.
+Again, the same.
+What you do there is you call a special method, called a constructor,
+and you call that by saying new, using this new keyword, and then
+the name of the class that you want to use as your template.
+And what that does is it creates an instance of your class.
+So in this case, a dog instance.
+We say instance and object interchangeably.
+It then copies over all of the class definitions into this instance
+so it gets its own copy.
+So this little dog instance would get its own age,
+and it would get its own bark, and it would get its own wagTail.
+Tail.

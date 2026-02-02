@@ -1,0 +1,50 @@
+ELISA BANIASSAD: OK, so now let's think about the requires clause.
+The requires clause let's us specify what the caller of a method
+has to ensure in order for that method to run properly.
+So if we're designing this method, then we
+need to be able to give a little hint to the caller of the method
+to say that there is a precondition that has
+to be satisfied for this method to be able to operate in the expected way.
+So now let's look at an example of when we might want to use a requires clause.
+Consider this operation.
+We've got a deposit method that's probably inside
+of a data abstraction-like account.
+Here, this deposit method takes an amount to be deposited,
+and it just adds that amount to the balance in the account.
+Obviously, we don't want amount to be a negative value, because then it's
+not actually depositing, it's actually deducting money from the account.
+So what we want to tell the caller of this method
+in the specification of this method is that this amount should never
+be less than 0.
+So we write that right into the specification.
+We write in a comment, requires amount is greater than or equal to 0.
+And that way, the caller knows that if it
+sends in an amount that doesn't comply with the specification,
+that anything can happen in here, it might light your computer on fire,
+or it might take all the money out of the bank, or whatever,
+no guarantees are made if this requires clause is not met.
+OK, so now let's look at a second example
+for the use of a requires clause that we can all kind of relate to.
+Because we all know that you are not supposed to divide by 0.
+This is kind of a cardinal rule.
+So if we were to use this method, we could
+write a call that looks like this.
+y equals divide 12 and 3.
+And we would know that if we made that call,
+that everything would be pretty happy.
+Because we'd get back 4, and that would be lovely.
+But what if we sent in a 0?
+Uh-oh.
+
+In this case, what we get back is infinity.
+And Java can't pass back infinity.
+It just doesn't have the space.
+So it would probably cause our whole program to crash.
+So to ensure that when this method is called,
+the caller, right here, makes sure that this argument is not equal to 0,
+we put it in the requires clause.
+So we write, requires y is not equal to 0.
+And that way, we can make sure that if our caller decides
+to call this method with a 0, that they are prepared
+for the craziness that might ensue.
+And they're prepared to get back infinity.

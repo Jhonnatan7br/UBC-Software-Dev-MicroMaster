@@ -1,0 +1,132 @@
+ELISA BANIASSAD: The observer pattern is so common,
+that Java has actually built it into its own language.
+So in the Java libraries you'll actually find
+an Observable class, and an Observer class, which is actually an interface.
+So to make use of these, what you would do
+is, you would just subclass from here and implement this.
+So now let's look at an example of doing this for ourselves.
+So suppose that in our simple drawing player,
+we want to add an Observer that saves our songs as we play them.
+So if we have all of our shapes, instead of just clicking Play Whole Drawing,
+we want to play them individually, in a specific order,
+by clicking each individual shape.
+OK.
+So now what we want to do is decide who's who.
+Who are we observing, and what is doing the observation.
+So we want to observe when a shape is played.
+So we want the Play Shape Tool to be the subject of the observation.
+So we're not making a new subject, we're using an existing class.
+Every time a shape is played, we want something to be able to observe it.
+Now the Play Shape Tool, unfortunately, already extends something.
+It extends Tool.
+So we can't also have it extend Java's Observable class.
+So we'll keep walking up the hierarchy, and we'll
+see where we can stick Observable in.
+So up in the Tool class we can say Extends Observable.
+Now Observable is a normal class, not an abstract class.
+So it has no abstract methods.
+There's no responsibility on the subclasses
+to implement anything or use anything.
+So it's totally OK that all of these other tools now
+also have this extra free behavior.
+We're only going to make use of that inside the Play Shape Tool,
+and that's completely fine.
+Now we want to create our Observer.
+And our observer is none of the things that already exist in our system.
+It's a brand new piece of functionality.
+So to capture that we're going to make a new package to house our Observer.
+And let's just call it Song Saver, and it's
+going to implement an interface called the Observer Interface.
+And that's the one we get for free from Java.
+Now IntelliJ is going to complain, because we
+need to implement the methods.
+So let's implement this update method.
+Here's the stub of the update method from Observable.
+And notice how generic these parameters are.
+passing in any observable object, and then any object object.
+So we have to cast those down if we want to use them
+for anything other than just basically printing them out.
+So this requires a little bit of knowledge on the part of our Song Saver
+about what kind of observer we're going to be getting,
+and what kind of argument is going to be passed in.
+So there's a little bit of slightly unprincipled stuff happening here,
+but we're in a safe space. so it's OK.
+So now that we have our update method existing,
+we need to go decide where we want to call Add Observer.
+Since we want it to be related to the Play Shape Tool,
+we might as well call it right from inside the constructor of the Play
+Shape Tool, right after this Super Call.
+So we'll say Add Observer right here, and we're creating
+a new Observer for the Play Shape Tool.
+Now we want to decide where we trigger the observation.
+We want to trigger the observation of when a shape is played.
+So let's go down to our Play Shape At method.
+And right in here, if the shape is not null, before we do anything else,
+we insert our Call To Notify observers.
+And we can pass in the shape that's being played, because that is actually
+what we want to record.
+And if we look at Notify Observers, we can
+see that it takes any object as an argument,
+so it's fine to pass in a shape.
+And then, remember, that it's going to call update
+on our Observer inside this complicated code.
+And it's going to pass in the argument that we're giving it, which in our case
+is just the shape.
+Now we want to go back to our Observer and Implementer update method,
+so that we can watch the shape that's being played.
+And we're just going to do something really simple.
+We're just going to print out the shape.
+So we'll add it to String Method down here in Shape.
+And we'll just say, Generate To String, and then we
+can just select all these fields.
+But then maybe we don't actually want all these lines, just XY, Width
+and Height, so we can delete a few.
+And now we go back into our Song Saver and we can just
+say system.out.print Playing Shape and then -arg.
+OK, now let's hit play and see if it works.
+So let's make some shapes and play them individually.
+And look at that.
+Nothing's being printed out.
+Why is nothing being printed out?
+And the reason is, of course, that the Java Observable
+interface has one funny idiosyncrasy.
+And if we look inside this Notify Observers method we'll see what it is.
+It only notifies the observers if something has changed in the subject.
+So before we call Notify Observers, if we
+want Notify Observers to actually call Update,
+we need to first call a little method called
+Set Changed, which sets change to True.
+And now it should work.
+So let's make our shapes and say Play Shape,
+and we can see that we have our observation.
+There are lots and lots of ways that you can implement the observer pattern.
+You can decide when you register observers with a subject,
+and you can decide how the observer actually gets updates from the subject.
+So the classic way that an Observer gets updates from the Subject,
+is just that the subject calls Update from inside of its notify method,
+and it sends all of the information about the update to the observer.
+We'll just say that this is some sort of string.
+This is kind of akin to you getting text messages on your phone,
+so you'll see the whole message appear.
+This is a push notification.
+Now sometimes you might decide, ugh, I don't actually want push notifications.
+They're kind of ruining my life.
+I'm just getting overwhelmed by too many push notifications
+from this application.
+So you'll turn them off.
+Which basically says, OK you might still get updates from the application,
+but instead you're going to have to pull that information from the application
+when you want it.
+So these updates no longer contain all that rich information.
+They might even be a little dot next to the icon saying, hey,
+you have a little bit of an update here.
+Then what you will have to do is pull that back.
+So you would call something called Get State, or, on your phone
+you would just hit the icon.
+But in the observer pattern you would call Get State.
+And then, what the subject would do, is send
+you back all of that rich information.
+So it would finally show you all of your messages,
+or show you all of your e-mails, or whatever
+those richer updates would have been before you turned off
+the push notifications.

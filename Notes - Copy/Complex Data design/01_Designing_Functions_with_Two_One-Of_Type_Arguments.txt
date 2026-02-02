@@ -1,0 +1,191 @@
+
+GREGOR KICZALES: In this video, we're going
+to look at how to design a function that consumes two arguments, both of which
+are described by a one-of type comment.
+And so a function, for example, is it consumes two ListOfString.
+That's what we're doing this video.
+But actually, something much more important than that's going to happen.
+What's going to happen in this video is, we're
+going to see that we can use the type comments to reason
+about the actual behavior of a function.
+We're going to take one more step towards designing a function based
+on a model of the function.
+What I mean by model is a more abstract representation of the function,
+or a less detailed representation of the function that
+tells us enough about what the function has
+to do that we can make some real design decisions based only on the model.
+In some sense, we're going to be programming using a picture
+before we're programming using code.
+So here we go.
+The problem in this file is that we're asked
+to design a function that consumes two ListOfStrings
+and produces true if the first thing is a prefix of the second.
+So if, for example, we give it list AB and list ABC,
+then it's going to produce true, because AB is a prefix of ABC.
+But if we give it list AB as the first argument,
+and list A as the second argument, then it'll produce false,
+because list AB is not a prefix of list A. The first part of list AB
+is the first part of A. But once you take the A
+off the front of both of them, you now have B in the first list
+and empty in second list, so that's not a prefix.
+So here we go.
+Let's design the function.
+As always, we'll start with HtDF.
+This function is going to consume two arguments that are both ListOfString.
+
+And it's going to produce a boolean describing whether one is a prefix.
+So we'll say produce true if list A, we'll call it,
+is a prefix of list B. And to make it clear which is which, I'll say
+prefix equal list A, list B right here.
+
+So now, I've got to start doing the check-expects.
+But before I do that, because this is a function that
+consumes two arguments-- both of which have a type that's described
+by one-of in the type comment.
+We don't yet have an example of designing a function like this.
+And we can jump ahead now to knowing that we are not
+going to know how to template it.
+And it might not even clear what we should do for tests.
+So here I'm going to introduce a new concept called
+a cross product of type comments table.
+Here's how it goes.
+Both of these types are ListOfString.
+So both of them have two cases in their one-of's.
+So what I'm going to do is, I'm going to make
+a table that's going to have two rows and two columns like this one.
+This is called a cross product of type comments table.
+It works for two arguments.
+And the idea here is that I'm describing the type of argument,
+a, across the top, and describing the type of argument, b, down this column.
+You could do it the other way.
+The important thing is just to label which is which.
+So I've got a across the top and b down the side.
+And the key thing about this table is that what
+I've put on the edges-- what I've put across the top
+here to label the columns and along the side here to label the rows--
+is the cases of the one-of type comments.
+So jumping back to type comment briefly, even
+though I know you haven't memorized by now,
+ListOfString is one of either empty or cons String ListOfString.
+So I just took those two cases and I popped them into the table here-- empty
+or cons String ListOfString.
+And since argument a is a ListOfString and argument b is a ListOfString,
+you get the same thing here as we get across the top.
+I just want to stress, you can use this design approach
+even if the two types are not the same.
+So if you have ListOfString and ListOfNumber, you could use this.
+If you have ListOfString and Binary Search Tree we could use this.
+The key thing is that both types have a one-of in their type comment.
+So we've got the cases of the one-of type along the axis.
+And now let's see, what is this table telling us?
+Well, let's see.
+This case here-- the empty, empty case-- well that's
+the case where both lists are empty.
+It says list A is empty and list B is empty.
+This table, in some sense-- in this box--
+is where we're going to talk about both lists being empty.
+In this box, what's happening is that list A is not empty,
+because list A cons String ListOfString.
+But Let's see is there because he says this box is
+the box were listed be not empty right here this is not empty
+but the state is empty.
+And this is the box where both lists are not empty, because both of them
+are cons String ListOfString.
+
+Now, this table is going to help me generate tests,
+because this table tells me what?
+Well, this table tells me I need at least four tests.
+I need to at least cover these four cases,
+and I may need to cover some more as well,
+but I at least need these four cases.
+So what I'll do is, through the magic of video editing again,
+I'll put the cross product table right over here to the side as we're working.
+If I was doing this for myself, I would have written a piece of paper
+and look at it as I'm going.
+And I know we're going to need at least four cases.
+
+So I know I'm going to need at least prefix equal something, something,
+something.
+I'm going to need at least four.
+
+So let's see.
+The simplest case is the case where they're both empty.
+If both lists are empty, then the answer is true,
+because empty is a prefix of empty.
+Right?
+A list with nothing in it matches a list with nothing in it.
+So that's if both lists are empty.
+Now let's do the case in the upper right, where list A is not empty.
+So it's going to be something like, list X. But list B is empty,
+so it's going to be something like empty.
+Well, what's the answer in that case?
+Well, if list B is empty, then list A is definitely not a prefix of it,
+because my list A is longer than list B. It can't be a prefix of it.
+So this is going to be false.
+So that's that case.
+Now let's do the case in the lower left.
+So this is the case where list A is empty and list B is not empty.
+
+What's the answer in this case?
+Well, in this case, the answer is true, because empty
+is a prefix of any list, because the way to think about
+is, all the elements in empty come at the beginning of list X.
+And that's true, because there are not elements in empty.
+So all the ones that are there come at the beginning of list X. So this one's
+true.
+
+Now, what's this case?
+In this case, both lists have something in them.
+So that could be a case like this.
+That could be a case like that.
+Well, in that case, it's true.
+The first list is a prefix of the second,
+but I think there could probably be a bunch more cases,
+so let me make some copies of that case.
+Let's see.
+If it's X and Y, it's going to be false, because the list X is certainly
+not a prefix of the list Y. And we should probably use the rule
+about things at least two long.
+So let's, here, say list XY.
+And that is a prefix of XY.
+Then let's do one where we've got list X-- let's do one where it starts out
+being a prefix, but it isn't later.
+And let's do one where it's just too long to start.
+We might not need that one, but let's do it anyways.
+Actually, let's do one where it's too short but OK.
+
+Let me see if I've got these right.
+Oh, this one I forgot to change to false.
+This should be false, and this should be true.
+And this last one where it's just too long, that should be false.
+So it's worth going through these again to be careful.
+Let's see, that one is-- empty, empty is true.
+That's the upper-left.
+That one is-- the upper-right-- false, because A is longer than B,
+so it can't be a prefix.
+This is empty, not empty.
+This is true, because the empty list is a prefix of anything.
+And then here is one where they both have elements and they do match.
+Here's one where they both have outlets and they don't.
+Here's one more than one long, but they match.
+Here's on where they're more than one long.
+They start off matching, but they end up not matching.
+Here is one where one is shorter, and here's one where one is longer.
+So that's a bunch of tests.
+As always, as the functions get complicated,
+we might end up needing more.
+But we've been able to generate a set of tests here pretty systematically.
+And the reason we were able to generate them so
+systematically is because the first thing I did
+was to generate this cross product of type comments table.
+That table really kind of gives me the lay of the land.
+It tells me, look, you need at least four tests.
+When we look at these here, the first test corresponds to one box.
+The second test is the upper-right box.
+The third test is the lower-left box.
+And then all the remaining tests are the lower-right boxes.
+Of course, in the recursion, they'll end up being some other boxes.
+But at least as they start out, they start out in the lower-right box.
+So that's pretty good.
+We've generated a bunch of examples using the cross product of type
+comments table.

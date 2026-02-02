@@ -1,0 +1,29 @@
+
+ELISA BANIASSAD: OK, so now we're ready to talk about the effects clause.
+And the effects clause is the clause that everybody really
+wants to write when explaining what a method does, because that's
+the one that lets you explain what a method does,
+from the perspective of the outside world.
+So we've got our original deposit method back,
+the one that only takes an amount.
+And now we finally get to explain what work this deposit method accomplishes.
+So all we write in the effects clause is what the method basically does.
+What's in here in the dot, dot, dot.
+And we remember that it does two things.
+First, it takes the amount and it adds it to the balance.
+And second, it returns the new balance.
+So we write the word effects in a comment.
+
+And we say adds amount to balance, and returns balance plus amount.
+So it actually increases the balance, and then it returns.
+We want to address what this return value is going to look like.
+Now, you might say, hey, this looks like we're talking about an implementation
+detail here.
+Which is kind of true.
+We're talking about the work that's accomplished by the method,
+but we're only talking about the publicly visible work.
+So we don't talk about any internal implementation details.
+We don't talk about how we accomplish this work.
+We just talk about the fact that when this method has finished,
+the balance will have been increased by the amount-- amount--
+and the balance will then be returned.

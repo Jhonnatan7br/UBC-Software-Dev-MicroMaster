@@ -1,0 +1,99 @@
+
+GREGOR KICZALES: Now let's see.
+What are these two mutual recursions going to do?
+These two natural mutual recursions, what are they going to do?
+This will produce integer or false depending
+on whether it's found in first of Loe.
+Let's make that a little bit more compact.
+
+If n is found in first of Loe.
+And this second one will produce integer false if n is found in rest of Loe.
+
+Now if we find it in the first, there's no use looking in the rest.
+We're supposed to find one of them.
+We don't need to find more than one.
+So that suggests an if.
+
+Now what's the question?
+
+Well, this thing produces false if it can't find it.
+This natural mutual recursion produces false if it can't find it.
+So-- and I apologize for the double negative here--
+but if it doesn't produce false that means it found it in the first.
+So the way I'm going to phrase this question is not false that.
+
+And that will mean, is it found in the first?
+Is it found in first Loe.
+And if it is found in first Loe, well, then that's what we want.
+That value that came back, which is going to be an integer,
+is what we want.
+And if it isn't found in the first of the Loe,
+well, then we better go look in the rest of the Loe.
+That's the natural recursion.
+Now let me just note, this question here which I phrased as not false,
+find [INAUDIBLE] element, I can also phrase
+this question as open paren, integer question mark,
+find dash dash element dash n first Loe.
+In other words, I could have used integer question
+mark instead of not false.
+And the reason I use not false is it's more
+general for backtracking functions.
+When we see other backtracking functions,
+we'll have this same not false pattern.
+So let's see maybe hopefully, I'm done.
+And I am.
+All the tests pass.
+
+Now why this is called backtracking?
+Well, let's just step through a couple examples.
+Let's add one more example to this.
+We'll put it up here.
+
+Let's look in D6 for D6.
+
+Well, if we look at this tree, we start at D6, and we're looking for D6.
+And immediately, we find it, so we're done.
+
+Now here's another example.
+Let's look in D6.
+
+We'll add one more here.
+Let's look in D6 for F1.
+And whenever I add an example, I actually
+should run it just to be sure it's working.
+And they are.
+Now let's look in D6 for F1.
+Well, what happens is we start at the top of the tree.
+We start at D6.
+It's not F1, so we go to the subs.
+We go to the first of the subs, which is D4.
+It's not F1.
+So we go to subs.
+We go to the first of the subs, which is F1.
+And it is F1.
+So we found what we want, and we produce 1.
+But now let's look at what happens in this case where we look in D6 for F3.
+Well, again, we start at D6, we haven't found F3.
+We go to D4, we haven't found F3.
+We go to F1, we haven't found F3.
+
+We go up to D4.
+Now we look at F2.
+We still haven't found F3.
+We go back to the next branch, because now we come down to D5.
+We still haven't found it.
+We go down to F3, we found it.
+And each time we get to a failing node with no subelements--
+those are called leaves, because they have no branches anymore-- each time we
+get to a failing leaf, and we go back up to its parent
+and then try the next child, the next sub, that's called backtracking.
+We back up to the previous branch and go down the next branch.
+And that's why this is called backtracking search,
+because it has this pattern of going all the way down
+to branches looking for what we want.
+And anywhere we fail, we produce false to go back to the next branch and then
+that goes to the next sub.
+And this if not false of looking in the first branch
+pattern is emblematic of backtracking search.
+And as I said, we'll see more backtracking search examples later
+in the course.

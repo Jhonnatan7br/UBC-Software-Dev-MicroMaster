@@ -1,0 +1,113 @@
+
+GREGOR KICZALES: In this module we're going
+to look at another kind of design element called an accumulator.
+And there are three basic ways to use accumulators.
+Rather than explain them upfront though, what we've done
+is to break the videos this week into three sections.
+The first kind of accumulator we're going to look at
+is something called a context preserving accumulator.
+And we'll see that what this does is it preserves context that otherwise
+gets lost in structural recursion.
+Now when you design with an accumulator sometimes you
+realize up front that you're going to need an accumulator,
+and sometimes you only realize part way through the process
+of designing the function that you will need an accumulator.
+So in this first example I'm going to pretend
+that I don't yet know I'm going to need an accumulator,
+and just start designing it without an accumulator,
+and that will help you understand I think a bit better the exact problem
+that the accumulator solves.
+So I'm in skip1-starter dot rkt, and the problem
+is to design a function that consumes a list of elements
+and produces the list consisting of only the first, third, fifth element.
+So it's basically going to skip every other element.
+So let's get going.
+It starts out as a normal "how to design functions" problem.
+We're going to consume list of-- and it says list of elements,
+it doesn't say what the elements will be.
+So I'll just say list of x, and then produce list of x.
+So this function, at least according to its signature,
+should work on any kind of element.
+Produce list consisting of only the first, third, fifth, elements of lox.
+Here's the stub.
+We'll call it skip one because that's what the problem asked me to call it.
+
+Now let's do some examples.
+Well whenever you're given an example for free, you should use it.
+So we'll start with this one.
+
+And we'll do another one.
+Let's see, we'll copy all of this just to save typing.
+
+This time, let's just use numbers, what the heck-- 1, 2, 3, 4, 5, 6, and we're
+keeping every other one.
+In some sense, if we number the positions starting at 1,
+we're keeping the odd numbered positions.
+So we're going to keep 1, 3, and 5.
+OK, there we go.
+
+Let's run these examples to make sure they're well formed.
+They are, the test failed, great.
+
+This is a function operating on list of x, so let's template it
+according to list of x.
+
+It's comed empty, l o x is something.
+And this is just the usual list of template,
+which by now you know by heart.
+
+You might have thought to put fn for x there
+because we don't know whether x is going to be
+a primitive type or a programmer-defined type.
+But because this function's going to operate on any x,
+that means it's probably not going to do much with that x,
+or it's certainly not going to do anything that's
+particular to x being a certain type.
+So I'm going to just leave it out because I'm
+sort of saying I'm probably not going to need this.
+You could have put it in and then you edit it out later, remember.
+Templates are the skeleton.
+So there is the template.
+And we didn't make a specific case for empty,
+but we could do that now if we wanted to.
+If you skip 1 of empty, what do you get back?
+Well you get back empty.
+And so I'm going to put empty there.
+
+And this function is really doing a kind of filtering thing.
+Sometimes it keeps the first element and sometimes it doesn't.
+If-- sometimes it keeps the first element then we'll "cons first of locks
+onto the skip".
+
+Sometimes it doesn't keep the first element,
+we'll just do the skip of the rest.
+
+Now the question is, what's the test here--
+when do I keep the first element, when don't I keep the first element?
+Well I kind of said it here.
+This example is making it a bit clearer to me.
+I keep the first element and if there happens to be a predicate called odd,
+if what?
+If the position of first l o x is odd.
+In other words, I need to know when I'm doing A, because its position is
+odd I'm going to keep it.
+But when I'm here, because B's position is even, I'm not going to keep it.
+When I get to C, because its position is odd I will keep it.
+But position, position, position, I don't know what the position is.
+In some sense at the beginning, I maybe know that position is 1.
+But by the time I get to the next element, and the next element,
+and the next element, I don't know the position anymore.
+What's happening is that this information, this context information
+about how far down the list I've marched,
+is lost by the template for structural recursion.
+The template for structural recursion gives me
+each element of the list beautifully.
+It gives me the natural recursion beautifully.
+It allows me to work with those beautifully.
+But what it loses is any knowledge of how far down this list we've gone.
+This is one example of the kind of problem
+a context preserving accumulator is going to solve.
+It's going to preserve for me the context of how far down the list
+we've gone.
+So that's the set up for the problem and in the next video,
+we'll start working on the solution.

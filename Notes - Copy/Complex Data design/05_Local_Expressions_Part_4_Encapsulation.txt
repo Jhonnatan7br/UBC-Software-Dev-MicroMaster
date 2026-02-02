@@ -1,0 +1,308 @@
+
+GREGOR KICZALES: In this video, we're going
+to look at encapsulation, which is the first important way that we're
+going to use local.
+Encapsulation is one of the most fundamental concepts
+in software engineering, and this is what it's about.
+Imagine a large software system with 10, 20, 50, or 100 programmers on it.
+Now ask yourself, how likely is it in that situation that two programmers are
+going to want to use the same function name for two completely
+different functions?
+It's pretty likely, right?
+It's almost guaranteed to happen, in fact.
+And that's the problem that encapsulation solves.
+What encapsulation lets us do is to take each part of our program
+and make it into a capsule, a little package that
+has a bunch of internal functions and constants and structures
+and only a small number of external functions and constants and structures.
+What encapsulation rests on-- and I'll explain
+why we call it encapsulation as we go.
+What encapsulation rests on is the observation
+that with a local, the A and the B in this example don't exist out here.
+If we draw the scope contour, that A and B don't exist out here.
+Now, why would that be useful?
+Well, let's go to FSv4, which is the file system example we did last time.
+Now, when we designed the functions in this file,
+because we had mutually referential types,
+we always ended up with two functions with these kind of silly names.
+There was sum-data--element and sum-data--loe.
+And really, from the perspective of someone who's holding onto an element
+and wants to sum all the data, they don't care that there's two functions.
+They really only one function, and they would
+like it not to have this silly name.
+But the function they want to call sum-data has to have this helper.
+So how can we fix that with local?
+Well, watch this.
+I'm going to do it once quickly, and then I'll come back and do it slowly.
+What I'm going to do is I'm going to say,
+you know, really, the function that the rest of the world wants to call
+is a single function that operates on an element.
+So I'm going to give the rest of the world
+a single function that operates on an element,
+and I'm going to put the two functions I wrote
+before as locally defined functions--
+[TYPING]
+
+I'll press Command-I to fix my indentation.
+So now the two functions I really defined are in there.
+I've got to go change the name of all these tests.
+I've got to get rid of this test, because sum-data--loe is not available
+at top level anymore.
+
+[TYPING]
+
+I have to switch to Intermediate Student Language, because I'm using local.
+And let's try it.
+
+That function's now running.
+Now, several things are different here.
+I'll redo the process in a minute with another example.
+But several things are different here, and let me talk about them.
+The first and most important is that the two mutually recursive functions,
+the ones with the funny names, are now encapsulated.
+They're wrapped up inside this local, and nobody outside the local
+can see them.
+As far as the top-level program is concerned,
+the only function that exists is sum-data.
+sum-data encapsulates sum-data--element and sum-data--loe.
+So that's the first difference.
+The mutually recursive functions are encapsulated.
+We only see a single global function.
+Because of that, I'm only publishing once signature,
+the signature of sum-data.
+
+Because of that, I have fewer tests, because sum-data
+is the only top-level function.
+You know, in the encapsulation mechanism provided by industrial strength
+languages, you would still be able to write
+unit tests for encapsulated functions.
+The fact that we can't write unit tests for encapsulated functions
+here is just to keep check-expect simple.
+Being able to write unit tests for encapsulated functions
+introduces a number of complexities that aren't really interesting for us
+for now.
+So those are some observational differences.
+How's this thing working?
+Well, we call sum-data-- for example, with F1.
+So we call sum-data.
+We evaluate the local.
+All the renaming and lifting happens, and then the body of the local calls
+sum-data--element.
+And that calls sum-data--loe, and back and forth and back and forth until it
+gets the result that's produced by the body in the function.
+Sometimes we call this line here a trampoline.
+Because what happens is we come into the top of sum-data,
+bounce off the trampoline into the mutually recursive functions.
+Boing.
+It's a silly name, a trampoline.
+I think you've got the idea pretty well by now.
+But computer scientists like silly names-- the more, the better.
+So there we go.
+That's a first example of encapsulation.
+
+Now what I'm going to do, again, is to do
+the process of converting multiple functions into a single function
+with encapsulation more slowly.
+I'll work through the process more slowly, telling you at each step
+is, and then I'll leave you to do the third example on your own.
+So let's go down here to this next one.
+The first thing is to identify some functions that
+are a good candidate for encapsulation.
+And what makes these functions a good candidate for encapsulation
+is that there's two or more functions that work together.
+Another way of saying it is that there's one function that
+has one or more helper functions, and the rest of the program really
+only wants to call one function.
+In this case, all-names operating on an element
+is really the only function that the rest of the program wants to call.
+all-names--loe is just a helper for all-names-loe.
+So the first thing is to identify a candidate that
+has this property-- that there is a function with one or more helpers,
+and the rest of the world really only wants to call one function.
+The next thing to do is to think of a name for the function
+that the whole world will call.
+Sometimes one of the functions already has that name.
+Sometimes it doesn't.
+In this case, I think all-names--element is a lousy name for the rest
+of the world to use, so I'm going to make up a new name.
+So I put the function header like that.
+Then I say local and an opening square bracket,
+and I go after the last of the functions,
+and I close the square bracket.
+I'm not going to fix the indentation yet.
+I will in just a second.
+And then I write a trampoline that calls the appropriate one
+of the multiple functions to get things started.
+I close all the parentheses.
+I type Command-I to fix the indentation.
+So now I've done the encapsulation.
+I just have to clean up the paperwork.
+
+First thing I have to do is if there were multiple signatures, now
+there's really only one.
+Now there's just the signature of the function that the whole world sees.
+So I'll get rid of the second signature, and I'm going to clean up the tests.
+Oftentimes this is going to mean getting rid of the base-level test,
+and I'll talk about the implications of that in a minute.
+
+I'm going to first get rid of the tests for the function that we don't have
+anymore.
+Then I will do a renaming of all the other tests.
+I'm going to copy that.
+I'll say find.
+Come down here.
+Find that.
+Replace it with that.
+I'll say replace, replace, replace, replace, replace.
+These stubs, you know, these two choices now, I
+could do that replace and get rid of the second stub.
+Get rid of that s.
+That might be one thing to do.
+Or you could just delete the stubs entirely.
+
+And now, of course, whenever you do something like this,
+you test right away to make sure you didn't mess up.
+And I didn't mess up.
+Now, the way I did that process so methodically
+follows this notion of a refactoring.
+The idea of a refactoring is you're going
+to make a change to a program that doesn't change its behavior at all.
+It just changes its structure.
+Sometimes you want to do a refactoring and then change the behavior.
+You should avoid the temptation to do both of those at the same time.
+First do the refactoring, check, and test that the behavior is still
+correct, then change the behavior.
+Right?
+Move in small steps.
+So there we go.
+That's a second example.
+I'm going to come back to talk about the fact
+that we deleted the base case test in a minute.
+But first I'm going to leave you to do an exercise, which
+is to go ahead and do the encapsulation of the find functions in the way
+that I've just done.
+So I have this started in front of you.
+You should have had in front of you all along,
+and you should have been doing this all along.
+But I'd like you go ahead and do this one now for yourself,
+just to practice the whole step-by-step process I did.
+And to help you, I'm going to put the steps of the process
+back on the screen.
+And you can also find them in the design recipes on the Using
+Local for Encapsulation link.
+
+So there's my solution.
+I basically just followed that process.
+I called the top-level function find, and I removed one signature.
+I removed some tests.
+I renamed the function and the tests.
+I did the encapsulation.
+I did the whole thing, and there we go.
+All tests pass.
+
+Now, we just did this for all three of the functions operating
+on this arbitrary arity tree.
+And we also know that for functions operating
+on mutually referential types, there's always going to be multiple functions.
+They're always going to go together.
+So that might give you an idea about the template.
+It gives me an idea about the template, and here's the idea it gives me.
+Which is maybe what I should do is pre-encapsulate the templates.
+
+Maybe I should make function like this.
+Maybe I should write the template like this.
+define fn-for-element e local and then both of these templates functions.
+Get rid of this comma in here.
+
+[TYPING]
+
+And now I have a pre-encapsulated template.
+You can do that.
+It would work out pretty nicely, actually.
+Let's see what the consequences of having that template are.
+Let's copy that template, and let's go back down to, for example, sum-data
+and pretend for a minute that we don't have the solution.
+
+Pretend that we're just at the copy template stage.
+I've now just copied the template.
+Well, what am I going to do?
+I have to rename the template.
+
+Notice I don't have to bother to rename the internal functions.
+The rest of the world doesn't use those internal functions,
+so they could be called strawberry and banana for all the rest of the program
+cares.
+It's perfectly fine for them to be called fn-for-element and fn-for-loe.
+I don't have to rename them at all.
+And now I just code to the examples.
+Let's see, if I'm summing the data, I don't care about the name.
+If I'm going to add the data of this element
+together with the natural mutual recursion, the base case result is 0.
+And in the combination step here, I also put a plus.
+
+And I'll run it.
+And here, I very, very quickly got to the encapsulated solution.
+
+It's almost exactly the same as this encapsulated solution.
+It's just that here, the inner functions, the encapsulated functions,
+still have their template name rather than having a custom name.
+But as I've said, that doesn't matter.
+What's the advantage of doing it this way,
+rather than starting with separated templates?
+Well, the big disadvantage of doing it this way
+is that I wasn't able to have a base case test during development.
+Because I'm not able to write a test for just the loe function.
+I have to write a test for the whole function.
+So here's what I would say about that.
+At this point in the course, it's still important to have unit tests.
+It's always important to have unit tests.
+And the basic idea of testing simple cases first is always important.
+But you're getting sophisticated enough now that you may not need to actually
+have the absolute base case test first.
+It might be enough for you to have a simple test first, a test that's
+kind of one away from the base case.
+And if that's true for you, then you can go ahead
+and design a function like sum-data using pre-encapsulated templates.
+If you're not comfortable with that idea, if that gives you the willies,
+then don't start with pre-encapsulated templates.
+Start with separate templates.
+Start with a full set of unit tests with base case tests and everything.
+And then once your program works, encapsulate it.
+That's fine.
+For that matter, you don't absolutely have to encapsulate it.
+But let me tell you why encapsulation matters.
+Remember what I said-- cards have 8 million lines of code in them.
+In eight million lines of code, how likely
+do you think it is that two different programmers once
+wanted to use the same function name?
+Is it 99% likely or 100% likely?
+It's one of those two.
+And that's what encapsulation does.
+It lets one programmer have a whole bunch of functions with whatever names
+they want, and they just publish to the rest of the world
+a small number of functions with really good names.
+All of their internal functions are totally hidden.
+And that lets them do what's called namespace management.
+It lets them deal with this naming problem.
+And it also makes sure that other programmers don't call functions
+that they're not supposed to.
+You know about the 2htdp/image library.
+And really, what's going on when you say require 2htdp/image, what you're saying
+is you're talking to the encapsulation mechanism built into Racket,
+and you're saying, hey, grab the whole whack of stuff that's
+the 2htdp/image library and let me see only the published names.
+There's also going to be a lot of unpublished names.
+As a general rule, when you grab a module of code,
+there's far more unpublished or hidden names than published names.
+And that's what a require mechanism is letting you do,
+is it's letting you say, just let me see the public names.
+Leave all the other ones encapsulated.
+
+So there you go.
+That's the first use of local, which is to support encapsulation
+in the teaching languages.
+Other languages have more sophisticated encapsulation mechanisms,
+but the basic idea is always the same-- take two or more functions,
+hide all the helpers inside a capsule so that the rest of the world
+sees only the functions that are really appropriate for the rest of the world
+to call.

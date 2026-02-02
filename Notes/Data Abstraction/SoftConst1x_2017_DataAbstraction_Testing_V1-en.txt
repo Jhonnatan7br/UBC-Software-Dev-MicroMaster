@@ -1,0 +1,48 @@
+ELISA BANIASSAD: OK.
+So now that we have our specification for insert,
+we're all set to start implementing.
+No!
+We are not going to implement yet, because we have not yet
+written our test suite for insert.
+The next stage of our four-stage design process is Testing.
+And so first, of course, we specify our data abstraction.
+Then we think of all of the range of usage scenarios
+to make sure our specification is up to scratch.
+And then we think about all of the test cases for that specification.
+Now, test cases are a great way to actually encode the specification.
+Because the specification just sits as comments
+on top of the signature of the method, and those comments
+aren't checked by anything.
+They're not checked by the compiler, they're
+not checked by the runtime environment.
+They're not checked at all.
+So the method could actually be quite out of sync,
+or there could be a real error in the specification
+and nothing would tell you.
+So instead, what it's nice to do is to write tests
+that capture the meaning, the semantics, of your specification,
+so that you can see whether your method actually satisfies that spec.
+So this is kind of part of several design methodologies,
+including agile processing, or agile programming, or test-driven design.
+So in those, generally what you do is you first write your tests.
+
+And then you run the tests, obviously.
+And then those tests will fail, because you have not
+done any implementation yet.
+You've just written the tests and the stubs of the method
+so that the code can compile and run, basically.
+But you haven't implemented anything yet.
+Then you run them and they fail.
+Then you implement your abstraction.
+That's not right.
+Implement your abstraction until the tests pass.
+And in fact, it's not as linear as this.
+What you will actually do is you write the tests, you run the tests,
+they fail, then you implement.
+And then you run the tests again, and then the tests sometimes still fail.
+And you kind of keep looping like this until, finally, all of your tests pass.
+And at the point that all of your tests pass,
+then you know that you have completely implemented your method according
+to its specification.
+And that is all as long as you have a good, comprehensive test suite.
+So next, we're going to look at making a comprehensive test suite.

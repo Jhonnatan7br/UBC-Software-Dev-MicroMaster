@@ -1,0 +1,164 @@
+
+GREGOR KICZALES: Now we're going to look at another form of data
+called an arbitrary arity tree.
+And as we'll see, this form of data is characterized
+by having two cycles in the type comments.
+It'll be the most complex form of data we've seen so far.
+But don't worry.
+A pretty incredible thing's going to happen here.
+Because of everything we've learned about type comments and references
+and templates and trusting the natural recursion,
+designing functions that operate on arbitrary arity trees
+is actually going to be pretty simple.
+It's only going to be a very little bit harder than designing
+functions that operate on lists.
+That's what you'll see as we work through these next couple of videos.
+So here's what I mean by a file system.
+And again, this could just as well be a photo organizer or something like that.
+But when I look at the files I'm working on for this class, there's a desktop.
+On my desktop, there's these folders.
+And there's a folder called mooc, and in there there's a folder called current.
+And in there, there's a whole bunch of other folders,
+including one called starters, and then there's week 3.
+And here's all the starters that we had a little earlier in the course.
+So what we need to do is to come up with one or more data
+definitions that can help us represent an information structure like this.
+Then we're going to simplify it a little bit.
+We're not going to worry about the actual contents of the files.
+We're just going to worry about a directory structure
+like this that has files in it.
+And for the actual contents of the files,
+let's just assume they hold a single number.
+A single integer is all each file holds.
+If I redraw it this way, then it looks like, or at least to a computer
+scientist, it looks like a tree.
+This is an arbitrary arity tree, and I'll say why it's that in a minute.
+First, let me say why it looks to me like a tree.
+It's because computer scientists draw trees upside down.
+We're kind of drawing the roots or something.
+And let me just point something out about this.
+What I'm going to say about this tree, or this model
+of an arbitrary arity tree, is that each element can have sub-elements.
+So for example, mooc has a sub-element or a subfolder current.
+And current has a number of subfolders, and starters has subfolders.
+But aisle-starter just has data.
+It's a file that just has data.
+And to simplify things for now, we're going
+to say that the only data it can have is just a single integer.
+We're not going to model storing the actual contents of the files in here.
+Now, why is it called arbitrary arity?
+Well, unlike lists, which were arbitrarily long in one dimension
+or arbitrarily wide in one dimension, this arbitrary arity tree is arbitrary
+sized in two dimensions.
+A given folder or directory like w03 can have
+an arbitrary number of elements in it.
+Current has a number of them.
+Starters has a number of them.
+w03 has a number of them.
+So it can be arbitrarily wide.
+In addition, the structure can be arbitrarily deep.
+This particular one is 1, 2, 3, 4, 5 deep, but it could be deeper.
+Remember, arbitrary doesn't mean large, and it doesn't mean random.
+It just means that before we start out we don't know how big it will be.
+Now, in order to deal with this arbitrary-sized in two dimensions
+structure that this has, the key thing that we're about to see
+is that it's going to require two cycles in the type reference graph.
+Remember, in order to have an arbitrary-size list,
+we had one self-reference cycle in the type reference graph.
+Here we're going to see that we end up having two of them.
+So now let's turn to DrRacket and start looking at that.
+
+Now I'm in fs-starter dot racket.
+And what I have here is the beginning of two data definitions
+that can be used to represent arbitrary arity trees like this one.
+So first is a structure definition, elt, which has three fields--
+name, data, and subs.
+And of course, we have to keep reading to know what that's about.
+And there's a type element and it says, Element is a make-element string
+integer ListofElement, and an element is an element in the file system.
+So that's going to be something like from our picture-- a mooc,
+or current, or lecture exercises, or starters.
+And what I'm saying here, because we said in the analysis
+that an element could either have sub-elements or it could have data,
+I'm saying here that there's data, which can be an integer,
+and there's subs, which is going to be an arbitrary number of elements.
+And it says if the data is 0, then subs is considered
+to be a list of sub-elements.
+If data is not 0, then subs is ignored.
+There are other ways to do this where, instead of having an element have
+both fields, in other words, both data and subs,
+you make two different kinds of elements.
+I thought this was simpler for our purposes for now.
+And then what's ListofElement?
+Well, ListofElement is just an ordinary list of type,
+like we've seen several times now.
+It's just a list of file system elements.
+Now let's see if this can build up the structure we want.
+So what I'm saying here is F1 is an element called F1.
+It has a non-zero data, so it's like an ordinary file.
+That's why I called it F. And its subs are supposed to be empty.
+Subs are ignored basically, so I just put empty.
+So that's F1.
+F2 is just like F1.
+It's another file.
+It happens to have the contents or the data too.
+An F3 is the same.
+Now, what's D4?
+Well, D4 has 0 for the data, so that means we're
+going to pay attention to the subs.
+And what subs does it have?
+Well, it has two subs, F1 and F2.
+So that looks like this.
+And then D5 has a single sub, F3, and then D6 has both D4 and D5.
+So that little set of examples there builds up this directory structure
+here.
+And I think we could see now pretty clearly,
+it looks like we can build an arbitrary arity tree here.
+Let's see why that is.
+Well, if we look at ListofElement, ListofElement
+has a self-reference in it.
+And that's what's allowing a directory's list of sub-elements
+to be arbitrarily long.
+That's what let's this list have F1 and F2 and this one have D4 and D5.
+And clearly those could be as long as they want.
+Now, in addition to that self-reference, notice
+that there's a reference here from the middle of the Listof Element type
+back to the element type.
+We've seen that kind of reference before.
+But hang on because there's something else going on here.
+There's also a reference from the element type down to ListofElement.
+Now, those two references together form what's called a mutual reference.
+So we're going to label them MR. Because you
+can go from the definition of ListofElement up to Element,
+and the definition of Element down to ListofElement.
+And there's a cycle there, a mutual reference cycle.
+So in addition to the self-reference cycle, which
+is letting one directory have an arbitrary
+number of immediate subdirectories, the mutual reference cycle
+between ListofElement and Element is letting that be arbitrarily deep.
+So D6 can have an arbitrary number of subdirectories, D4 and 5.
+And each of those can have an arbitrary number of subdirectories
+and so on and so on and so on.
+And
+So what you could see here is that these two cycles in the type comments,
+the self-reference cycle and the mutual reference cycle,
+support an arbitrary arity tree, a tree that can be arbitrarily
+deep and arbitrarily wide at any point.
+One quick note about these arrows and the way
+you label mutual reference arrows.
+The way I do it is first I draw all the arrows.
+Then I label all the self-reference arrows.
+Then I put my finger on an arrow, and I start following it around
+through the types.
+And if I ever come back to that same arrow,
+then all those arrows along the way were part of a mutual reference cycle.
+And then any arrows that aren't part of a mutual reference cycle
+and aren't part of a self-reference cycle
+are just ordinary reference arrows.
+In this case where there's just two types, it's easy.
+But sometimes you could have mutual reference through three or four
+or five or six or more types, and then it's a little harder
+to get the arrows right.
+And it's very important to get them right.
+We're going to see it helps us a lot with the templating
+that we'll do in the next video.

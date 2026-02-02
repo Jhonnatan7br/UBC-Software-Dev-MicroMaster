@@ -1,0 +1,200 @@
+
+REID HOLMES: As we mentioned before, when we're thinking about our APIs,
+we really want to consider their usability.
+That is, how easy is it for a developer to look at our API
+and learn how to use it to accomplish their specific tasks?
+A core part of this process is to think about the affordances
+we give a developer for an API.
+What kinds of names do we give our APIs?
+How can we make it clear what actions they perform
+and what protocols are required in order to make the actions stream together
+to perform specific tasks?
+So when we're thinking about the usability of our APIs,
+we really want to take some aspects of good development practice
+and combine it with good usability practice
+where we think about our users, we think about their tasks,
+and we try to design our APIs in a way that make it easy for users
+to use our APIs correctly and hard for them to use them incorrectly.
+Let's take a look at four specific aspects of API usability--
+four principles that we can keep in mind when we're designing our APIs.
+So the first is visibility.
+
+All right, so what we want to think about when
+we're thinking in terms of API visibilities--
+we want to make it easy for a developer to look at our API
+and understand what it does.
+And when we're thinking in this way, what we want to do
+is really prioritize what parts of the API are most important.
+If we have 1,000 API methods but every task uses two of them,
+we want to make sure that those API methods
+or classes are extremely prominent so developers can easily find them.
+And we also want to make it hard for a developer to misuse an API.
+So let's take a look at a concrete example
+of how we can improve the visibility of an API
+in a way that makes it harder to misuse an API.
+So let's consider a sorting method within a online store, or just
+a store of any kind, right?
+So we have a collection of items that we want to sort.
+
+Now, we have a lot of options here for how we can manage this sorting
+artifact, but we're just going to do is we're going to pass in a string
+here according to the parameter that we want to sort on.
+
+All right, so this just says we want to sort the items based on their clearance
+attribute, right?
+So those items that are on clearance should be sorted first.
+So let's go and transform this and make it a little bit harder
+to misuse this API.
+Because if you think about it, if you spell clearance wrong
+or you don't know what the other words are,
+it can be easy to confuse this sort routine in a way
+where it's not going to know what to sort on.
+All right, so let's try to fix this up.
+So what we're going to do instead of taking a string here,
+is we'll use an enumeration, which makes it much clearer for the developer
+to see, what are the options that are available for sorting?
+
+And in this way, the developer can quickly
+go and look at the filter enumeration and see what all of the options
+are, and just use them directly.
+Also, the type checker within TypeScript, in this case,
+would go and check this enumeration to make sure we're using a valid value.
+So this is a way that we can make a small change to the visibility
+of specifically this parameter.
+That makes it easier for a developer to understand
+how to use this sort routine.
+Next we want to think about the model that a developer using our API
+has to keep in mind.
+And when we're thinking about the model, we
+want to provide them with the abstractions that make it easy
+for them to accomplish their tasks.
+
+So what we want to do is we want to consider, for instance,
+having names that map to the tasks that the developer is trying to accomplish.
+So let's think about an online store.
+We could have a method that looks like this for getting an item.
+
+So here we're saying, hey, store.get product ID.
+That's some kind of a string.
+And instead, what we want to say is, hey,
+this method-- get-- isn't extremely descriptive.
+It doesn't help us to understand what exactly is going on here.
+So we can make a really simple change to adapt
+it to fit more the mental model that a developer using our API would have.
+So this re-factoring wouldn't be very complicated.
+All we'd need to do is just provide a more descriptive name.
+
+And this was an extremely simple change, right?
+We just changed get to getProduct, but it
+makes it easier for the developer to understand what is actually
+going to happen within this method.
+Another thing that we would want to do, is
+we might want to think about the abstractions
+that we're providing to the developer.
+We want the abstractions that we give them
+to map the level that they're thinking about these kinds of tasks themselves.
+So again, within the store context, let's think of another way
+to get an item out of a store.
+
+All right, so this is quite complicated, right?
+So we have store.getDept with the department ID,
+dot getShelf with a shelf ID, dot getProduct with a product ID.
+But if we think about what the developer wants to do,
+they don't care about the department, and they also
+don't care about the shelf.
+What they want to do is they want to just get the product, right?
+And this drives us towards an API that looks like this one, right?
+This is what we want to see-- just store.getProduct with product ID, where
+we abstract away the notion of a department and a shelf
+from the developer, right?
+So this is the kind of case where we want
+to think about the level of abstraction that we're actually
+giving to a developer as well.
+Next, we want to think about ways to use our type
+system to provide an effective mapping between the ideas
+that a developer has in mind and the affordances provided by our API.
+
+So one concrete example of this would be, again, with getProduct, right?
+So when we think about our definition for getProduct,
+what could it look like?
+It could look like this.
+
+And in this case, the API just says, hey, we have getProduct.
+It takes a P-I-D-- a "pid,"-- which we probably define as being product ID.
+That's a string.
+And it returns it and it gives us some kind of object back,
+or some kind of variable back.
+But we don't know what it is, right?
+But alternatively, we could provide much more detail
+here with a very simple change.
+
+So here, what we're saying is this getProduct
+API is going to return a product instance, right?
+And this can be really helpful, because again, as a developer,
+you know exactly what you're getting back.
+You can go and look at the type declaration for a product
+and know what fields and properties are available on that object, right?
+So this is a really simple change that makes
+it much clearer for a user of this API to understand what kind of object
+they're going to get back, and it better suits the internal mental mapping
+that they'll have for this API.
+One final property of API usability that's often overlooked
+is that of feedback.
+
+And in terms of feedback, what I mean is we want our APIs, at runtime,
+to give the developer-- the person who's using that API--
+constant and early feedback when something erroneous is encountered.
+We don't want an API to chug along oblivious to errors,
+or trying to hide errors from the user.
+We want them to let the user know when they've used an API incorrectly.
+So let's take a look at a concrete example.
+Let's go back to that sort example from earlier.
+
+So here we see items.sort('clearance').
+So that's a mistake, and that's not going to work, right?
+So if we go and the API interprets this method and does its best to sort,
+or returns the items in an unsorted manner or an incorrectly sorted manner,
+it's not going to be doing the developer any favors.
+So what this API should do is as soon as it gets its parameters,
+it should validate-- especially parameters-- to make sure that they're
+meaningful in this context, right?
+So sort, as its first action within the API,
+should check that the parameter makes sense.
+And when it doesn't, it should throw a meaningful and descriptive error
+back to the user that says, hey, clearance is not a known key-- not
+a known sort key-- right?
+And it can give that feedback right away.
+Because when we're thinking about our APIs,
+we want to make it easy for developers to know
+when they're doing the right thing, and also
+make it easy for them to debug when the wrong thing is happening.
+We can also measure these principles using various metrics
+when we want to reason about the overall usability of our APIs.
+So in terms of visibility, one thing that we can measure is,
+how long does it take to learn how to use an API?
+Again, when there are thousands of API methods,
+can the developer quickly hone in on the ones they care about the most?
+In terms of model and mapping, we can think about how many actions--
+how many API actions-- it takes to perform a task,
+because a developer doesn't actually care about the individual actions.
+They only care about tasks.
+So the fewer actions they have to take, the better it is for them, right?
+So we can think about them in terms of actions.
+Also for model and mapping, we can think about error rates.
+How well does the API prevent us from doing something
+that doesn't actually make sense?
+How can we ensure that the developer does the right thing?
+And finally, in terms of feedback, we can think about error rates as well,
+right?
+We can think of, actually, user satisfaction more than error rates.
+So we could think about, how satisfied is the user of this API?
+If the API goes and chugs along and does its best effort
+but returns the wrong result because it encountered some erroneous condition
+that it didn't tell the developer about, they're
+probably not going to be very happy.
+So we can poll the user satisfaction by talking to developers
+and seeing what they think about our APIs.
+Can they trust that they're doing what they expect?
+And these are all things that we can concretely
+measure about these four principles to help us to understand
+the overall usability of our APIs.

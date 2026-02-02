@@ -1,0 +1,210 @@
+
+SPEAKER: All right, so we're back to our hair salon.
+We've run it and already we're seeing a horrible problem.
+The code doesn't even run very far and we're
+getting some kind of awful looking thing.
+So basically what we're seeing is the code is dying.
+What we are seeing is something called an exception.
+And when an exception happens, it often prints
+out something called a stack trace that tells us where in the code
+we are when it dies.
+The stack trace shows us the whole stack of methods that led to this point.
+It depicts Main at the bottom, because that's the first method called.
+And then called from there was makeNewBooking,
+which then called ArrayList.set, which then called a method called rangeCheck.
+And it's inside of rangeCheck that we died.
+And we can tell because that's where we see our exception message.
+And it's complaining that there is an out-of-bounds exception--
+an IndexOutOfBoundsException.
+So what is an IndexOutOfBoundsException?
+Out Well, we can see that we're trying to access item number 23.
+But there are only 17 items in the array.
+So basically we're trying to access outside the memory that has
+been nicely allocated to the area list.
+And we're not allowed to access off the end of our array.
+So let's build some hypotheses for why this is happening.
+The first thing that we might have done is
+we might have passed the wrong thing into makeNewBooking from main.
+And for this, we need to check the parameter list
+and see that we're putting in the right thing.
+The second option is that we're not making the correct booking.
+It seemed fine the last time we looked at it,
+but this code has been changing a lot.
+So to check that hypothesis, we would want to look inside of makeNewBooking
+and make sure that the booking is being indexed correctly
+and that nothing odd is being done to it before the Add method is called.
+OK, so let's check hypothesis 1 first, that we
+did something wrong at the call site.
+And actually, we can see that's exactly what's happening.
+The booking time we're passing in is 22, and that's clearly a typo.
+It should be 12 if it's going to match the call right beneath it.
+Typos like this happen all the time.
+And this one's easy to fix.
+We can fix it just by changing this time to 12.
+So great, that's fixed.
+But we don't just want to stop there.
+That was pretty trivial.
+But we still want to chase down our second hypothesis just
+to make sure that we can cover it off.
+So I'm going to set a break-point here, because I
+want to step in to makeNewBooking and make sure that nothing else strange
+is happening.
+OK, let's run the debugger and step into makeNewBooking.
+So here we have our booking time.
+And we can see that the customer is me.
+And that all the elements in the booking are null.
+And then we're moving down and, oh, hang on a second, the booking time has
+changed to 13, which is really strange, because it
+doesn't seem like we've actually done anything to the booking time.
+It seems like we're just taking the booking time,
+printing it out, and passing it into the Set method.
+But in fact, if you look very closely, there's a typo here.
+And amazingly and annoyingly, this little variable
+is being changed because of this typo.
+Notice that we have all these plus signs that knit together
+the string that we're printing out.
+There must have been a couple here as well, because we
+have two pluses right in a row.
+And two pluses in a row looks innocent enough,
+but actually they have great meaning in Java.
+If you put two pluses together like this after an int,
+it actually increments the value of that int.
+So this Print statement was actually doing some unexpected work.
+It was actually incrementing the booking time value.
+Oh, no.
+And if we keep stepping through, I actually
+end up being booked at 13, even though I was trying to be booked at 12.
+So let's stop execution here and erase this.
+And now we should be booking it at the correct time.
+And we can step through and see now that it's all happening correctly.
+Yup, Elisa is booked at 12.
+Now, let's go back to Main and run the whole thing
+to see what else is going on.
+And there are still bad things happening.
+So first there's this line in bright red,
+but we're going to ignore that for now and take a look at the output above it.
+We make a new customer Elisa.
+The customer is booked at 12.
+But then there's no customer booked at that time.
+OK, why not?
+I'm going to add one more call here to perhaps give us
+more insight into what's going wrong.
+I'm just going to try looking for a booking that doesn't exist.
+Let's verify a booking at time 13.
+Oh, and now we have another problem, something
+called a NullPointerException.
+A NullPointerException happens when you try to access an object that is null,
+so it hasn't been filled in with all of the lovely details of construction.
+It's just sitting there being a pointer to nothing.
+If you try and call a method on a null object,
+you will get this null pointer exception.
+So we have a couple of issues with verify booking.
+It's saying that there's no booking when we know there is.
+And when there is no booking, it really, really gets upset.
+So both of these problems seem like they exist within verifyBooking.
+So let's kind of make a blanket hypothesis about these.
+It seems like something is going on with the retrieving of bookings
+inside of verifyBooking.
+Now this is not the best, most well-formed hypothesis,
+but it at least gives us a starting point for where to look.
+It seems like the customer name isn't being retrieved properly
+for some reason, maybe.
+And then we have this second problem, which is this NullPointerException.
+So we're going to chase these down.
+Let's put a break-point at the first call to verifyBooking.
+And we see our salon and it has a booking at 12.
+OK, so let's step in and through.
+So this is a valid booking, because we know that Elisa is booked at 12.
+And we can see that this variable booked customer is the object for customer
+440, which is Elisa.
+So we should go into the second case here,
+where we have a customer with the correct name.
+But if we look what's actually going on, we're going into this first case.
+Why is this happening?
+OK, if we look carefully up here, it turns out
+that we have a typo in our condition.
+Instead of checking that the customer is null,
+we're checking that the customer is not null.
+We're doing the opposite thing to what we should be doing.
+So we're going into the wrong branch of our conditional.
+We can change this to check that the customer equals null.
+That's when we want to say there is no customer booked at that time.
+So now if we rerun this, we've actually solved both problems just
+with fixing that one typo.
+We have a confirmation that Elisa is booked.
+And we've also gotten rid of our null pointer exception.
+How did we manage that?
+Let's change it back to how it was and put the break-point at the next line
+instead to investigate.
+If we step in here, we can see that this time the customer is null.
+So the first test fails.
+And then in the next conditional, we're calling this method on a null pointer.
+Calling a method on a null object or on a null pointer will kill execution.
+So we weren't catching the null case correctly.
+So by changing this to equals, equals, we've actually solved both problems.
+If it's null, nothing will ever be called on it,
+which means that it will not crash.
+And if it's not null, then we will come in here and check the name.
+Now, let's run it again and chase down this craziness that's happening here.
+So you can see that these exceptions when they come in
+are not actually very polite.
+They just kind of overwrite all your output.
+OK, now we have another kind of exception,
+an IndexOutOfBoundsException.
+We're indexing at 17 and the size is 17.
+Now remember in Java and programming in general,
+arrays are indexed starting at 0.
+So the size of the array is actually one more than the last indexable
+item in the array.
+So we shouldn't be indexing past 16 in this array.
+So what's happening?
+Clearly the wrong number of elements are being initialized in this array.
+So hypothesis 1, the initialization is wrong.
+And hypothesis 2, it isn't being accessed correctly.
+So let's take a look at initialization first.
+We'll go into hair salon and see how it's being initialized.
+And sure enough, we can see that we have yet another typo.
+We want to be able to index all the way up to 17, but we didn't allow that.
+This should be a less than or equal to sign.
+We can run that again and see if it helps.
+Oh, no, it actually doesn't help.
+That's interesting.
+Why not?
+Now, we're indexing at 18 and the size is 18.
+Well, we know that this was wrong.
+But it seems like something else is wrong as well.
+So let's investigate our second hypothesis.
+Let's see where it's being accessed.
+To find out, we can actually look right here.
+It says it's being accessed in PrintBookingList.
+We can look in here and see that it says less than or equal to 19, another typo.
+Typos will totally get you in programming.
+Human error is no joke.
+It looks like maybe in an earlier version of this
+we wanted our hair salon to be open until 7,
+and then we changed it to be open until 6, or 5.
+And we have all these, what we call, magic numbers hanging around.
+Numbers that we've put in literally and then we have to go chase down any time
+we want to make a change.
+We don't really want these in our code.
+So what we want to do is replace these magic numbers either
+with a symbolic constant or we want to calculate
+the actual size of this array.
+So here we'll say when I is less than bookings.size.
+And then it will never index off the end of the array
+because we'll always be indexing at least one less than the size.
+So now if we run it, we've finally eliminated all of our errors.
+We're indexing right up to 17 here in our booking list, which
+is what we want, and not passed it.
+Now really, we shouldn't be using a magic number here in our initialization
+either.
+Instead, we could add a text field called MaxTime
+and set it in the constructor to be 17.
+And you could actually take this in as a parameter
+if you wanted to make salons with different numbers of hours.
+But for now we'll just say 17, since we're only using at one time.
+And here, I'll say I is less than MaxTime.
+So now if we want to change our salon hours,
+we only have one place where we'll need to go.
+This will protect us from those pesky typos.
+And it's much better programming style.

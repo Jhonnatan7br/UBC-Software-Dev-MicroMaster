@@ -1,0 +1,63 @@
+
+ELISA BANIASSAD: OK.
+So now, we've been through how to draw out
+the execution flow of for loops and if statements and regular methods.
+And so now, let's do this monster example
+and just put the whole thing together.
+So we have this method called [? latz ?] going on.
+First, it runs a for loop, just printing out all the strings in a list.
+Then it checks inside the list, if list contains dog, then it prints out dogs.
+If the list doesn't contain dogs, it prints out no dogs.
+And then, of course, it prints out done.
+Not of course.
+Not every method has a "print done" at the end, obviously.
+So this is the flow.
+Let's draw this whole thing out.
+So we start with the "start."
+And that's, of course, this curly bracket.
+The first statement in here gets its bubble.
+Here we go.
+So this is a for loop.
+And then it's just for string in the list.
+
+And sometimes, you could write also if there is a next.
+If more items in the list, you can write something
+descriptive in here that links it back to the for loop
+and helped you understand the dynamics of what's going on.
+And if there are more things in the list,
+then we go into this statement, which is the true block of the for loop.
+So we say print s.
+
+And then, once this line of code is done,
+it doesn't just jump to this line of code.
+Instead, it goes back up to the for loop to check again
+to see if there were more items in the list.
+So that's the loop structure.
+And then, if this is false however, we come down here
+and we execute this if statement.
+So we say if list contains dog.
+
+So that's our descriptive bubble that corresponds to this statement.
+And if it does contain the string dog, then we're
+going to the true block of this if statement, print dog.
+And that's if it's true.
+And if it's false, then we go into the else block instead.
+So we print no dogs!
+
+And remember, the print dog doesn't feed into l statement.
+It doesn't go from here to here.
+It's going to skip over the l statement and go straight to print done.
+
+So this if statement is going to end and keep going.
+It doesn't loop because it's not a loop.
+It's just a conditional statement that will continue executing.
+So once print dog has been printed inside of this block,
+we'll go right down to print done.
+And otherwise, we print no dogs, and then we come down to print done.
+And then from print done we go to the end of the method.
+So now you know how to depict execution flow in a method,
+and you have a couple of good conditional and control structures
+under your belt. You now know how to write a for-each loop,
+but for loops are pretty similar.
+So this gives you the idea of how looping works.
+And you know how to deal with conditional behavior.

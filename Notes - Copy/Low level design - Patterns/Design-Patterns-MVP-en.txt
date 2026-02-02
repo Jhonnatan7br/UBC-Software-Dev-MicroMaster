@@ -1,0 +1,132 @@
+
+REID HOLMES: Another compound pattern is Model View Presenter, or MVP.
+MVP really is a modernization on MVC that
+tries to enhance the testability of your systems.
+The way it does this is by really decreasing the amount of code that
+can be in the views, and forcing the controllers, or presenters,
+in MVP's case, to be more featureful.
+The model component in MVP is really the same as we saw it before in MVC.
+It contains the data objects for our system.
+Now there is one small difference.
+While you can use the observer pattern within MVP the same as you do in MVC,
+it's often the case that the model will instead interact with the middle
+layer-- the presenter in this case--
+using an event bus.
+An event bus is really just a third-party component
+that moderates the interactions between these two different layers.
+And there's just one thing to be aware of.
+If it's not required, but you'll often see this in practice.
+Next, we have the presenter.
+So the presenter acts just as the controller did in MVC,
+but with a few minor differences.
+Now one thing to really be careful of when you're designing your presenters
+is to make sure they don't have any dependencies on user interface
+components.
+And this is important because the presenter in the MVP pattern
+needs to be easy to test.
+And this at the core of the pattern.
+And once you start depending on UI components,
+it becomes much slower and more troublesome to do this testing.
+So you need to be really careful not to do that, you when
+you design the core of your presenters.
+The view is where the biggest differences in MVP lie.
+So one thing that we'll notice here is that the view
+isn't coupled to the model at all.
+What the presenter does is it acts as a mediator.
+It can go and update, and update the model in retrieve state.
+But it responds to notify events, but it never, ever
+passes model objects to the view.
+Instead, the presenter only interacts with the view using primitive types.
+So it'll go and it will send strings, and numbers, and arrays
+of strings and numbers, up to the UI.
+And those will be rendered, but the view won't actually get model objects.
+Now this is great from a testing point of view.
+Right, because if you want to test your presenter,
+you know that the interactions from the bottom level
+are going to be these models that are really well-defined.
+But you know that the way that it responds to any interaction
+is through primitive types.
+And primitive types are really easy to create assertions for.
+Also, by not passing model objects up into the view,
+it becomes much harder to have heavyweight views.
+Because they don't have objects to work with,
+they only have primitive strings, and numbers, and things, right.
+There's not a lot of data up there.
+So the view really has to pass data down to the presenter in a simplified
+format.
+And allow that the presenter do all of the logic parts of the application.
+In this way, the views end up being really lightweight,
+and the presenters are forced to take on a much heavier burden.
+And that's exactly what we want anyway.
+Because the views are the things that are the most likely to change.
+And we want those changes to be easier to reason about.
+In fact, in practice, what you often end up doing with MVP
+is you'll write a lot of tests for your presenter and model,
+but you might validate your views only by inspection.
+Just by looking at the code.
+Because it's a lot harder to screw up a method,
+if it's just iterating over a list of strings,
+than if it's iterating over some complex data type
+that's come up from the model.
+So just like we did with MVC, let's take a look
+at the interaction flow that happens with an MVP.
+So the first thing that happens is the user performs some kind of action.
+And this gets passed down to the presenter.
+And again, like we said before, if this action includes data,
+only primitive versions of the data will be passed to the presenter.
+The presenter will then go and modify its internal state
+and update the model as it needs to.
+And that will be the second thing that happens.
+Once the model is updated, it will go and fire
+events that get passed back up to the presenter, in this step three, here.
+So one thing to keep in mind here, that's a little bit different,
+especially when you're using an event bus,
+is the model often passes an instance of itself along with this notify event.
+So you think of this as being the push version of the observer pattern.
+So the presenter doesn't need to go and then retrieve the data
+state from the model again.
+Now once the presenter has this updated version of the model,
+the next thing it's going to do is go and update the view.
+This is the last step.
+Now again, it's really important that this update step is only sending
+primitives up to the view.
+Right, so if you tried to log in, if your action was to do a login,
+and you provided the wrong password, this
+wouldn't go and send some type of error object back up to the view.
+It would go send a specific error message to the view.
+It might say set error, with the error string.
+So it is really important that there's only primitives coming down,
+and primitives going back up.
+And this really does, again, keep our views lightweight and easy
+to test, while also forcing our presenter
+to take on the burden of containing all of the business logic
+within our application.
+Just like with MVC, the main goal of MVP is to decouple the view from the model.
+But unlike MVC, MVP really does enforce this decoupling
+by not allowing any model objects to ever make it up to the view.
+So this is great, from a testing point of view,
+but it's bad in that it makes the presenters quite large.
+So it's often the case that we just take a step back and think
+about how we can split up our presenters,
+so that we don't just have one presenter object, which contains essentially all
+of the logic for our whole application.
+Also, the way that the MVP model uses the event bus
+changes the efficiency of the system.
+So this is where we go and we step back, and we're
+able to use the event bus to maybe make smarter decisions about how
+these notify events should happen.
+And this is one way that the complexity of the application can be simplified.
+In terms of the Mario example we talked about for MVC,
+the biggest difference comes from this decoupling
+between the model and the view.
+So what we need to do is we need to have the presenter interpret those Mario
+model and enemy model objects that get modified through the update
+notification path.
+And we need to make it so that the presenter then goes and sends
+primitive objects to the view, which specify how different Mario view
+figures are going to move around the screen.
+Right, so this difference is really enforced in this case.
+The model objects that we created for our MVC pattern
+can't just be passed up to the view.
+The presenter is going to need to interpret them, and pass up
+primitive representations of those objects instead.

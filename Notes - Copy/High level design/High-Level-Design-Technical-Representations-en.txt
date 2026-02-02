@@ -1,0 +1,122 @@
+
+REID HOLMES: All features, bug fixes, and even new systems all
+start at their core with an idea.
+
+And the nice thing about an idea is it's really easy to think about.
+This is just a simple sentence-- fix this bug, add this feature,
+make a new game.
+Right?
+It's a simple high level ideas.
+But when we want to go and build this into a software system,
+we need to make it more concrete.
+We need to add more detail to make this be a possible task.
+And this often requires multiple different layers
+of technical representation.
+So the first thing that we want to do with an idea
+is we want to transform it into a specification.
+
+And this something that we've seen before.
+We're going to take an idea into a specification.
+This is just like user stories.
+So we're going to go and take our idea and we're
+going to flesh it out in the form of a spec
+so we have a better idea what we want to build.
+Now in this process we'll often learn things
+that will cause us to go back and modify the original idea.
+This is an iterative process.
+Because by making this idea more concrete, we'll learn things.
+And we'll figure out things that might be inconsistent
+or things that are harder than we expect or that weren't fully captured
+in the original idea.
+And we'll go back and we'll modify the idea.
+Now once we have a specification that we're pretty happy with,
+we need to go and, again, come up with a new technical representation
+and transform it into that so we can start to think about how
+we're going to build the actual system.
+And this next level down is the design.
+
+Now transforming from the specification to the design is pretty challenging
+work because specification is in more of a plain text type domain
+as is the idea.
+But the design is much more concrete.
+When we're looking at the design, we're thinking in terms of UML diagrams
+or some other type of diagrammatic representation.
+So moving from this domain down to design is pretty challenging.
+But again, just like up here, this is also an iterative process.
+We will learn things by creating the design that
+might have to go back and feed back into our specification,
+leading to other changes.
+So we need to go and deal with this step as well.
+But our design isn't enough.
+We can't execute a design.
+So we need to go and come up with another representation still.
+And that's the code.
+
+Now the code is--
+just like here-- in a different design space or different representation
+space than the design.
+But it is still closer.
+Right?
+When we going from design to a code, we have our classes.
+We have our fields.
+We have a general idea of what we're doing.
+So this step is often less challenging than managing the transition
+between specification and design.
+But again, still once we go and implement
+this low level representation, we'll go and learn things.
+Well figure out that we had shortcomings in our design
+there's going to have to feed back into the design
+so we can reason about whether or not this
+the whole design that we have makes sense.
+So as we move down these layers of technical representation, what
+we're really doing is we're making things more concrete.
+
+And conversely as we move up these layers,
+we're making things more abstract.
+
+Now it's not that it's easier to make things more concrete
+or easier to make things more abstract.
+They each have their own challenges.
+When we're going and making things more concrete,
+we're essentially having to fill in details.
+We're going to have to make up novel pieces of information.
+For instance, when we go from the specification to the design,
+we need to figure out what are classes, what are our methods going to be,
+what public fields will we have.
+And when we go from the design to the code,
+we need to think about-- hey, what private methods are
+we going to have, what algorithms would be using what,
+private types of data structures.
+But when we try to do design recovery from code
+we also have other challenges.
+So if we're looking at the code and trying to figure out what the design
+was-- if there wasn't an explicit design in the first place--
+we need to figure out which details we want to show
+and which ones should we hide.
+And in this case, we can see the real challenge of going up the abstraction
+hierachy moving from the design and the specification
+is a really challenging task.
+We are given a big UML diagram.
+How can we figure out what it actually does--
+what the specification was.
+So this can be really a challenging process.
+So there are challenges both in making things more concrete and more abstract.
+But the one thing to keep in mind is that there really
+is iteration within each of these steps that we need to think about.
+The other thing to keep in mind is that each
+of these different types of technical representations
+have different stakeholders that are interested in them.
+So if you're the product owner you're obviously
+extremely interested in the idea and the specification.
+For the design and the code are much less interesting to you.
+And if you're, for instance, a QA developer,
+you're going to be interested in the code and maybe the design.
+But the idea and the spec might be less interesting to you.
+I guess, actually, if you're QA person you're
+going to want to be building your test from the spec.
+But the scope of what you promote will be different.
+So These different representations provide different value
+for different stakeholders.
+And every system will have multiple layers of technical representation
+that will be used to help provide clarity on what the system does
+and how it should be built.

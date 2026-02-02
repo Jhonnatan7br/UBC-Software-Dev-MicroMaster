@@ -1,0 +1,88 @@
+
+ELISA BANISSAD: OK, so now I'm going to show you a bit more technical a loop,
+and that's the for loop.
+So the foreach loop let you nicely iterate
+through a list of things in an array or in a list.
+But what if you want to do something just a number of times in a row,
+and there's no list involved?
+So here I've set up this for loop so that we can elucidate this concept.
+Here's a little method called print nums, and it takes an argument, x.
+Now, we're going to use that argument x to figure out how many times we
+want to iterate through this loop.
+So here's the declaration of the for loop.
+It has three parts.
+The first is setting up the initialization
+of what's called a counter.
+So we have initialising counter.
+
+The next part of the loop is the actual condition.
+
+And then the last part of this declaration
+is actually moving the counter forward, so increment counter.
+So this is a tiny little piece of computation
+that actually keeps things moving.
+So when you think about what's going on, we've got this for loop.
+We've decided that our counter is going to start at 0.
+We're going to keep the counter going until this counter is
+basically equal to the value that's coming in here, to this value of x.
+And the way that we keep the counter moving forward so that it doesn't just
+infinitely loop with no change-- just sits at 0 forever--
+is that we have this little bit of computation
+that calculates what the next iteration of the counter should be.
+So in another kind of loop, in a while loop, you wouldn't have all of this.
+You would just have a condition, and then you
+would be responsible to put that incrementing
+code right inside of the loop.
+A lot of people have heard of infinite while loops,
+because sometimes you'll forget to increment
+your counter inside of the while loop.
+And then it just never ends.
+But with a for loop, you're forced to put
+the code that increments your counter right into the declaration of the loop.
+So let's go through and see exactly how the control flow of this whole method
+would look, because the for loop has so many little components
+that you can't just draw a big for bubble
+and then keep looping back to it.
+It's actually got a little bit more going on.
+So we have our start, and that's our method declaration.
+And then the first thing that happens is that this little local variable
+is declared.
+It's declared within this scope.
+So if you were to use i out here in this scope, you wouldn't be able to use it.
+You would get an error.
+i only exists inside of the for loop.
+So it's a little variable that's actually local to this code block.
+So first we declare i, and we initialize it.
+We set it to 0.
+So int i equals 0.
+So that's the very, very first thing that happens.
+Next, we get to our for declaration, the condition itself.
+So then we get to for i is less than x.
+
+If this condition passes, we go into the loop.
+So then we go into print i.
+So the first time that we go into the loop, it's going to print 0.
+Then it's going to print 1, 2.
+And then it's going to die, because if we passed in 3, then
+it would die when it got to the value of x.
+OK, so after we've printed i, do we go straight back up to our for loop?
+No, we do not.
+That would be an infinite loop, because we were never incrementing the counter.
+The third thing that happens is that i plus plus is run.
+So then we get i plus plus.
+And after i is incremented, then we go back and check the condition again.
+So i starts out at 0.
+Then it checks, is i less than x-- in this case, 3?
+If it is, we print i.
+And then we increment i.
+So now i is equal to 1.
+Then we say, is 1 less than 3?
+Yes, it is.
+So we print i.
+And i becomes 2.
+Is 2 less than 3?
+Yes.
+And then, is 3 less than 3?
+No, it is not.
+So then we jump to the end.
+And that's how a for loop works.

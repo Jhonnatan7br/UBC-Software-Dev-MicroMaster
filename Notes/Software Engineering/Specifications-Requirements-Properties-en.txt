@@ -1,0 +1,36 @@
+
+{
+  "summary": "Four key properties for effective software requirements: complete, consistent, precise, and concise, ensuring clarity and usefulness for development teams and customers.",
+  "keywords": ["requirements properties", "complete", "consistent", "precise", "concise", "software engineering", "specifications"]
+}
+
+REID HOLMES: When we're capturing the requirements for our system,
+there are four high level properties we want to keep in mind.
+We want our requirements to be complete, consistent, precise, and concise.
+So obviously when we're writing down the requirements,
+we want to make sure that we write down all of the requirements
+that we have for this system.
+We don't want to deliver a product that's missing important functionality
+that the customer actually cared about.
+So we want the requirements to be a complete list.
+We also want the requirements to not be inconsistent with one another, right.
+So if we have a big long list of requirements,
+we don't want some requirement down later in the list,
+down at the bottom, the 1000th requirement
+to contradict something that we said earlier in the requirements list
+or the development team won't know which is the right answer.
+We don't want them to be in that kind of situation.
+So it's really important that our requirements be internally consistent.
+Next we want our requirements to be precise,
+and this is challenging because we're using natural language to capture
+what it is we want the system to do and there's natural in precision
+in using that type of language for writing down and capturing
+requirements.
+And finally, we want each requirement to be as concise as possible,
+because our goal here isn't to bury the development team in requirements
+documents, it's to clearly and succinctly capture
+what it is the system can do.
+And when our requirements are concise, it's
+easier to check that they're consistent and that they're complete as well.
+So this is really an important property that we
+want to keep in mind through the whole requirements gathering process.

@@ -1,0 +1,176 @@
+
+ELISA BANIASSAD: OK.
+So now, with all that under our belts, we can now talk about parameter passing
+and how data flows into method calls and back out again.
+So I set up a couple of methods here.
+Let's just walk through them.
+First of all, we have this first method called whatever,
+because we don't really care too much about it.
+And inside of the method we have a declaration of x.
+So we see int x.
+Sorry.
+We don't need to write the int down.
+We're not doing that.
+And x gets a little slot that can hold a value.
+And right away, we're assigning it to the value of three.
+The next thing that happens is that we call this method, called notMuch,
+because it doesn't do very much.
+And the only thing that this method does is it takes a parameter
+and then it changes the value of the parameter to five.
+So how this works mechanically is that this value of x
+is kind of piped in to this new variable.
+But this parameter declaration is actually a variable declaration.
+It actually makes a little variable that's in the scope of this method.
+Scope.
+And what I mean by the scope of this method
+is that it only lives as long as this method is alive.
+So it makes a little variable called num.
+And that's the first thing that it does.
+And the second thing that it does is it copies the value from the argument
+down into this parameter slot.
+So it just takes this and it copies it right down.
+So now num is also equal to three.
+And then this method actually only does this one line of code.
+It just changes the value of num to five.
+So the very first thing that it does is it changes this
+and it makes this equal to five.
+And notice that x is not also changing.
+num is changing locally within its scope.
+But there's nothing in here that says that x also has to change.
+We have no pointer back to x.
+We are just changing num in here.
+As soon as this method ends, we go back up to the call site.
+It returns back.
+It doesn't return a value, it just returns.
+So we come back to this call site and then we
+go to the next line of code, which is a declaration of y
+as an integer and an assignment of the value of x to that integer.
+And that just copies the value that's held inside of x up into y.
+And that value is still three.
+Nothing that changed down here has actually
+changed x, once again, because we didn't asign x a value.
+We just assigned this local value of num a value.
+OK.
+So now that we understand how passing a simple primitive value into a method
+works, we're going to look at what happens when you pass an object.
+So here we have an object declaration d, which is a dog.
+And as we know, it sets up our little reference.
+And here we have the instantiation of that dog.
+So we have dog instance here.
+And it does all the same stuff.
+So it barks.
+And it has a / and we're going to name the dog
+Elisa, just to be self-aggrandizing.
+And this little assignment of course, means
+that we have a reference from d to this dog object.
+Great.
+Now we're going to pass our dog, D, in to our little method.
+And this time it's called bitMore, because it does a little bit more.
+So we're passing d into bitMore.
+So we call this method.
+And then the first thing that happens is it reads the parameter list
+and sets up these as kind of local variables.
+So we have myDog.
+
+And it gets its little reference spot.
+Now, what does not happen is that all of d is copied,
+and a copy is made, and given to bitMore.
+That is not what happens.
+Instead, what happens is the reference is copied down.
+So here we have a reference from myDog back up to this original dog
+instance, which means that if we change the name of my dog to be Norm,
+it will change it over here, overwriting the Elisa name.
+And then when this method ends, this local value, this local variable dies.
+So this whole thing goes away when this method ends.
+And we return back to here.
+And we still have d, however.
+D is still a live reference to this same object.
+So we can still kind of get at this object.
+And so now if we print d.name, what will come out
+is Norm, because we have changed it in this place,
+referred to something within this local scope.
+OK.
+So I've added another little line of code in this method
+just so that we can roll back and see what
+would have happened if we had had a second dog instance that we created
+within this method.
+So let's walk through it all again.
+We've already got d.
+And we've got it assigned to this object instance.
+It's already named Elisa.
+Now we call our bitMore method.
+And so that comes down here.
+And we declare our myDog variable.
+And we end up copying this reference down, which means
+that we have a reference up to here.
+But then immediately what happens is we reach this new line of code.
+myDog equals newDog.
+And that means that we're creating a new dog object.
+So we have a second one hanging around.
+Dog instance 2.
+It wouldn't be named that inside the computer.
+But this is just for illustration.
+So we have our second dog instance and it has all the same.
+Bark, name, whatever.
+I'll just put my name in here.
+
+And then we assign newDog, this newDog to myDog, which kills this.
+It completely overwrites this reference.
+And it points myDog to this new dog instance. myDog equals newDog.
+Then when we change the name of myDog, it changes in here.
+It doesn't change back up here .
+So we say myDog.name equals norm.
+So we change this.
+Then the method ends.
+And as we know, this dies when the method
+ends, because it was declared inside of the scope of this method.
+So this goes away, which means that we also totally lose
+our access to this instance.
+Effectively, it goes away too, from our perspective.
+And then when we come back up here and we say, print(d.name),
+we're going to get Elisa back out of here,
+because we didn't actually change the name of this original object at all.
+We had already created our new object, and we just changed it locally.
+So now we're going to continue our journey
+through perimeter passing by looking at passing lists into methods.
+And spoiler alert, lists are just objects in Java.
+So they're passed in exactly as objects.
+You pass in the reference to them.
+You don't pass in the whole copy.
+But let's just walk through it just to get super crystal clear on this.
+So we've declared a list, nums.
+And then we have instantiated a new list.
+And instead of drawing the circle I'm just going to draw it as a list.
+And it gets its little object names, so ArrayListInstance.
+
+And we never really need to remember this name.
+You should know that.
+And then the assignment statement means that this number
+refers to this array list instance.
+Perfect.
+Now we're passing numbers into this method creatively named useList.
+OK.
+Great.
+So we call this method, useList.
+It sets up its local variable for myList.
+myList And gives it its little spot.
+And again, rather than copying the whole list down so that we get a local copy
+in here-- no, no, no--
+instead what we do is we copy this reference down into myList so
+that myList also refers to this same list instance.
+Great.
+Then we're calling myList.add(5).
+And that means that we travel along myList
+and we're adding the number five to that list.
+Then the method ends.
+Once the method has ended this variable is no longer in scope.
+So it dies.
+And the reference dies.
+But we have another reference to this.
+So this one doesn't die.
+We still have it pointed to by nums when we go back out of this method,
+we return to here.
+We see nums.add(6).
+So we say, OK, nums. da, da, da da, da here we go. nums.add(6).
+And now our array list instance, which we have referenced at the moment
+by num, has two numbers in it, five and six.

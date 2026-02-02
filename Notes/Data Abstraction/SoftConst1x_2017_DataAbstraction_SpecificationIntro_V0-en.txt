@@ -1,0 +1,83 @@
+ELISA BANIASSAD: Now we're going to delve into the four phase design
+process for designing and implementing abstractions.
+This is going to be the process that we use through the entire course.
+So the first thing that we want to do is think
+about what the public view of our abstraction is going to be.
+What will this abstraction provide to the rest of the world?
+So we think about which methods and which operations this abstraction
+provides.
+So one, we specify.
+
+Next, we think about all of the situations in which other classes are
+using our data abstraction.
+And we think about all of those so that we can make sure
+that we've got the right specification.
+So that is staged two, use the data abstraction.
+Next, we look very carefully at each of the methods
+that we have designed, that we have specified,
+so that we can imagine all the scenarios in which we use them
+correctly and also incorrectly.
+And we write tests to exercise all of those situations.
+So stage three is that we test our data abstraction.
+And yes, we test even before we've implemented, just
+like you've done in previous courses.
+And only then do we get to actually implementing the data abstraction.
+So stage four is implement.
+
+And let's get started.
+Just to get us into this idea of how to design data abstractions,
+let's imagine a really, really simple clean example of data abstraction, just
+a very simple one.
+Let's imagine that we're designing a data
+abstraction that is an integer set.
+So let's think first about what an integer set actually is.
+Remember that an integer set is a set of integers.
+So here we have a set, and it can be any number of integers.
+So it can be any size, but it can only contain integers.
+And it can only contain each integer once.
+So this is a just fine integer set.
+This is a just fine integer set.
+This is not a just fine integer set because this is not an integer.
+Everything in this set has to be an integer, so no.
+And also can't contain duplicates, so this is now no longer an integer
+set because it has the second number three in it.
+OK, now we know what an integer set basically is.
+So now let's design a data abstraction to capture all of this.
+OK so now that we know what an integer set looks like,
+let's imagine the data abstraction that we can use,
+that we can design to capture this integer set.
+OK, so let's start thinking about our data abstraction.
+What operations would we want to provide to the outside world?
+Well, as we were talking about it, we were going through and putting things
+into our integer set, which suggests that we
+want to be able to insert elements into our integer set.
+So let's write insert as one of our operations.
+Another really obvious operation is the opposite of insert.
+So we can imagine that we would definitely
+want to have a remove operation.
+
+And actually, that's pretty much all we need for now.
+We have these two operations.
+And we can think about the specifications of these operations
+really specifically.
+So now we've decided what operations our data abstraction
+is going to provide to the world.
+And now we have to figure out exactly what those methods are going to do.
+So here's where we specify each operation in our data abstraction.
+And we do that by asking three very specific questions.
+The first question is, is there anything that the method
+needs to be set up before it can run properly?
+What are the preconditions for correct operation of this method?
+And we put that in a line called that requires clause.
+
+Next, we think about what this method will
+be changing about the data in the data abstraction or the data
+that it operates on outside of the abstraction.
+And we put that in a line called the modifies clause.
+
+And finally, we think about the most obvious part
+of the specification, which is saying what the method actually does.
+And we put that in a line called the effects clause.
+
+Now I'm going to go through what each of these clauses specifically mean,
+and after that, we'll look at how they relate to the insert operation.

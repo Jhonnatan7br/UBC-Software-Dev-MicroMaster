@@ -1,0 +1,111 @@
+
+REID HOLMES: Whereas coupling captured how connected classes and methods were
+to each other, cohesion captures the degree to which the members of a class
+serve a unifying task or concept.
+In this way, cohesion is much more about ensuring our program abstractions
+and consequently our design is sufficiently well-defined
+to allow related methods and fields to be placed together
+without being interfered with by other unrelated code.
+We will also reason about cohesion in terms of a flow chart.
+Since cohesion is about the relatedness of elements within a class,
+we will start by a simple question.
+Does the class do one thing?
+This is a fundamental question, because it means that a class should only
+be impacted by changes to just that one thing,
+and not to any other aspects of the system.
+This will make the code easier to understand, maintain, and reuse.
+When a class is functionally cohesive, all of its code
+contributes to a single well-defined feature or task.
+The example here from Mario is functionally cohesive,
+because it only really does one thing.
+It defines where on the screen a star box should be placed,
+and allows it to be activated by a figure.
+It's important to remember here that even
+though this code is highly cohesive, it's still
+coupled to the rest of the system.
+For example, to star, figure, and item.
+Sequential cohesion arises when operations within a method
+transform output from one step and use it as input to the next step.
+This results in a sequence of steps oriented around some kind of data.
+Here's a different example from coin box within Mario.
+In this case, there is sequential cohesion, because a number of steps
+are being performed linked by the coin object.
+This includes manipulating the coin box's items array, activating the coin,
+and adding the coin to the actor who hit the coin box in the first place.
+Sequence is important here too, because we
+need to bounce the box before showing the coin.
+This kind of cohesion is normal, because these
+are the kinds of methods that allow our systems to perform complex tasks.
+Communication cohesion arises when different tasks
+are grouped together within a method only
+because they work on the same data.
+We couldn't find an example within our Mario code that
+exhibits communication cohesion, but this fragment
+shows what one might look like.
+Here we can see that the sequence of operations doesn't really matter.
+The commonality is about performing similar actions on the this.data field.
+Ultimately, these first three kinds of cohesion
+are all part of good program designs, because they
+show that the methods within a class are working on common tasks and data.
+Code is procedurally cohesive when it follows a specific execution
+sequence that is largely driven by control flow instead of data flow.
+In the code here, Mario's victory method is performing several different steps,
+but the order really matters.
+We have to play the winning music and show the winning
+animation before starting the next level, for instance.
+Again, here we still see coupling to both level and view.
+Procedurally cohesive code is less desirable than our previous forms
+of cohesion, because it is harder to independently reuse
+such code unless you're reusing all of the parts it's coordinating as well.
+Temporal cohesion arises when functionality
+is grouped only because it happens at the same point
+in the execution of the system, not because the functionality
+itself is related.
+This is problematic, because it often results
+in actions on many different objects that
+are related only through the temporal semantics of when
+the method is being invoked.
+The example above comes from the level class,
+and here we can see a lot of manipulation of level, the world
+view, figures, obstacles, and items, even
+though the relationship between these elements in this method
+is just that we want to reset the level so we can start over.
+Logical cohesion occurs when different pieces of functionality
+are combined because they contribute to the same task,
+even if their intent is different.
+For instance, the set lives method in Mario
+exhibits a logical cohesion, because while it might make sense for Mario
+to track how many lives he has remaining,
+it does not make sense for Mario to reach deeply into the level class
+to update the life count on the screen.
+In this case, the life-displaying functionality
+would be better served in the level class itself, rather than in Mario.
+For instance, if level changed its internal structure
+for displaying the live count, the Mario class
+would also have to be modified, indicating
+the change is not well isolated.
+Coincidental cohesion is the most detrimental form of cohesion,
+and arises when functionality is arbitrarily grouped together.
+This form of cohesion is really the lack of any cohesion at all.
+It is terrible, because it means that the code within a class
+will be harder to understand since it is responsible for a wide and diverse set
+of tasks.
+The code will also be hard to reuse independently,
+and will be involved in many different bug fixes and feature
+additions which increase the chances of defects propagating wildly
+through the system.
+The Mario code was well-defined, but the two methods above
+have been placed in the main file, even though they are no way related
+to that code.
+One common source of coincidental cohesion
+are classes with extremely generic names, like you tell.
+Thinking about how cohesive the classes are within our systems
+helps drive us towards designs that are easier to understand, debug, reuse,
+and evolve.
+You might recall that we said these were also
+the goals of loosely coupled systems, which
+is why you will often hear that we want designs that are
+highly cohesive, and loosely coupled.
+Because although coupling and cohesion are considering different aspects
+of our designs and implementations, they are both ultimately
+about improving the long-term quality of our systems.

@@ -1,0 +1,125 @@
+
+REID HOLMES: Many software companies have a core underlying belief
+that effective decision making needs to be backed by meaningful data.
+And software systems are no different.
+When a customer asks for a requirement, the technical team
+needs to be able to deliver the requirement with an implementation that
+matches the customer's expectation.
+So they want to be able to measure in an effective way
+that the feature that's being added adds the functionality that they care about.
+And this matches what Lord Kelvin said in the late 1800s
+when he mentioned that to measure is to know.
+We need a way to concretely evaluate the features
+that we've added to our system, make sure they
+perform as expected, and are correct.
+And requirements validation plays an important role in this process.
+Being able to validate a requirement is also
+extremely useful for a technical team.
+Because if you have a concrete understanding
+of how your customer is going to evaluate your feature,
+you can evaluate the feature yourself using the exact same methodology
+while you're creating it.
+And it turns out, in practice, measurable objectives
+tend to be easier to achieve than unmeasurable objectives.
+One other nice thing about capturing the rules
+for how you're going to validate your requirements
+is it gives you a way to make sure that the requirement is
+clearly and concretely stated in the requirements itself.
+Because if you can't come up with a concrete validation process,
+it might mean that you need to go back and step through the elicitation
+and analysis phase to make sure that you're actually
+capturing the requirement in an effective and clear way.
+Finally, validating requirements makes it
+so that the technical team and customers are
+on exactly the same page at the end.
+What you want to do is you want to be able to find problems
+with the validation steps during the requirements gathering process,
+rather than during the product of liberty process
+that could happen years later when all of the development
+is finished on a project.
+So this gives you a way to really capture these kinds of errors,
+really, upfront and help the teams get on the same, consistent page.
+So some requirements are really easy to validate.
+So, for instance, say you have a functional requirement that the list
+should be sortable on both columns.
+All you need to do is sort the list on both columns
+and make sure that it actually works.
+And that's relatively straightforward.
+But other requirements can be really challenging.
+For instance, the system shall be performant,
+or the system shall be usable.
+What does that actually mean?
+How do you measure that?
+What is performant, and how do you measure usability?
+These types of requirements are really challenging in practice
+and often need to be restated in more concrete terms
+so that they're meaningful for the development team
+and give them explicit goals to try to meet.
+So let's step through a concrete example now where
+we look at how we can make these requirements more
+meaningful for development teams so that they have explicit targets that they
+can work towards.
+A common requirement is that a system shall be performant.
+And that's an easy requirement to add to the list of quality attributes
+that you care about or your system.
+But what does that actually mean?
+How can the development team actually measure the performance of their system
+and know that they're hitting it and achieving that requirement if you're
+just saying, should be performant?
+Let's break down performance and take a further look
+at how we could split this requirement out in a more concrete way
+to provide a development team with more measurable goals
+that they can validate against.
+Let's take a look at performance.
+
+So performance can mean many different things.
+One thing that-- one type of feature you might think about when
+you think about performance is time.
+And time make sense, because time captures how long
+it takes for something to happen.
+Another performance limitation for systems
+is in terms of storage or space.
+And when we think about space, we might want to split this up a little
+bit further as well.
+When we think with the space occupied for a system,
+we might think in terms of memory, or we might think in terms of disk.
+And when we think about this concretely, we
+can actually attach concrete numbers to both of these values.
+You can say, hey, the system should never
+use more than 100 megabytes of memory during its execution.
+Or the system should not consume more than one gigabyte
+of disk including its caches.
+These are both extremely measurable values that the development team
+can think about.
+In terms of time, there's lots of other values we can think about as well.
+So the first one, and the easiest one to think about, may be response time.
+
+Response time would capture how quickly the system can respond to the user.
+So you could say, hey, the system shall respond to a user's input
+within 150 milliseconds.
+And that gives a development team something
+that they can measure explicitly against.
+You could also think in terms of throughput.
+
+Throughput measures the amount of users per second,
+or the number of transactions per second that a system can handle.
+But there are different kinds of throughputs.
+You might say, hey, we care about peak throughput or offpeak throughput.
+
+So in peak throughput, you might say, hey, in the middle of the afternoon,
+the system should be able to handle 50 users per second.
+And in offpeak times, when the system is maybe doing other transactions
+in the background, you might say, hey, the system should only
+be able to handle 10 transactions per second.
+So you can go to a lower threshold, because the system
+is doing other things at the same time.
+And, again, all of these leaf nodes give the development team concrete values
+that they can measure their system against to validate
+that they've actually delivered the performance targets
+that the customer actually cares about.
+And by putting them in these concrete terms,
+it also forces the customer to clearly define what they mean by,
+the system shall be performant.
+So this gives the development team a way to concretely push back
+on the customer to make sure they're completely specifying
+their desires for the system.

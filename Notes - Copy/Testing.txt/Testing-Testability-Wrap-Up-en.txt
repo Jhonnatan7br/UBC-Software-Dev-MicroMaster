@@ -1,0 +1,63 @@
+
+REID HOLMES: There's some inherent challenges
+to just keep in mind when we're writing our automated tests in practice.
+Ultimately, it's really important to remember that tests are code too.
+Because tests are code, they can also have faults.
+So when you have a test failing, it's often
+the case you need to consider whether or not the test itself has failed,
+not just the code under test.
+We've actually performed a big study of this recently.
+And we found that up to 26% of test failures
+are caused by defects in the tests themselves.
+And that can be really impactful in practice that--
+in a way that's unfortunate.
+Because when your test fails, you want it to be finding a real fault.
+Additionally, as we mentioned earlier, in terms of non-determinism,
+is comment for 10% to 15% of tests to execute in a non-deterministic way.
+This is where you run the test on the same code multiple times
+and it will pass and fail inconsistently.
+And that is another unfortunate thing to keep in mind when we're
+thinking about the value of our tests.
+So ultimately, when we're thinking about whether or not to embark on a testing
+approach, we really need to think from our team's perspective, how much risk
+are we willing to incur, and how much are we willing to pay.
+How much effort are we willing to put into testing
+to validate our system at the level that matches the risk
+profile that we actually have?
+And this is a really important intellectual process
+that every team needs to go through in order
+to correctly and effectively determine how much testing they need in practice.
+In review, the testing process is all about enabling these five steps
+so we can quickly and reliably go through and validate
+the behavior of our software system.
+And when we talked about testability, we were
+talking with these four different properties, four different ways
+in which we can improve the structure of the code to enable these five
+steps to be accomplished more easily.
+So controllability is all about improving
+the reachability of the different parts of our code in practice for our tests.
+Controllability is also an important property
+for improving the trigger ability of the faults within our system.
+Isolate ability is also involved in triggering faults.
+So this is an important property here as well.
+Finally, observability is unsurprisingly involved
+in propagation and observation of faults.
+So when we make our code more observable,
+we're able to find those faults and move them down to a part of our system
+where we're able to see what's happening.
+And automation is about all of these different steps.
+So it's about improving all of the first four steps.
+Now, we'll note that the fifth step isn't actually listed in this--
+from this list of properties at all, because interpretation
+is all about going back to our specifications
+and reasoning about what's actually correct within our software system.
+Because when we start actually creating tests and throwing strange inputs
+at functions, we'll realize that we haven't specified all of the behaviors
+in our system.
+And it's important to think really hard about what the right behavior actually
+is in practice.
+And to write it down so it's captured in our specs, so going forward we
+know how our system is actually going to behave
+when it's given these unusual inputs.
+And this is really what testability and testing
+itself is all about at its core.

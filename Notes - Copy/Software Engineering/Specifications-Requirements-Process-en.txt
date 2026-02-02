@@ -1,0 +1,57 @@
+
+REID HOLMES: Capturing the requirements of our system
+is an important part of the specification process.
+And these requirements really fall into two high-level categories,
+functional requirements and nonfunctional requirements.
+So the functional requirements capture what it is that the system should do.
+So, for instance, if we had an online system,
+we might say the user should be able to log out with a single click.
+That would be a concrete functional requirement.
+Whereas, the nonfunctional requirements capture properties
+that the system should have.
+So you could say the system should be usable or should be performant
+or should be testable.
+Now, one thing about these nonfunctional requirements
+is they can vary in who they are actually important to.
+The customer is going to care more about usability, performance, maybe
+scalability, than the development team, who
+are going to be more interested in reliability, complexity,
+and testability.
+So the different stakeholders will care in to different degrees
+about the varying nonfunctional requirements within the system.
+And this ends up being a discussion between the engineering team
+and customers while they try to figure out what it is,
+what behaviors the system should have.
+One thing that's really important to keep
+in mind for these nonfunctional properties
+is that they are often in conflict with one another.
+For instance, if you're thinking about designing a system that you wanted
+to have really low complexity-- that is, to be quite simple--
+it might actually have a performance hit that you pay for that.
+So if you're building a system that says, for instance,
+had several types of caches--
+you were caching results along the way--
+of course, that would be more complex, but it would be faster.
+So when you're having this discussion about the nonfunctional properties,
+it's important-- really important-- for all the stakeholders
+to be involved and really weigh the pros and cons of each of these requirements.
+Because these decisions that you make will often
+be at the expense of one or another.
+Another place where this comes in often is in terms of usability and security.
+So as we try to add more and more security to our system,
+it can make it harder and harder for people to actually use in practice.
+So having a concrete discussion about nonfunctional requirements
+is really important early on in the specification process.
+Now, one thing that's really important to keep in mind
+when we're thinking about the requirements of our system
+is they should define what the system is doing,
+but not how it is that it's doing it.
+So a concrete example of this would be a sorting algorithm.
+You might say, hey, we want this list to be sortable in n log n end time,
+and that would be fine.
+That would be a great functional requirement.
+But we wouldn't say we want this list to be sorted with Quicksort.
+Because that's really concretely capturing how
+it is that the developer is going to implement that requirement.
+And that's really not in the spirit of what we're trying
+to do during the requirements process.

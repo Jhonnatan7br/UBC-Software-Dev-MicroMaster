@@ -214,3 +214,63 @@
   3.  Running tests.
   4.  Deploying to a server.
 - Each step provides a fast feedback loop to developers if something fails.
+
+## 8. Designing Robust Classes
+
+### 8.1 What is Robustness?
+- The ability of a system to be resilient and recover from strange or unforeseen states, rather than crashing. The goal is to plan for failure and handle it gracefully.
+
+### 8.2 Exception Handling
+- **Purpose**: A mechanism to recover from exceptional runtime situations. When an error occurs, a method can `throw` an exception, which propagates up the call stack until it is `catch`ed by an appropriate handler. If uncaught, the program terminates.
+- **`try-catch-finally`**:
+  - `try`: Contains code that may throw an exception.
+  - `catch`: Handles a specific exception type. Multiple `catch` blocks can be used to handle different types.
+  - `finally`: Contains cleanup code that **always** executes, regardless of whether an exception was thrown or caught.
+- **Checked vs. Unchecked Exceptions**:
+  - **Checked**: Subclasses of `Exception`. The compiler forces you to handle them (with a `try-catch` or a `throws` declaration). Used for recoverable, anticipated errors (e.g., file not found).
+  - **Unchecked**: Subclasses of `RuntimeException`. The compiler does not enforce handling. Used for programming errors that should not be caught (e.g., `NullPointerException`, `ArrayIndexOutOfBoundsException`).
+- **Exception Hierarchy**: Custom exceptions can be created by extending `Exception` or its subclasses, allowing for more specific error handling and the ability to catch general categories of exceptions.
+
+### 8.3 Assertions
+- **Purpose**: A development and debugging tool to verify that the internal state of a program is correct. Assertions are used to check for things that "should never happen." They validate preconditions, postconditions, and class invariants.
+- **Mechanism**: An `assert` statement checks a boolean condition. If the condition is false, it throws an `AssertionError`, halting execution.
+- **Usage**: Assertions are intended for development and testing only. They can and should be disabled in production code to avoid any performance impact.
+
+### 8.4 Testing for Exceptions
+- An important part of testing is verifying that the code correctly throws exceptions under invalid or exceptional conditions.
+- A common pattern in unit tests is to use a `try-catch` block:
+  - When an exception **is expected**, the test calls the code in the `try` block. The corresponding `catch` block allows the test to pass. If the expected exception is *not* thrown, the test should be explicitly failed.
+  - When an exception is **not expected**, any exception caught by a `catch` block should fail the test.
+
+## 9. Extracting & Implementing OO Design
+
+### 9.1 From Requirements to Class Diagram
+- **Identifying Classes**: A common technique is to analyze textual requirements (e.g., user stories) and identify all **nouns** as candidate classes.
+- **Identifying Associations**: **Verbs** in the requirements describe interactions between nouns, which translate to associations (relationships) between classes. These are represented as fields.
+- **Multiplicity**: Indicates how many objects are linked (e.g., `1`, `*` for many). A `List<Type>` field implies a to-many relationship.
+- **Aggregation**: A "part-of" relationship (e.g., a `Car` has-a `Wheel`), shown with a diamond, indicating that one class owns or contains another.
+- **Bidirectional Association**: When two classes have fields referencing each other, shown with a line with no arrowheads.
+
+### 9.2 Modeling Dynamic Behavior with Sequence Diagrams
+- **Purpose**: To visualize how objects interact over time to accomplish a task. They are excellent for understanding and implementing the logic within a method.
+- **Components**:
+  - **Lifelines**: Vertical lines representing an object's existence.
+  - **Method Calls**: Horizontal arrows between lifelines.
+  - **Activation Bars**: Rectangles showing when a method is executing.
+- They can model control flow like loops (`loop` frames) and conditionals (`alt` frames).
+
+### 9.3 Implementing the Design
+- **Fields & Collections**: Associations from the class diagram are implemented as fields. A to-many relationship is implemented using a collection like `List`, `Set`, or `Map`.
+- **`equals()` and `hashCode()`**: When using custom objects as keys in a `HashMap` or storing them in a `HashSet`, you **must** override `equals()` and `hashCode()`. Otherwise, the collection will not be able to find objects correctly, as it depends on these methods for value equality, not just reference equality (`==`).
+- **Bidirectional Relationships**: To avoid infinite loops when linking two objects (e.g., `student.addCourse(c)` which calls `c.addStudent(s)`), each `add` method must include a guard condition to check if the link already exists before proceeding (e.g., `if (!this.courses.contains(c))`).
+
+## 10. Design Principles & Patterns Summary
+- **Design Patterns**: Reusable, principled solutions for common object-oriented design problems. Key patterns include Iterator, Observer, and Composite.
+- **Iterator Pattern**: Abstracts the logic of traversing a collection into a separate `Iterator` object (`hasNext`, `next`). Allows iterating over custom collections without exposing their internal structure. Can be implemented as an inner class for access to private data.
+- **Observer Pattern**: Defines a one-to-many dependency where a `Subject` notifies multiple `Observers` of state changes. Java provides `Observable` (class) and `Observer` (interface). Notifications can be "pushed" (with data) or "pulled" (requiring the observer to fetch data).
+- **Composite Pattern**: Allows clients to treat individual objects (`Leaf`) and compositions of objects (`Composite`) uniformly through a shared `Component` interface. Simplifies handling of hierarchical structures like trees.
+- **Core Principles & Refactoring**:
+    - **Single Responsibility Principle (SRP)**: Each class should have high **cohesion** and a single, well-defined purpose.
+    - **Coupling**: Aim for **low coupling** between modules to minimize the impact of changes.
+    - **Liskov Substitution Principle (LSP)**: Subtypes must be fully substitutable for their parent types without altering program correctness.
+    - **Refactoring**: The practice of restructuring code to improve internal quality (readability, cohesion) without changing external behavior, enabled by a solid test suite.

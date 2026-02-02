@@ -1,0 +1,116 @@
+
+REID HOLMES: The flexibility of software systems
+means they can be designed in a variety of different ways.
+But we want our systems to be easy to understand,
+quick to diagnose and fix, and amenable to future change,
+when we want to add new features.
+All systems start out this way.
+When you only have one line of code, it is easy to understand, easy to fix,
+and is amenable to future changes.
+But over time, as we add new features, we end up extending the design,
+violating the design, obfuscating the features that are in there already.
+And this makes the code harder and harder to maintain.
+So we really want to think about our design
+in an up front an intentional manner.
+Ultimately what we want to do is find a set of design principles
+to help guide us towards making good decisions.
+But before we look at design principles, let's take a step back
+and look at some design symptoms.
+Now this isn't a comprehensive list.
+There are lots of different symptoms of poor design.
+But here are some high-level tips that can help us think about the designs
+that we've come up with when we're evaluating design A against design B.
+A rigid design is a design that's resistant to change.
+We can see these in our own systems when we go and make
+a change in one small module, that ends up
+propagating across the breadth of the system.
+Rigid designs are challenging in practice
+because they make effort estimation really hard.
+If you don't know what that propagation is going to look like,
+figuring out how long a task will take is challenging upfront.
+It also makes assessing risk challenging, because again,
+we also don't understand that propagation path
+for the changes we're making to our systems.
+Design fragility arises when we have a design that's easy to break.
+Designs that make a lot of assumptions about the context in which they're
+going to run, or are lax in their pre and post-condition checking often
+exhibit design fragility.
+One common example of software fragility is when we're fixing bugs,
+and we end up changing code that has no logical connection to the bug itself.
+This exacerbates both fault localization tasks and future program understanding
+tasks.
+Next, let's talk about design immobility.
+At the individual line level, most lines of code are not truly unique.
+So if you have some code that you've written before,
+or if there's some code that exists within your company or on the internet,
+you might be tempted to just go and reuse it.
+This kind of task is known as clone and home, or pragmatic software use.
+So what you do is, you go to search, and you'll find the code that you want,
+and you'll copy it into your system.
+And you realize, oh that code has some dependencies on some other modules
+or classes, and you'll copy those into your system.
+And after a few hours you'll realize that you
+need to copying more and more and more of the code into your system,
+and you realize you just can't do it.
+The code that you want is too tangled with its original context for you
+to actually reuse it effectively.
+Now this is the kind of task where you might think that refactoring is exactly
+the right thing to do.
+What we want to do is take that code that's
+tangled with its original context, and extract it and turn it
+into a reusable module.
+And that's great for you as the person who
+wants to reuse the code, but as the original owner for the code,
+they only derive risk from this operation,
+because the code is working for them before,
+and these kinds of large structural changes are often risky.
+Software with viscous designs make it easier
+to violate the design than adhere to it.
+This is problematic, because it leads developers
+to introduce hacks to their system in order to make the code work.
+And those hacks lead to the crude technical debt that a system has.
+Viscosity also applies to the processes used within the software system.
+So if for instance the build system is slow, or the test system is slow,
+developers will go and batch their changes together, and submit them
+in big bunches so that they can accrue those slow steps all at once, even
+if it's not the safest way to proceed with the development on their systems.
+Software is often created to solve complex problems.
+And we live in a complex world.
+Because of this, it's unsurprising that the systems we end up building
+end up being complex themselves.
+As developers, we like to build systems that we can use for future uses
+as well.
+This fitness for future often drives us towards building abstractions
+into our systems so we could easily augment and extend them in the future.
+However, overbuilt abstractions are one source of needless complexity.
+Abstractions do make our systems harder to understand.
+So we need to be very careful about the abstractions we introduce into them.
+While in some cases, these broad abstractions might be really useful.
+For instance, if you're designing a general purpose library.
+In other cases abstractions that don't end up being used in practice just
+end up adding cognitive overhead to the developers who
+are trying to modify and understand your systems in the future.
+Next lets talk about repetition.
+Software systems are so large they exceed
+the ability of a single developer to understand the entire breadth
+of the entire system.
+So if a developer adds a new feature by copying some code
+from one part of the program into another,
+they might solve their problem, they'll add that new feature,
+but they also introduce a clone.
+These clones are problematic because if we
+find that there's a defect in one of these blocks it has been cloned,
+we have to find all the places scattered across the system where
+these clones exist, and update them consistently.
+Often clones indicate some type of simple abstraction
+is missing from the system.
+Systems tend to become harder to understand or more opaque over time.
+This happens when developers add new functionality
+into convenient, if improbable locations in their code.
+This can often be seen when developers are
+reluctant to add new classes to their systems,
+and instead glom functionality onto existing abstractions,
+whether they make sense there or not.
+This can really make it hard for the code
+to communicate its intent, which inhibits future program understanding,
+bug fixing, and future additions.

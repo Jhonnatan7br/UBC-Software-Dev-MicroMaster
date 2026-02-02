@@ -1,0 +1,63 @@
+
+ELISA BANIASSAD: So now we're going to talk about abstraction.
+Abstraction has a lot of meanings in the English language.
+For instance, abstract art means art that doesn't literally
+convey what it's trying to represent.
+Instead, it blurs or summarizes it.
+But in computer science, we use that term a lot.
+We say abstraction for our own purposes all the time.
+And what we are often referring to is different levels of abstraction.
+And what we're really meaning, and what we're really saying,
+is that what we want to do is hide the details of something
+behind an interface, or a container.
+So let's look at some different levels of abstraction.
+One level of abstraction that you're probably
+actually really comfortable with is the statement level of abstraction.
+
+And statements are provided by a programming language
+to help you say things without having to go through every single machine
+instruction to make it happen.
+So for instance, if you were to say x equals
+1, what that would tell the computer is that you want 1
+to be assigned to the memory location that is labeled x.
+So in this case, our abstraction is the equals operator.
+It's an operator that takes basically two parameters-- it takes something
+that it's going to be changing the value of and a value to change it to.
+And then inside the implementation, what happens
+is that it will do all of the assignment work.
+
+And that might be several lines of very low-level code.
+But you don't have to worry about it, because all you have to say
+is x equals 1, and all of the implementation does the work for you.
+Another level of abstraction is functional abstraction.
+
+And this is where things start to get cool,
+because this is how programming languages let
+you define your own abstractions.
+So for instance, we could define our own function called, say, sort.
+And then any time that you wanted to sort something,
+you could just call this method, or this function,
+and pass it in whatever it is that you want to have sorted,
+and then it would invoke a whole bunch of implementations.
+So sort would sit out here as the interface
+to this functional abstraction, and the implementation
+would live secretly inside.
+And actually, this is something that you should feel pretty familiar with.
+Because in previous courses, you were basically mainly dealing
+with functional abstraction.
+So now we're going to go out even one level further
+to talk about data abstraction.
+So in Java, the way that we can define data abstractions is using classes.
+So each of these would be one class.
+We'll get more into a more complicated version of this.
+But for now, let's just think of them as classes.
+And when we think about our drawing player code,
+we saw several different data abstractions,
+several different classes.
+So for instance, we saw a shape, and we saw a drawing,
+and we saw that more complicated, cool one-- the MidiSynth.
+
+And inside of each of these, they had methods and fields
+and an implementation.
+And so each of these was a cohesive whole
+that collaborated to form this central concept.

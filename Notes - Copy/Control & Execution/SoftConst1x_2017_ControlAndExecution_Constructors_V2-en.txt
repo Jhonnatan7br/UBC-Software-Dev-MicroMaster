@@ -1,0 +1,120 @@
+
+ELISA BANIASSAD: So we've looked at passing values into methods,
+and we've looked at returning values from methods.
+But we haven't looked specifically at this very special method, which
+is the constructor and how that works.
+So here's how it goes.
+We set up our variable d.
+So we have a dog, d.
+And then on this side, we have the call to the constructor.
+Now the call to the constructor is actually the call
+to make this object of dog type.
+So it sets up a dog.
+Dog instance, and it allocates all the stuff that needs to go in here.
+So all the methods, all the fields, everything.
+So remember, we had a bark method.
+And in this case, we have an age field.
+We could have lots of fields.
+It doesn't really matter.
+So it sets up this dog instance, and then it calls the constructor.
+So this is the allegation phase.
+The second thing that happens is it actually
+makes a call to this method, dog, with this number of parameters
+and this type of parameters.
+It looks inside of the class to find a constructor that
+matches this signature.
+So it looks down here, and it sees dog int.
+And it says, yes.
+That is the matching one.
+So it runs this method.
+It calls this-- this sets up a parameter age, and sets up a little spot
+for its value to go.
+And of course, we've called that with number seven.
+So seven is just copied down into the age spot.
+Fantastic.
+And now we encounter this line of code here-- this dot age.
+You're going to see that a lot in Java code.
+And what this dot age means is that it's referring
+to the age that's living inside of the instance
+that you're currently creating, or currently working in.
+Notice that we have not passed d into here.
+We haven't passed a reference to the dog at all.
+Instead, this method is actually living right inside the dog itself.
+So there's a method sitting right in here called dog that takes an int.
+And that matches up with this one.
+And so, we're executing inside of here.
+So we want this age variable-- this age value--
+to be copied into this age value.
+And what that means is that we have to use a different name because we
+have age here and age here.
+So to differentiate between the two ages,
+we use this term "this" to say we mean this one, the one that's
+inside the object.
+So the parameter age gets copied over into the object's age spot.
+Fantastic.
+Great.
+Then this method ends and all the local variables die.
+So the local variable is age.
+So it goes away totally, and we come back up here
+on what is returned is actually the reference to this dog instance.
+So we have this reference to here.
+And this reference is then assigned to d.
+So d gets through this assignment statement. d gets
+this reference to this instance.
+So this is copied over into here, and now we
+have a reference from d to our newly constructed dog object.
+So just to sum up, it goes through two phases.
+First, it allocates all the memory.
+Then it runs the map.
+Then step two, runs the matching constructor.
+And actually, there's a step three, which
+is that it returns the reference of the instance
+back so that it can be saved at the call site.
+OK, so now we can almost totally recognize
+what's going on in many of the constructors in our drawing player
+application.
+For instance, in the drawing player class itself,
+we can see the constructor takes two parameters--
+a drawing object and this timer object.
+The timer does something really similar to what big bang did in BSL.
+It basically repeatedly runs a particular method,
+but only does it at set intervals.
+OK, so we know that the first thing that happens when the constructor is called
+is that it makes a new object for the drawing player
+and the allocation happens.
+Then, this constructor runs.
+So it takes these two parameters and assigns the value of these parameters
+to its fields of the same name.
+And remember, we have to use this notation
+to distinguish which one we're meaning.
+Now, the drawing player has a reference to both of these objects.
+It is a reference to the drawing, and it has a reference to this timer.
+So it actually knows about two other objects.
+And of course, the constructor also sets some fields.
+We have playing column is equal to zero, which
+means it's setting up the playing from the start of the drawing.
+And then, it initializes these two lists--
+the last column played and the shapes in the current column.
+So up to this point, we've done this really correct and great thing, which
+is when we see a line of code like this, we draw a picture that looks like this.
+We see dog d, so we put a d.
+And then we have a little box and then we
+have the new dog, which is our circle with the dog instance.
+And this has a reference to this dog instance
+because we've assigned new dog to d.
+Great.
+We did the same thing when we saw our array list.
+So we saw an array list.
+This is the new array list.
+
+And we have our little variable a, and it has a reference to this list.
+Fantastic.
+This is totally correct.
+But it's really cumbersome to draw.
+So instead, from now on, just for the sake
+of shorthand, what we're going to draw instead is we're going to see new dog.
+And we're going to make our circle.
+And instead of coming up with some fake little address name,
+we're just going to say that it is called d.
+And instead of coming up with some sort of a array list instance fake name,
+we would just say that this is called a.

@@ -1,0 +1,68 @@
+
+REID HOLMES: Getting user stories right is often
+challenging, especially for newcomers.
+So let's go through a set of guidelines called
+INVEST that was developed to help engineers and customers write
+effective user stories.
+
+So the first guideline in INVEST is independence.
+
+And what this means is that all the user storage should be independent
+from each other as much as possible.
+And the reason for this makes a lot of sense
+when you think about how you choose user stories from a global list of stories
+to be built.
+If you have a precedence order saying that we
+need to build this feature, then this feature, then this feature, then
+this feature there's never any discussion about what your next feature
+to build is.
+So when you have independent stories, it gives that development team
+and customer much more flexibility to choose from a product backlog
+to make sure they select the right set of stories for an iteration.
+Next, we want to think about our stories in a way that makes them negotiable,
+and we can't negotiate about a story.
+We can't effectively choose whether or not
+we want to pursue that story in any iteration.
+So during the negotiation phase, what often ends up
+happening is extra features or extra detail is added to the user story.
+So it needs to be possible to consider these user stories a work in progress,
+or extra detail can be added as needed.
+Next, we want to make sure that the user story is actually providing
+a meaningful value for the product.
+
+And this gives us an opportunity to step back and think
+about the role-goal benefit for a feature.
+So as we go through the development of a project,
+the value of different features will change over
+time as the needs of the product change, as the customers
+expectations or opinions change.
+So we need to be able to go back and really evaluate
+the value of a feature at the time that we're considering building it.
+Next, the feature should be estimable.
+
+That is we need to be able to provide an effective costing for their feature.
+So if we can't provide a concrete and meaningful cost
+for the development of a features, we need
+to step back and really add the extra detail that's required,
+or break down that feature into a set of features that are more estimable.
+All right, so taking that time to make sure
+that we have a concrete and real understanding of those costs
+is really important.
+And this drives us at the next feature, which is small.
+It turns out in practice, small features are easier to estimate.
+They're easier to reason about the value for.
+They're easier to negotiate about, and they also
+tend to be more independent because they have smaller subsets of features
+within them.
+So user stories should be as small as possible
+to help drive these other features.
+And finally, we have testability, and this goes back
+to the definition of done for a story.
+We want to always make sure that our stories are testable,
+so that both the customer and developer can make sure
+that the feature have been developed in a way that
+is agreeable to both parties.
+So these guidelines really provide a framework
+that we can use as we go through and write
+our stories to make sure that they're more complete and more useful
+in practice.

@@ -1,0 +1,118 @@
+
+{
+
+  "summary": "Details additional types of software requirements: design constraints (organizational, regulatory), environmental constraints (system integration), and customer preferences/priorities.",
+
+  "keywords": ["requirements types", "design constraints", "environmental constraints", "preferences", "software engineering", "specifications"]
+
+}
+
+
+
+REID HOLMES: There are many types of requirements in practice.
+
+We've already talked about functional requirements
+
+which capture what it is that the system is supposed to do.
+
+And we've talked about nonfunctional requirements, or quality attributes,
+
+which capture the qualities that we want the system to have.
+
+
+
+But there are other types of requirements that
+
+are also really important in practice.
+
+The first of these is design constraints.
+
+
+
+And these are constraints within an organization that
+
+will influence the software that's being built.
+
+So for instance, if an organization is in a regulated industry,
+
+and they need to follow a regulatory framework,
+
+those regulatory constraints will influence
+
+the product that's being built.
+
+While the organizations might also have internal processes
+
+or other types of budgetary constraints that will also influence the product.
+
+And these need to be captured explicitly.
+
+OK.
+
+So, there's this thing Conway's law that has software teams
+
+will build systems that match their organizational structure.
+
+And this is really true in practice.
+
+So if you have a UI team and a back end team,
+
+you're going to end up having a UI layer as some kind of back end layer.
+
+So these types of internal constraints within their organization
+
+will also influence your designs.
+
+So these might be captured here as well.
+
+Next, we have environmental constraints.
+
+
+
+And environmental constraints acknowledge that software
+
+doesn't actually run in isolation.
+
+So when you build a system, you want it to work with other systems
+
+within an organization or in the world at large.
+
+And we need a way to capture those as well.
+
+So if the software that you're building needs
+
+to work with an external authentication provider or some specific cloud
+
+service or a specific library or framework,
+
+these all need to be captured within the environmental constraints
+
+of the system.
+
+And finally we have preferences.
+
+
+
+And preferences acknowledge that the customer
+
+has a long, long list of requirements that they want the system to fulfill.
+
+But they have an internal understanding of the order in which these things are
+
+in terms of their importance.
+
+Some of these requirements are getting more important
+
+and more valuable to them than others.
+
+And preferences really encode or give the development team
+
+a concrete understanding of that encoding from the customer.
+
+You want to have some understanding that the product, the features that you're
+
+building today are the next most important ones that the customer's
+
+going to care about, rather than some other features that
+
+might be technically interesting but less valuable in the end.

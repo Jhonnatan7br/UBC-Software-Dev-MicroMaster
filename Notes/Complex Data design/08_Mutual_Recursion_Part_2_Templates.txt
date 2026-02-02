@@ -1,0 +1,85 @@
+
+GREGOR KICZALES: In the last video, you saw the type comments
+for an arbitrary arity tree, and you saw how the mutual reference works
+in those type comments.
+Because of the two cycles, the tree can be arbitrarily wide at any point,
+and it can also be arbitrarily deep.
+You have now seen the most important part about arbitrary arity trees.
+In this video we're going to do the templates.
+And there won't be any new template rules.
+The templates are just going to fall out from what we already know.
+So now I'm back in fs-starter.rkt.
+And again, we've got the two types which have mutual recursion.
+And we're going to do the templates.
+And the interesting thing we're going to see about the templates
+is we already know how to do them.
+Just a reminder, when we have types that involve mutual recursion, what I do
+is put each type and interpretation together.
+So there's element and its interpretation.
+Listed element and its interpretation.
+Then I put all the examples.
+And now I'm going to put all the templates together.
+And that's going to be much easier for us when we go to design the functions.
+And it also helps us see the mutual reference structure better.
+So here we go.
+There's going to be two templates because there's two mutually recursive
+types.
+
+So there's going to be that template and that template.
+And let's see.
+Notice I'm not putting the template rules
+used because you're not required to do that anymore.
+But I'll talk about them as we do it.
+This is a compound data.
+So there's all three selectors.
+
+And then I'm going to decorate that with the types of value
+that come back from the selector.
+So in the case of name, it's a string.
+In the case of data, it's an integer.
+And in the case of subs, it's a list of element.
+Now list of element is a non-primitive type.
+It's a type that we define.
+So the reference rule here says that we should wrap this selector
+into a call for fun for LOE.
+And I'm going to go ahead and do that like that.
+Now we're done with fun for element.
+For fun for LOE, well, let's see.
+This is a one-of with two cases.
+So there's a cond with two cases.
+
+First case is atomic distinct, empty.
+
+Second case is the second case, so we'll say else.
+Then it's a compound cons.
+First LOE.
+Rest-- whoops.
+Rest LOE.
+For a second, we'll just decorate those.
+Well, this is an element.
+And this is a list of element.
+
+Reference rule here says that we'll wrap in fun for or element.
+
+And the self-reference rule here says we'll go fun for LOE.
+
+So there we go.
+We've got the template for both types.
+And we didn't really need a new template rule.
+The reference rule and the self-reference rule
+just worked to produce the right answer.
+In some sense, the only new rule for templating types
+involving mutual reference, is to do both templates at the same time.
+That'll help use see the mutual recursion structure
+in the templates corresponding to the mutual reference
+structure in the types.
+And just to draw that out for you, let me switch again to this kind of figure
+that we've seen before.
+Where I've got both the type comments and the templates,
+and you can see where there's a self-reference
+there's a natural recursion.
+Where there's a mutual reference cycle, there's a natural mutual recursion.
+So fun for LOE calls fun for element.
+And fun for element calls fun for LOE.
+And in the next video, we'll see how that plays out
+as we're designing the functions.

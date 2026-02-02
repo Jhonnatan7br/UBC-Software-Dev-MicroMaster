@@ -1,0 +1,58 @@
+
+ELISA BANIASSAD: The second line of defense
+for making your code more robust is to use
+assertions to make sure that your code is running in the correct states.
+So JUnit lets you test your code from the outside.
+That sometimes called black-box testing or unit testing.
+But it doesn't let you look at the private members of your classes
+to figure out if they are exactly how they should
+be during the execution of your code.
+So what assertions let you do is put assertions directly
+into the running of your code so that it can see all that private data
+and so that it can check that the state and class
+invariants are being maintained.
+And you put these potentially at the beginning and end
+of any critical or private methods where you want to make sure
+that you are running correctly.
+Now that might seem awfully slow.
+It might seem like, wow you're putting in a lot of sort of little checks
+to make sure that things are going OK.
+And isn't that going to bring your program to a halt?
+Well, the great thing is that these are only
+used during testing so you can turn them off for production.
+That means that the lines of code can sit there,
+but they will not run at all when performance is critical.
+Here's a great place to use assertions.
+We can see that we could check for the correct state of the animal
+after it has eaten.
+So even if we're running it from main, and not from the tests
+or even if we're running it from the tests,
+we can check the private invariant of our code.
+So what we should be able to do right here
+is we can assert that the animal is no longer hungry,
+and eaten is greater than what it was before.
+Now we'll have to add a little variable that
+keeps track of what the original value of eaten was,
+but that's kind of within the realm of reasonable.
+It's not a huge extra piece of code.
+We can just add a variable called "initial eaten" up here.
+So once all this food runs, eaten and initially eaten,
+should have different values.
+Eaten should have been incremented by one.
+So now we can run this code.
+And we want to go into Maine and make sure
+that the animal is hungry and not allergic.
+And now if we run our code, we can see that everything
+goes on as normal, which is great.
+However, if within the course of editing you
+actually throw an exception in the wrong place or delete something
+that increments eaten or make some other typo, then if you run this code again,
+you'll get the assertion error.
+Note that you need to have assertions turned on
+in your IntelliJ configurations.
+If you aren't getting an error when you try this,
+then you should go into the run debug configurations
+and write dash EA under VM options.
+Great, so this assertion error has told us
+that we've broken some internal invariant.
+And we can also see that the rest of the program did not run.

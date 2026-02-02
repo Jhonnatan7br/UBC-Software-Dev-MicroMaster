@@ -1,0 +1,78 @@
+
+REID HOLMES: Automation plays a crucial role in modern software systems.
+The sizes of development teams, complexity of systems,
+and the pace of development demands that software
+is built in a reliable, repeatable, and revertible way.
+Automation provides a means to enable these properties.
+There are many different tasks in the development process
+that can be automated.
+Let's take a look at some of them now.
+Let's start here with a code change.
+So we've changed some code, and the first thing we need to do
+is collect all of the other resources within the system
+necessary for building it.
+So what we want to do is we want to get all of the code in the dependencies.
+So while changing the code is a manual task, having automation,
+using automation to get the code and all of the dependencies of a project
+automatically is an important first step.
+And if anything goes wrong in this process,
+we want our feedback that goes back into the changing code part of our system.
+Because maybe we need to make some other changes
+to the code or metadata of the project so that the dependencies can
+be directly downloaded.
+And once we have the code and dependencies, what we want to do then
+is build the project.
+And again, there is a feedback loop from the build step,
+from build back to changing code.
+Because if the system doesn't build, we're
+probably going to need to make some kind of change
+to make that work in the future.
+Once the system builds, we of course want to run the tests.
+And if the tests pass, that's great, and we can move on to the next step.
+But if they don't, again, we'll go back into the code-changing step
+to make changes to make that code work in the future.
+And finally, we have the deployment steps.
+So when the tests all pass, we're going to want to deploy the code.
+And again, if it doesn't work, we'll go all the way
+back to the code-changing step to make other changes to make that deployment
+work in the future.
+But if it does work, then we're totally set.
+So we can see we have a forward sequence of actions that happens here
+from changing code, to getting dependencies, building,
+running the tests and deploying.
+And at the same time, there's this reverse feedback loop
+from these steps that goes back almost always
+back to the changing-the-code part of the process.
+It's important to realize here that the changing the code
+also includes changing the metadata for the project,
+changing the automation scripts themselves.
+So we just really end up going back to the start of the process.
+Because even if we make a change to the deployment scripts,
+we're going to still want to build the system
+and run the tests to make sure that those parts of the system
+still work correctly.
+One thing to realize here is that we can automate all of these steps,
+except for the original change code itself.
+Getting dependencies is an automatable step,
+using package libraries like NPM, or Maven, or Ant.
+Building the code is also fully automated in most large systems.
+Running the tests should be automated so you only have to hit one button
+and have your test run.
+And deployment, as much as possible, should also be automated.
+Because whenever we don't use automation,
+we introduce the chance of some important failure
+happening that can be problematic.
+As we mentioned previously, we want these steps to be repeatable, reliable,
+and revertible.
+Repeatability is important for enabling systems
+to be built by various automated systems.
+Reliable automation is automation you can count on
+to deterministically perform it's repeatable actions while consistently
+achieving the same result. This is fundamental for stakeholders
+to be able to trust the automated toolchain.
+And by being revertible, automation also decreases the time
+required to back out of a bad change and redeploy
+the last known good configuration.
+This is really helpful if you know can trust that you can rule out
+of a change, to be more willing to make changes more frequently than you might
+be otherwise.

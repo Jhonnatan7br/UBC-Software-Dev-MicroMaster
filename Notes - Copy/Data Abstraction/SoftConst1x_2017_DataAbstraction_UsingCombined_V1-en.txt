@@ -1,0 +1,84 @@
+
+SPEAKER: OK, so now let's think about the use of scenarios for our data
+abstraction.
+This will help us to figure out whether the specification
+that we have actually provides us with what we need.
+So what we do now is we go through all the different usage
+scenarios for how our data abstraction would be called by the outside world.
+And this isn't something that's just done for small academic systems.
+Developers do this too to try and figure out
+whether what they're providing actually meets their own needs.
+And it's not just done once.
+It's done again and again and again.
+Every time new capabilities are added to the data abstraction,
+you think through the usage scenarios again so
+that you can make sure that your specification is--
+encompasses everything that you need.
+OK, so now let's get started looking at all of our usage scenarios
+for our integer set up's directions.
+So we want to think of all the situations
+in which we're going to use our integer set.
+So first we're going to make a new package called the UI package where
+we're going to put all our interaction stuff,
+and we're going to be doing that throughout the course.
+Every time we have UI stuff, we're going to put it in a UI package.
+So inside the UI package, we'll put our usage class
+which we're calling integer usage.
+OK, so now inside of integer set usage, we
+can jot down all of our use case scenarios.
+So we can imagine what methods we will call and in what order we'll call them.
+So we'll set up that class to have one method, which is main,
+and to get our main method we're going to type public static void main,
+but who can remember how to do that?
+So instead we do shortcut, which is PSVM,
+which actually just shortcuts us out to having a lovely main method to use.
+OK, so now that we have our main method, we put in all the uses
+that we've thought about.
+But let's look technically at how we expect our integer set
+abstraction to be used.
+So we know that we want other objects to be able to insert integers
+into our integer sets.
+And so we know that they will be calling dot insert on our integer set.
+So this might look like mySet.insert, and then some number like three.
+So, of course, IntelliJ can't resolve the mySet name,
+because we haven't actually declared it.
+So let's go up here and declare integer set mySet.
+So that's the declaration.
+And it's going to want to know where integer set is actually defined,
+because we've made this UI package, and integer set
+is defined in the model package.
+So we'll need to import it, and IntelliJ will help us with that too.
+But actually declaring isn't quite the entire usage scenario,
+because we can declare the variable, but we need
+to actually be operating on an object.
+We need to actually call insert on an object.
+So we have to create or instantiate the integer set first.
+So actually the way that we'll do it is we'll say integer set,
+mySet equals new integer set, so that way we're creating an integer
+set, and then after that we can call insert on instantiated object.
+So now let's consider the context of use for the removed method.
+We already have our integer set with the number three in it all declared
+and ready to go, and we've already called Insert on it.
+So we know it's an object that can operate.
+So actually we can just call our remove method right after our insert method.
+We can just type right in mySet.remove, and then we
+want it to actually be the same number as the one
+that we inserted just to see it actually coming out,
+so we would say remove three.
+So this is actually a pretty typical usage scenario for insert and remove.
+We've got things going into the integer set with insert,
+and then we're taking them out again with remove.
+So maybe later we'll see that we can decide
+how to change it to make other things easier like testing or optimization
+or whatever, but right now we're focusing
+on just typical use of situations as a way
+to frame our thinking about whether we provided the right functionality
+for the abstraction.
+And so far it seems like we have, so awesome.
+And the other cool thing is that because we
+have sort of stub implementations for our integer set,
+we can actually even run this code, which isn't really
+that interesting because nothing actually happens because we have not
+implemented anything yet.
+But we at least can see that it compiles and runs in theory.
+And this will help us when we move forward to testing.

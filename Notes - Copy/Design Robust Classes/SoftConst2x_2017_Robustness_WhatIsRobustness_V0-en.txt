@@ -1,0 +1,20 @@
+
+ELISA BANIASSAD: Today we're going to talk about the concept of robustness,
+the idea that we want our classes to be kind of resilient when they run.
+We don't want them to crash all the time because they've
+reached some strange state that we didn't foresee.
+You've probably experienced applications crashing on your phone
+or on your computer, and usually, that's because you did a combination of things
+that maybe the application didn't foresee.
+Now, as developers, we want to be able to plan
+not for being able to predict every single combination of things
+that someone will do with our program, but instead,
+being able to recover when it seems like things have reached a strange state.
+In this course, we're going to look at two ways
+to enhance the robustness and resilience of our programs.
+First, we're going to look at ways to recover our programs
+from the brink of crashing.
+And that, we're going to do using exception handling.
+Then, we're going to look at how to discover
+potential crashing points in our code by sprinkling assertion
+throughout our code to make sure that it is maintaining program invariants.

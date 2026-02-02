@@ -1,0 +1,25 @@
+
+REID HOLMES: We most commonly think about the source code
+when we think about our software systems.
+And the reason our thoughts travel the code so quickly is there's a lot of it.
+There's thousands, hundreds of thousands, millions
+of lines of code in our system.
+And anytime we want to add a new feature, we have to add new code.
+And anytime we want to fix a bug, we need to modify some existing code.
+But the code alone doesn't give an accurate representation
+of what's going on within our systems.
+We also need to spend time considering how the system executes.
+The reason we need to think about the execution of our systems
+is because the execution is what actually gives value.
+As a user, you don't care what the code looks like.
+You only care that the system does what you want.
+It's those behaviors and actions that matter to you as a user.
+And as a developer, you only get paid if your users are happy.
+So we need to make sure that the behaviors in our system are correct.
+And this is one reason why debuggers are so popular.
+We use the buggers to pause the execution of our code
+so we can examine the state and figure out what's going on at runtime.
+So when we think about our systems, it's really important
+that we both think about the static structure,
+but also spend a bit of time trying to internalize the dynamic behavior
+of net system at runtime.

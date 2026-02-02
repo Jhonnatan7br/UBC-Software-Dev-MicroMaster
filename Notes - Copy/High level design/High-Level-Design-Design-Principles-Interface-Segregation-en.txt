@@ -1,0 +1,91 @@
+
+REID HOLMES: The next solid design principle we want to talk about
+is the interface segregation principle, which
+helps provide design guidance for our interfaces.
+So what the interface segregation principle says
+is that clients should not be forced to depend on interfaces that they do not
+use.
+The reason this is important is that it's often
+tempting to just keep adding more and more methods to the interfaces
+that we have rather than create new interfaces.
+And like the single responsibility principle for classes,
+interface segregation is all about making sure
+that our interfaces are focused on a tight specific set of functionality.
+Let's take a look at the interface segregation principle
+as it might apply to Mario.
+So let's imagine we have a client class here
+called Mario game, which is our main game instance for Mario.
+And this is traditional Mario where the enemies
+run around the screen on their own accord and players move
+around and jump on different enemies.
+So we need the ability to move Mario around the screen.
+We want to be able to set an AI, so that we can update how the enemies move
+about the screen, right.
+So we want them to somebody to be easy and sometimes hard, for instance.
+We want to be able to set the input, so that player one can be Mario
+and player two could be the Luigi.
+We also might want to set the names of characters,
+so that Alice can be player one and Bob can be a player two.
+And finally, we need to be able to update those enemies
+as they're running around the screen, because they don't get moved directly.
+So you can imagine an extension to the Mario game
+where we've gone and created something called Mario race.
+And in Mario race you only have players competing against one another.
+There are no enemies at all.
+And in this case, you're only going to need to have your move set input
+and set name methods available to you.
+We can also imagine a second extension to the game
+where in some crazy future world, we use Mario to train self-driving cars.
+So we want to do is we want have a simulator called Mario Sim,
+and that's only going to make use of our set AI and update methods.
+It doesn't care about inputs or the traditional moving that
+comes from users, right.
+We just want the enemies to be able to move amongst themselves.
+All right, so this is the situation as we have it now.
+We have the figure interface, which has four concrete subtypes, Mario, Luigi,
+enemy, and turtle.
+And we have the Mario game client, which uses the whole figure interface, right,
+because this is the complete game.
+But unfortunately, we have-- also have this Mario race client, which
+only uses some of the interface, right.
+It's only interested in the parts that can move Mario around the screen,
+set the output, and set names, because this
+is for players playing against one another.
+And we also have this Mario Sim client, which
+also uses a different subset of the interface
+because it's only interested in set AI and update.
+And unfortunately, both Mario Sim and Mario race
+are being forced to depend upon parts of the figurative race
+that they don't need.
+So how can we use the segregation principle to improve this design?
+If you think about the figure interface and how
+it's being used by these different clients, what you realize is
+you really need some type of player component, a player--
+if you think about the figure interface and how it's being used by Mario race,
+Mario game, and Mario Sim, what you realize
+is you really need to separate the playable parts of the interface
+for controlling players from those parts of the interface that
+can deal with the non-player characters or NPCs within this game.
+So what we wanted done is we've split figure into two parts.
+There's the player interface that has new set name and input, set input,
+and there's the NPC interface which has set AI and update.
+And then what we've gone and done is we've got and changed
+the subtypes, the concrete subtypes, so they extend the part of the interface
+that they actually care about.
+So what does this mean for the concrete games themselves.
+Let's take a look at that now.
+Now that we've split the player interface,
+we need to go and reattach our clients.
+So here we can see that Mario race only has
+to depend on the player interface which has the move, set name, and set input
+methods, the three things they actually cared about.
+And they don't have to worry about these NPC methods anymore, set AI and update.
+At the same time, Mario Sim only has to depend on the NPC interface
+and has no interest at all in the player interface.
+But what does this actually mean for Mario game?
+Well, if you think about it, Mario game actually uses both of these interfaces,
+and that's entirely reasonable.
+So we can just draw that directly into this design.
+
+And in this way, we're able to extend our design,
+so that Mario game can use both interfaces.

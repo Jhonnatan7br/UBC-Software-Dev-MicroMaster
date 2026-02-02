@@ -1,0 +1,233 @@
+
+REID HOLMES: Over time, even the best design
+will degrade as the software has evolved.
+Rather than doing the right thing, developers often
+find fixes that work because they don't understand the original design,
+or they have time pressures that causes them to intentionally violate it.
+Technical debt is a metaphor that is often used in this space
+to acknowledge that these quick fixes have a cost that
+often needs to be repaid in the future.
+If debt isn't repaid, it can cause overall system viscosity to increase.
+The idea behind thinking about technical debt
+is really to encourage long-range planning.
+Martin Fowler described technical debt as a quadrant.
+The vertical dimension is whether the debt is
+incurred intentionally or accidentally.
+The horizontal dimension captures whether the rationalization
+for the debt was carefully considered or not.
+So let's take a look at what happens in these four quadrants.
+So a reckless deliberate change would be something where we'd say,
+we don't have time to think about this.
+So you are intentionally choosing not to think about the cost of the work
+that you're doing.
+But you can do this prudently.
+You can also say, hey, our deadline is firm, but the risk is worth it.
+So you've evaluated the risk that this debt will cost you in the future,
+and you've decided that it's worth it to meet your deadline.
+The next case was where we have reckless, inadvertent change.
+Or this is just where you don't know--
+you haven't learned enough to make good decisions.
+So you could say, hey, it'll work in production without any testing.
+And, of course, this is crazy.
+Any developer should know that this will be a problem.
+And just because you don't think about the debt
+doesn't mean that it doesn't exist.
+We can't just stick our heads in the sand and ignore these things.
+And the last category is where you end up inadvertently introducing debt,
+but not because you are being reckless, but because you just
+didn't know something.
+So, for instance, you didn't know how your system was going to scale.
+So in that kind of category, you have something like, we were lucky,
+but next time we can do better.
+So let's go and break these down a little bit further
+into individual terms so we can think about them a little bit more easily.
+So reckless deliberate debt is just being irresponsible.
+You just are shirking your duty as a software engineer, as a designer.
+Deliberate prudent debt is intentional.
+So it's considered debt that you thought really hard about.
+Reckless inadvertent debt can be thought of as incompetence.
+These are things that you should have known
+or should have known that you should have investigated further
+but you chose not to.
+And then, inadvertent prudent debt is just accidental debt.
+Sometimes these things just happen because we don't fully
+understand our context, and we don't know
+that we should fully understand them, and it's not really our fault.
+Sometimes you have to build something to fully understand
+the implications of the thing that you've built.
+Refactoring is one of the most common ways to pay down technical debt.
+The goal of refactoring is to improve the design of the system
+while preserving its semantics.
+Code smells are often used as indicators for ways the design could be improved.
+Other improvements, such as those that reduce coupling, increase cohesion,
+or improve reusability or evolution, can also be achieved through refactoring.
+When considering a refactoring, a mnemonic, called the rule of threes,
+is good to keep in mind.
+The first time you need to create a feature, just code it up.
+The second time you need to do the same thing or something extremely similar,
+code it up again, but wince.
+Feel bad about it and take note for the future.
+The third time you really want to refactor that code before you
+write that feature once more.
+The rule of threes acknowledges that premature refactoring is itself
+a problem, and we want to try and avoid that
+as well because we don't want to spend all of our time
+refactoring because sometimes we just need to focus on adding new features
+and fixing bugs within our existing system.
+Refactorings proceed in three steps.
+First, the code that is to be restructured needs to be understood.
+Next, the code is transformed through a series of mechanical steps,
+often assisted by an IDE.
+Finally, the resulting code should be refined in the case
+that the transformation step caused any rough edges.
+An important aspect of refactorings is that program behavior should
+be unchanged after the refactoring.
+To ensure this, the test suite should be run before and after the change
+to ensure they pass in both conditions Without effective tests
+it is often hard to refactor with the kind of determination that's
+needed for large restructuring tasks which might otherwise
+be perceived as being too risky.
+Again, it's really important to reiterate that the goal of refactoring
+is not to fix bugs or add new features, although the refactoring operation
+should make these easier in the future.
+The need to refactor is often triggered by some kind of quality concern.
+For instance, if you're adding a new feature that turned out
+to be harder than expected, you might want
+to think about what should be restructured within your design.
+Or if a bug fix becomes more scattered across the system
+than the design might indicate, again, a refactoring might be in order.
+Finally, if you're performing a code review
+for what you thought would be a simple feature,
+but the change ended up being very complicated,
+that would be another indicator that a refactoring might be a good idea.
+While refactoring can be incredibly beneficial for the systems design
+and implementation, it is not actually all that common of a task.
+This is because while the benefits of refactoring
+are mainly for the technical team, the risks and costs
+are borne by other system stakeholders.
+Refactoring is costly as it takes time away from novel system development.
+It's also risky because it involves many code changes that
+are often spread across the system.
+These changes have the opportunity to introduce new faults if you
+don't have really comprehensive tests.
+Finally, refactorings often suffer from a second system effect
+as it's easy to get carried away with the refactor
+rather than really focusing on the core design issues you're trying to improve.
+Refactoring early is easier than refactoring late
+in the development process.
+This is one of the main reasons why it integrates well
+with agile methodologies, like XP, TDD, and Scrum,
+as engineers using those methodologies typically
+iterate quickly on their executable system
+so they can refactor as a part of the process.
+This is captured by the notion of embracing change.
+There are dozens and dozens of refactorings,
+but most involve restructuring code by splitting or merging
+classes or methods, and moving methods and fields between different classes.
+Let's take a look at a few concrete refactorings
+and see how they could apply to Mario.
+Let's start by performing an extract method refactoring on the tick method
+within the level class, which we also actually looked at earlier
+as a part of the testability unit.
+So remember, this tick figures segment is really long.
+So what we're going to do is we're going to create a private method here called
+tick figures.
+And what we're going to do is we're going
+to extract this long block from in the existing method
+and move it down-- extract it into this private method that
+just deals with taking the figures so that's easier to understand.
+But it's also more cohesive because it's just about that one thing.
+And then here we'll add the reference back
+to call the new private implementation.
+And that's all that's involved in making this extract method happen.
+And if you look at the tick method now, it's much more succinct.
+So if you needed to make a change to how tick worked,
+there's a lot less to consider.
+Also, if you needed to make a change to the most complex functionality here,
+that is how the figures themselves got ticked, you just
+have to go down to this tick figure implementation
+and you can make those changes there because this is all tied together
+in this one cohesive block.
+Extract method refactorings can also be performed within the IDE.
+For instance, we can go Refactor, Extract, Method, and this
+can be performed for you.
+And in this way, IDEs are really able to help refactorings
+happen in a much more automated way.
+So let's go and take a look at another example from Mario.
+So we can go and say, hey, setLifes is kind
+of an unfortunate name for a method.
+We'd rather it be setLives.
+I mean, even here the selector itself is called liveNumber, so why is it lifes?
+We can see already setLifes is here, but it's
+called from several other program points within the system.
+So if we wanted to go and rename this, we
+would have to go and update it's declaration
+and update all of the callers of this method.
+But here we'll go and we'll use the actual refactoring.
+So go Refactor, Rename, and we'll call it setLives, and just say Refactor.
+And what's happened here is it's gone and changed all of the callers
+of this method and the declarations.
+We see now it says setLives, and also I see this call right above it--
+it was also fixed automatically.
+And you can imagine, if you have a system with tens of thousands
+or millions of lines of code, this type of refactoring
+can really make renaming things much, much easier.
+And having good names is fundamental to having
+systems that are easy to understand.
+So, of course, now, we have this thing called lifes--
+this field called lifes.
+So let's go and fix this too because I don't like this field name.
+Let's go and refactor this-- rename it to lives and change it.
+And we can, again, see here is the referencing the field,
+and it's updated here, and if we went to the declaration above,
+we can see that it's been changed to lives.
+So, doing this refactoring is really quick,
+and we'll update all of the references within our system.
+Let's try a more complex refactoring.
+So recall in the [? Smells ?] video, we talked
+about how there was duplicated code between SpikedTurtle and GreenTurtles.
+So what we want to do is we want to extract some of this functionality
+into its own method, and then pull it up into the supertype-- up into Turtle
+itself.
+So what we're going to do first is create an init method here.
+And what we'll do is we'll go on move this code up from the constructor
+and down into this method.
+And of course, we'll add the parameters to captured the data fields that
+are needed for parameterizing this behavior
+amongst the different subtypes.
+And we'll make the call to it from the original constructor
+with the right values.
+And after refactoring-- this is part of the cleanup phase--
+we need to make sure that we're actually applying all of the refactoring steps
+appropriately.
+So here we need to push these parameters through the implementation.
+All right, so let's go into GreenTurtle now and finish this refactoring ops.
+What we want to do is we want to call this init method that we just created.
+So we'll call this .init, and we'll add our values,
+and delete the old code that was just duplicated from before,
+and interestingly, here we see that we have a bug in init.
+It's an unresolved function.
+And that's because we actually put it inside SpikedTurtle.
+We forgot to pull it up-- to do the pull up refactoring--
+to move it from SpikedTurtle to its superclass, Turtle.
+So let's do that here.
+So we're going to remove it from SpikedTurtle.
+Go into Turtle, and just add it into this class
+so it's accessible to both SpikedTurtle and GreenTurtle.
+So first, we'll go check SpikedTurtle, and we see that, yes,
+this call to this .init works.
+It's visible within Turtle.
+And, if we now go and check in GreenTurtle,
+we can see that the same thing is also true.
+So this .init is not giving us an error anymore.
+And we've gone and taken these two duplicate blocks
+and extracted them into their own method and pulled
+that method up into the supertype so both subtypes could use the code
+without there being any duplication.
+So these were just three simple refactorings
+that look at ways that we can restructure our system
+to reduce the complexity of long methods,
+to fix the naming of some methods and fields,
+and to reduce duplication between two different subclasses.
+And all three of these are ways that can go and improve
+the designs of our systems so that they're easier to change in the future.

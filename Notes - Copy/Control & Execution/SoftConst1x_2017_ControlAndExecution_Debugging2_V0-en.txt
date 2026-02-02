@@ -1,0 +1,264 @@
+ELISA BANIASSAD: Welcome to our second round of debugging.
+So we have this hair salon from last time.
+It's been augmented a little bit.
+So let's run it and see what's changed since our latest version.
+Basically, I've gone in and I've broken it.
+At this point, this code is totally riddled with bugs.
+We're going to find a couple of them in this and future videos,
+but you should grab this code and chase down more on your own.
+So all of this is printing out, and we can
+see how it corresponds with the code from our main class.
+And if we read through, we can see a few problems.
+So first, we make a customer, we book the customer, we verify the booking,
+but then we see Elisa, the customer, doesn't
+think she's booked at that time.
+Then we have a new piece of functionality
+that lets us change a booking.
+But again, the customer doesn't change their booking,
+and the booking doesn't look like it's changing, because here it says there's
+no customer booked at that time.
+And also, sure enough, here it says the original time.
+Then it says, "Making a new customer called Elisa."
+And we're not quite sure why that's happening,
+but we can see we're trying to find a new booking by name.
+So both these printouts must be happening over here,
+when we call confirmBookedName.
+And and something's going wrong, and we're not
+finding our booking for Elisa.
+And then we see all the bookings for the day,
+and Elisa is booked at the wrong time, because we
+wanted her to be booked at 13.
+OK, so what are we going to chase down first?
+Let's chase down this bug, that Elisa doesn't confirm her new booking.
+Now, there's been another structural change to this,
+and that is that the customer now has a notion of the book time.
+So the customer is keeping track for themselves when they're booked,
+which sets us up for having this back-and-forth relationship
+between the hair salon and the customer, which is actually more natural
+and matches reality a lot better.
+So let's imagine what might be causing this problem.
+There are maybe three hypotheses that jump out at me.
+First, we might be retrieving, and therefore reporting the booking
+incorrectly.
+In other words, the booking exists, but we're not reporting it right.
+So to test that out, what we would do is put a breakpoint in confirmBooking(),
+assuming the error was in there.
+The second hypothesis is that the method for actually setting the field
+isn't working.
+So we're making the booking properly, and we're trying to set the field,
+but the field is not being saved, kind of like what
+we saw before in the constructor.
+And to chase down that hypothesis, we would put a breakpoint in the setter
+in setBookedTime().
+And the final option is that we're forgetting to set the field entirely.
+We're never calling back to the customer to set the field.
+And to chase down this one, we would look in makeNewBooking().
+So those are the three possibilities.
+If you have a field that's not seeming to be changed,
+either it's printing it out wrong, or the changing itself is wrong,
+or you're forgetting to change it entirely.
+So let's start by investigating this first hypothesis, that we're
+retrieving the value incorrectly.
+We'll put a breakpoint in confirmBooking().
+Let's run our debugger and start stepping in.
+So we've got our objects here.
+Elisa has her book time of 0.
+And let's step into confirmBooking().
+We can see our current object is customer, with the name
+Elisa, which all seems fine.
+And the confirmation is saying "Confirming
+that I am booked at that time," and the book time is still 0.
+So it's not that we're returning the wrong thing.
+It seems like the value of book time was never actually changed.
+So the problem is not in here.
+Hypothesis one has been disproven.
+Let's stop the execution and go chase down hypothesis three
+that the method for setting the field isn't working.
+That means we have to go into the customer
+and look at the setter for the book time.
+Now, I was going to put a breakpoint here, but what I can actually see
+is that this method is gray, which means it's never actually called.
+So clearly, our bug isn't coming from this method
+not working properly, because this method is never actually used.
+So we've quite quickly disproven hypothesis number two.
+Hypothesis number three is that the problem is in makeBooking,
+that we're never actually setting the field.
+And this would explain why we're never even calling setBookedTime().
+So this seems like it's probably the right hypothesis.
+But we still need to confirm it.
+So we'll step into here.
+We've got our array list, and we're making this new booking.
+And now we want to step into here and see what's going on.
+So we've got customer 440--
+that's Elisa-- booked at time 12.
+And we're saying booking.addBooking at this booking time.
+And here's the customer.
+Great.
+So we can step over this and see that booking time has been added.
+Now there's a customer sitting at time 12.
+However, we can see that our customer Elisa still has a book time of 0.
+So we're never setting the customer's booked time.
+So we'll stop execution, and add c.setBookedTime() to bookingTime().
+And now, if we rerun the code, Elisa should know what time she's booked at.
+And now she knows.
+"Confirming that I'm booked at 12."
+"Elisa's time is changing from 12 to 13."
+But then, "Confirming that I am booked at 12."
+Oh no!
+So there's still a bug in there.
+We haven't solved all our problems.
+The next problem is that the booking isn't changing.
+So onto bug number two.
+We've got this call in Main to changeBooking,
+but it's clearly not working.
+So let's form our hypothesis for what might be happening here.
+Hypothesis one.
+The validation could be wrong.
+It could be that the customer was booked at that time,
+but that that method isn't working.
+That would be strange, because it worked for the earlier case.
+And we can see in the printed-out list that the booking hasn't actually
+changed.
+So I think we can immediately discard this hypothesis.
+It is not that the validation is wrong.
+The second option is that the rebooking isn't happening correctly.
+So the change, for some reason, just isn't taking place.
+So to test this, we'll set a breakpoint in changeBooking() and see
+if the parameters are coming in correctly and whether the booking list
+is being saved correctly.
+So let's go in and put in the breakpoint into changeBooking(),
+and then we run it.
+And we can see all of our state here.
+The hair salon exists, and the customer exists,
+and there's a booking for Elisa at time 12, which is perfect.
+That's exactly the right state.
+And here we see customers 440--
+that's me-- and the new time is 13.
+And now we're saying, get the booking time for customer.
+And the book time is 12.
+That was the original time.
+And so now we've got the customer's current time.
+We know when the customer was booked originally.
+And now we print something out that says we're changing from the booked time,
+dot dot dot, then we do some calculations,
+and then it says to the next booked time.
+So bookedTime is 12, and now we're going to change it to 13.
+So we've changed the booked time.
+But if you look inside the customer, the booked time is still 12.
+So what you've actually done is you've made a local copy of the booked time.
+You've copied it into a little local integer,
+which is going to completely die when we get to the bottom of this method.
+And we have not actually changed the value inside of the customer
+object itself.
+So we've made a local change, not a change
+on the object we were trying to affect.
+This is actually a really common bug, especially when you're just
+starting programming with objects.
+You'll change a little local variable instead of changing a field.
+The reason the booking wasn't being changed
+is because you can see what's happening here.
+By saying bookedTime = newTime, we'd actually made them the same thing.
+So the booked time was 13, and now the new time is also 13.
+So all we're doing is moving the customer into the new time,
+slot 13, and then setting slot 13 to null.
+We can actually watch that happen.
+So this has all gone terribly wrong, and it's all because of this one line
+of code, bookedTime = newTime.
+So we stop execution, and we'll comment out this line of code
+so that we don't forget our shame.
+And we want instead to say customer.setBookedTime(newTime).
+So now everything should work correctly.
+So let's debug our way over to here, and we see our customer come in.
+The new time is 13.
+The booked time is 12.
+We're printing the message.
+We're setting the new time to be the customer.
+Briefly, there are two customer 440s, Elisa and the [? list. ?]
+And then we set the old one to be null.
+Great.
+Work achieved.
+So we have one more bug to chase down, and we can find that in Main as well.
+And that is where we want to find me by name, and it says no, we can't.
+You might wonder why there is this additional functionality
+to find something by name, not just by object.
+But you can imagine-- if you were in a salon,
+you wouldn't want to have to create a new object every time you
+found someone's booking.
+So this is kind of the functionality that covers off that use case.
+So everything seems like it's working Elisa
+is sitting in the right place in the list, but we can't find me by name.
+So how come?
+Here in confirmBookedName(), we're doing a search for my name.
+So let's make some hypotheses.
+One, there's no customer booked for that name
+because it's been taken out for some reason.
+Maybe we accidentally killed that element in the array.
+Two, it might be that we're looking for the wrong booking.
+That means that we would have to set a breakpoint inside confirmBookedName()
+and make sure everything is lining up.
+And then the third option is that we're retrieving the name wrong.
+The booking is in the list, and we're looking for the right name,
+but something is going wrong in connecting the two.
+And again, we'll need a breakpoint in confirmBookedName().
+So to chase down hypothesis one, if we set a breakpoint right before the call
+to confirmBookedName() and debug, we can see what's coming in, and we can see
+that there's a booking for Elisa.
+And Elisa even agrees.
+They both say the booked time is 13.
+So that is not the problem.
+We have killed hypothesis number one.
+The problem isn't that there's no booking.
+So on to hypothesis number two.
+To do that, we'll kill the execution and set a breakpoint right at the beginning
+of confirmBookedName().
+And we'll see if there's a typo in the parameters
+or if anything strange is happening there.
+So here we have our bookings and our booking time,
+and we have our booked customer.
+And we can see that all the parameters are coming in correctly.
+The names are all Elisa.
+So hypothesis two is also disproven.
+We're definitely looking for the right customer, so that is not the issue.
+So now let's keep going, to test hypothesis
+three, to see if the person just isn't being found correctly.
+So we're setting this new variable, bookedCustomer,
+to be the customer at the given time.
+And then we're doing this interesting thing
+where we make a new customer named Elisa.
+That's why we get that printout, "Making new customer."
+And you might be wondering why we're doing that,
+and it's because you have to compare things of the same type.
+You can't compare strings to ints.
+You can't compare hair salons to customers.
+And you can't compare customers to strings.
+So if we want to compare the string "Elisa"
+to the customer whose name is also Elisa,
+there are lots of things that we can do.
+But one of them that's often done is make a new dummy customer,
+or a dummy object, with the same field of the value that you're looking for.
+So in this case, we're making a new person, also called Elisa,
+and then we run a check, isPersonBooked.
+And this will produce a Boolean value, based on bookedPerson == namedCustomer.
+And what we're hoping to do there is compare
+to see that these two people have the same name.
+But in fact, what we're doing is comparing the people themselves.
+And even though these objects have the same name,
+they're two different objects.
+So this is going to return false, even though intuitively we
+would expect it to return true.
+So we found our bug, and now we need to come up
+with a different way of comparing these people,
+because we want to compare their names, not their object references.
+So first, let's isolate the name of the customer.
+Let's save that out.
+So String customerName = bookedCustomer.getName().
+Then we want to compare the customer name to the name that's coming in.
+So we want to say that the value person is booked equals
+customerName.equals(cName).
+Because dot equals is actually the proper way
+to compare values of objects, as opposed to comparing their object references.
+So let's see if this works better.
+This should now return true if the two names are the same.
+So let's rerun our code and see if we found me.
+And sure enough, we did.
+We found all three of our bugs.

@@ -1,0 +1,248 @@
+
+{
+
+  "summary": "Introduces generative recursion (e.g., Hailstone, fractals) and explains the necessity of a three-part termination argument (base case, reduction step, convergence) to prove its eventual halt.",
+
+  "keywords": ["generative recursion", "termination argument", "Collatz conjecture", "Hailstone sequence", "fractals", "recursive functions", "Sierpinski's Triangle"]
+
+}
+
+
+
+GREGOR KICZALES: In the last video, we drew some pretty pictures
+
+of triangles and squares.
+
+In this video, we're going to look at some pretty pictures too.
+
+Actually, what we're going to do is we're
+
+going to look at some of the math-- or a very simple function-- it's not math,
+
+it's a very simple function-- behind a pretty picture.
+
+There's this thing called the Collatz conjecture,
+
+and it's about a sequence of numbers that work like this.
+
+If the current number is even, then the next number is n over 2.
+
+If the current number is odd, then the next number is 3n plus 1.
+
+And what I've done here is using the recipe for generative recursion,
+
+I designed a ISL function for hailstones--
+
+that's what this sequence is historically called-- which basically
+
+says, look, when we get to 1, we stop.
+
+So if n is 1, we produce the list 1.
+
+Otherwise, we cons n onto the next call, which
+
+is if n is even, we call ourselves recursively with n over two,
+
+and if n is not even-- in other words, if n
+
+is odd-- we call ourselves recursively with plus 1 and n times 3, which
+
+is exactly this rule up here.
+
+So there's hailstones.
+
+And the reason it's called hailstones is that if you compute the sequence
+
+for a very-- for a number of values-- I'll just do it for 10 now-- if you
+
+compute the sequence for a number of different starting values
+
+and then you measure the length of the sequence and you plot
+
+that, you get a picture kind of like that.
+
+
+
+Let's talk about something else for a second.
+
+
+
+Look at hailstones.
+
+Hailstones is a recursive function that calls itself
+
+with either n divided by 2 or n times 3 plus 1.
+
+Let's compare hailstones to the Sierpinski's Triangle function.
+
+stri, the Sierpinski triangle function, is a recursive function that
+
+calls itself recursively with s over 2.
+
+Now, if you think back a bit, when you first
+
+saw recursive functions I think you probably got a bit concerned,
+
+hey, is this ever going to stop?
+
+This function is calling itself.
+
+Why will it stop?
+
+And then I convinced you not to worry about that,
+
+because we talked about the notion of a well-formed self-referential type
+
+comment that had a base case and a self-reference case
+
+and how the existence of the base case meant
+
+that recursive functions operating on this kind of data would always stop.
+
+And the reason they would always stop is that if it wasn't the base case,
+
+they were going to take a subpiece of the current data,
+
+and by taking subpieces of the current data-- in the case of lists,
+
+by taking the rest of the list each time--
+
+they would eventually reach the base case-- again in the case of lists,
+
+empty.
+
+And so that's why we were happy with those recursive functions.
+
+We knew they would stop.
+
+What about these recursive functions?
+
+They're not operating on a well-formed self-referential data definition.
+
+So that previous proof that they would stop doesn't apply anymore.
+
+What we need for these functions is a three part termination argument.
+
+Let me show you what I mean.
+
+I'm still in termination-starter, and the problem here
+
+is to do a three part termination argument for stri.
+
+
+
+Now, what I'm going to do actually is I'm
+
+going to pick this up and take it over to fractalsv1.
+
+I want to put the termination argument right there.
+
+
+
+I'll paste it in right here to fractalsv1,
+
+And I'll get rid of just the description of it.
+
+I'll put just that part.
+
+So now this is going to be the three part termination argument.
+
+The first part of a termination argument is the base case.
+
+When does the function stop?
+
+You can usually pick these right out of the definition of the function.
+
+It stops there.
+
+
+
+The next part of the argument is the reduction step.
+
+What is the argument to the function in the recursive call?
+
+What is the thing which the template calls the next problem?
+
+Well, again, that's usually pretty easy to pick out of the function definition.
+
+In this case, it's s over 2.
+
+
+
+And then there's the argument that repeated application of the reduction
+
+step will eventually reach the base case.
+
+What that means is that if I start with a legal s,
+
+and I keep doing the reduction step over and over again, I'll get to the cutoff.
+
+And in this case, that's fairly straightforward.
+
+As long as the cutoff is greater than 0 and s
+
+starts greater than or equal to 0, repeated division by 2
+
+will eventually be less than the cutoff.
+
+
+
+I promised we wouldn't do much math in this course.
+
+I'm still keeping my promise, but I'm getting a little bit close to it.
+
+But I think that even people who don't love math
+
+will agree that if you keep dividing a number by 2 over and over
+
+and over again, that number is eventually going to get right up to
+
+and approaching 0.
+
+And so as long as the cutoff is bigger than 0,
+
+you'll eventually get to be less than the cutoff.
+
+The point of a three part termination argument
+
+isn't to talk about how fast you're going to get there.
+
+It's just to prove that you will eventually get there.
+
+So with this three part termination argument,
+
+which you should always include when you use generative recursion,
+
+we now know that stri will stop.
+
+Let's do another one.
+
+And this one is so simple that you might find it too simple,
+
+but I want to do it, because as soon as I do this one, then
+
+I'm going to do a trickier one.
+
+I'm going to go back to fractalsv1, and I'm
+
+going to do the three part termination argument for the carpet.
+
+
+
+And in fact, what I'm going to do is let you do the three part termination
+
+argument for the carpet.
+
+So there is the carpet.
+
+You want the base case, the reduction step, and the argument
+
+that repeated application of the reduction step
+
+will eventually reach the base case.
+
+This is going to be almost exactly like the one we just did.
+
+I'm aware of that.
+
+But please do it anyway.

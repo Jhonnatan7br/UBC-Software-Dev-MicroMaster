@@ -1,0 +1,220 @@
+
+ELISA BANIASSAD: The observer pattern is an object-oriented solution
+for when you need one object to effectively watch another object.
+So Twitter is a really, really great example
+of this kind of publish subscribe feeling.
+You follow someone on Twitter.
+And then Twitter will send you back updates.
+The observer pattern, however, is once again, a response to a design problem.
+And that problem is that following and updating is a lot of responsibility.
+It meant that each of the collaborators in this publish and subscribe
+architecture had a lack of cohesion.
+So the publisher then needed to deal with dealing with all of its followers
+and sending all of the updates.
+And the followers needed to deal with remembering to subscribe,
+and also handling their updates on that end.
+So the design patterns people came up with a better
+object-oriented arrangement.
+The observer pattern abstracts all of the publishing behavior, and then
+all of the subscribing behavior into two collaborators.
+So on the publishing side, we have the subject.
+That's the subject of the observation.
+So the subject has two things that it can do.
+It can add observers to a list.
+So we would have a list here.
+And it can notify observers on that list by calling the update
+method that lives inside the observer.
+The observer on the other hand, just deals with updates.
+So it would get an update and then it would do something like display it
+on a screen.
+So this allows us to capture the abstract behavior that's
+involved in the observer pattern, the subject and the observer.
+But to concretely tie it into our own implementation, we use subclassing.
+So we determine which of our classes should play the role of the subject
+and which of our classes should play the role of the observer.
+In this case, we're imagining we have some class called Twitter
+and its subclass is the subject.
+And we're imagining that our client is a subclass in itself
+and its subclass is the observer.
+Now let's look at the dynamics of how the observer pattern works
+by using a sequence diagram.
+So the very first part of the pattern is that the concrete subject needs
+to subscribe all of its observers.
+So the observer itself doesn't actually have
+to be the one to do that subscribing.
+It's quite possible that there would be some other sort of God-like class
+or a different component that would set up the relationship between observer
+and subject.
+So I'm not going to say that the call to subscribe is coming from the observer.
+I'm just going to say that it comes from somewhere.
+So I'm just going to call this add.
+What this really means is add observers.
+Add observers.
+So that just comes in and it kind of plays out and then it returns.
+And again, doesn't have to come from here.
+The second part of the pattern is when the concrete subject is actually
+doing its thing.
+Because remember, the observer wants to be updated
+when anything interesting happens in the subject.
+So when something interesting happens, what happens is the call comes in to do
+the behavior of interest, whatever it is.
+And then that method will run.
+So that's just a typical behavior that lives inside the subject.
+However, the subject has to have something added to it.
+It has to have the method call to notify or notify observers
+added into that behavior of interest.
+Because that's how the observer will hear about it.
+This notify or notify observers call, this implementation actually
+lives inside of the abstract subject.
+So it doesn't have to be defined here.
+We say that it's a self call, because the concrete subject has inherited it.
+So this will then call update on the concrete observer.
+And then the concrete observer will do whatever
+it is that it needs to do to process the update.
+And then it returns and then the behavior can continue.
+There are lots of ways to introduce the observer pattern into a piece of code.
+Let's start with a really simple version,
+which is when you already basically have a publisher and a subscriber
+and you want to set up the collaboration between them in a principled way.
+So in this case, we have a course and student system.
+So obviously, students are going to be wanting updates from the course.
+And here we can actually see probably that behavior of interest
+that I mentioned before.
+Whenever a lecture is published the student
+is going to want to know about it.
+So to bring in the observer pattern what we do is first,
+we set up our subject class and our observer class.
+So we would introduce those two classes in this arrangement into our system.
+Then we would figure out which of our classes
+should extend which of these classes.
+So here we have the course extending subject,
+because the course is a subject.
+And we have the student extending the observer,
+because a student is an observer, specifically, of a course.
+Then we would set up the relationship between the subject and the observer.
+So we put a list inside the subject that contains the observers.
+Next we would work out exactly where inside of the whole system
+the observers are registered with the subject.
+In this case, we can just say that whenever
+a course is launched that it gets a list of subjects.
+Or sorry, a list of students.
+So here we would say add observers right inside of the constructor.
+Again, this is highly situation dependent,
+so you'll want to look at your own implementation
+and decide where the right spot is for registration.
+Next we want to figure out what the behavior of interest is going to be.
+In this case, we have our published lecture behavior,
+which is when we want our students to be updated.
+So we would put our call to notify right inside of here.
+
+And then we have to override this update behavior,
+so that when the students are notified, when
+that notify observers call the update method,
+the student does something with it.
+Like starts to study or reads the slides or something like that.
+So here we put our update code.
+And that's it.
+Then you've implemented the observer pattern.
+OK, so we've set up our class hierarchy.
+We've got instructors, we've got courses and we've
+got people who are registered.
+And now we're going to print out all the registrants in that one course.
+And now I'm going to prepare a module called the observer pattern.
+So let's run it and see what happens.
+Great, so it's pretty minimal output here.
+We have Erika and James both registered and Elisa
+is prepping the observer pattern.
+Wonderful.
+So now however, we want to actually code the observer pattern,
+because we want people to be able to enroll in this course
+and then be updated when I prepare a new module.
+And right now, they would presumably just
+have to check the website a whole bunch.
+And we want them to be notified.
+So what do we do?
+Well, the first thing we need to do is set up a new package called observer
+to hold all of our observer stuff.
+And then we have an interface called the lecture observer.
+Next, we have a class called the subject.
+And the subject class, which is just a regular Java class,
+has a list of lecture observers.
+And we could have called these lecture observers students.
+Instead, this is just a design choice, but since we don't actually
+know that students is the only thing that will be doing the observing,
+then we want this to work for any observer.
+So we're going to keep it a little bit more generic.
+So now let's get our hierarchy set up.
+We want our course to extend subject, because it's
+the subject of the observation.
+And then we want student to implement the lecture observer.
+And it already implements teachable but it's fine
+if it implements both of these interfaces.
+Great, so now let's implement some methods.
+So if we go into the subject, the first thing we know we need to implement
+is the add observer method.
+And it takes a lecture observer or any of its subtypes as a parameter.
+And then we add that parameter to the observers list.
+And first, of course, we check to make sure the lecture observer is not
+already in a list.
+Great.
+So now we need to decide where we're going to call this add observer method.
+Huh, OK, well here's the method register student.
+And it calls this add students method.
+So let's go in here.
+And this is the method that's adding the student
+to the course, which seems like a really natural place
+to add them as an observer.
+So we'll call add observer and we pass the student in as the observer.
+And this all works, because since course extends subject,
+it's inherited this add observer method.
+Next we want to figure out when our observers will get notified of things.
+First of all, let's provide our notification code.
+Inside the subject we'll say, public void notify observers.
+We could have called it anything actually,
+but this is the traditional name for that method.
+And now we'll put in what they will be notified with.
+What message will they actually get?
+Well, they're going to get notifications about lecture modules,
+so we're just going to push that out to them.
+So this method will take a lecture module.
+And then for each of our observers, we're
+going to call this update method, which we haven't made yet.
+And we'll pass in that lecture module, because that's what
+we're sending through to the observer.
+So now we need to make this observer.update method.
+And we can declare that method up here in the lecture observer interface.
+But then we'll have to implement it, obviously, in the concrete classes.
+We could do it in student or we could do it
+in each of the subclasses of student.
+But somebody has to implement it.
+So let's go into student and implement a generic version.
+And then in the subclasses if we want, we
+can override that behavior to be something less generic.
+So we'll add in our update method right here with its lecture module parameter.
+Then for now, we'll just have it print out
+something that says like prof has posted lecture module.
+And then the lecture module details.
+And since we kind of want lecture module to print out nicely,
+we've overwritten the toString method.
+Great, so let's run our code and see what we get.
+Ha, no change.
+We're not getting any updates.
+Why not?
+Oh, because we're never actually calling our notify observers method.
+That's kind of important.
+We want to call notify observers when we're prepping a module.
+So if we look in prepare module, it calls add lecture module on the course.
+And the course is our subject.
+So right inside add lecture module we want
+to call notify observers passing in the lecture module.
+Great.
+Now if we run it, it should work, and it does.
+Prof has posted the lecture module.
+And of course,--
+We could go and improve our toString method
+to add some nice line breaks or some formatting
+so that it prints out even more nicely.
+Beautiful.
+Now we can see that every time the professor posts a module, each student
+is notified.
+So this is printing out twice because two students are registered.

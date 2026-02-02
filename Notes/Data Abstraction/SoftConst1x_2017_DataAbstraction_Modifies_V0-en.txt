@@ -1,0 +1,128 @@
+
+ELISA BANIASSAD: OK, so the next stage of specifying our data abstraction
+is talking about the modifies clause.
+But before we get into actually writing our modifies clause,
+instead what I'm going to talk about-- just for a second--
+is this concept of mutability.
+
+So mutability basically means that values can change,
+and they can stay changed.
+So this is a fundamental difference between object orientation
+and what you're used to from functional programming.
+In functional programming, if you had an insert method where you were
+going to insert something into a list--
+so you have insert, and you have a list, like with two elements--
+1 and 2.
+And you want to insert a third element into that list,
+and you pass both of these into the insert method.
+What you would get is a brand new third list
+that is basically the concatenation of these two first lists.
+But in object orientation, that isn't how it would go.
+Instead, you would have a list that would have two elements--
+1 and 2.
+And you would pass them into insert with a third element, 3.
+And instead of getting a brand new list with a brand new name, instead what
+would happen is that insert would actually
+add the 3 to the original list.
+And this would have some kind of name, like myList or something like that,
+some kind of way to identify it.
+So this value is actually changing right in place.
+And this is visible, also, even in the simplest situation like the assignment
+operator.
+So if you have x equals 1, what you've really done
+is you've put a little value of 1 into a spot that's
+associated with the symbol x.
+If you then have a second line of code that says x equals 2,
+that means that you've actually changed the value
+of what is sitting inside of that spot.
+So now the symbol x relates to the value 2 instead.
+So that is mutability, and that is fundamental, now,
+to our understanding of how modifies affects data abstractions.
+OK, so now let's think about how we specify the modifies clause
+for our method specification.
+So modifies asks us to consider whether a method is making any changes
+to a data abstraction object.
+So let's recall our deposit method from before.
+Now, when we look at this, we have to consider what data
+abstraction it's actually sitting in.
+It's not just a method floating in mid-air.
+So let's attach this to a particular data
+abstraction, which would, of course, be an account data abstraction.
+So let's make an account class here, and make a data abstraction.
+And the public visible interface of that data abstraction
+is this deposit method.
+
+But behind the private implementation is the balance.
+
+So when we call the deposit method, what happens is we pass in an amount--
+say, 5-- and it is passed in as a parameter to the deposit method,
+and then the deposit changes the balance.
+It increases the balance by the amount of the parameter.
+So now the balance would be 5.
+And if we called it again with the value 3,
+then deposit would change the balance again, and now the value would be 8.
+So when we see this from the public's perspective--
+if we looked at this as actually making calls to the data abstraction,
+to the account object--
+what we would see is d, or some variable, equals my account,
+or something .deposit depo 5 first, and then d equals account.deposit 3.
+And we would see this value of d change.
+We would see that first it was 5, and the second time it
+was 8, because first we put in 5, and the second time we put in 3,
+and that's increased the value of the balance to 8.
+But we actually don't care about what's happening inside of here.
+This is all a black box.
+And equally, we don't really care about what's happening inside of here.
+The fact that we have this implementation
+should just be thought of as a placeholder,
+because what we're really thinking about is the public, visible interface
+at this point.
+We're just thinking about what the caller of the method
+should have to consider when it's calling that method,
+just like with the requires clause.
+So here, we just want to say that regardless of how any of this is
+implemented-- even though we have an implementation in there for right now,
+we could change this at any time--
+but regardless of how it's implemented, this deposit method
+will change something about this account object.
+So to signify that, what we do is we write a modifies clause.
+And we just write modifies this.
+And we don't get any more specific.
+This just refers to the object, or the data abstraction,
+that we are writing the method for.
+So we just say this, because we don't want to refer
+to any of the implementation details.
+That's not really the business of anybody
+that's outside of the data abstraction.
+Instead, we just want to talk about that publicly visible interface.
+That's the only thing we're specifying.
+So we remain somewhat general at this stage.
+And we say, this method is a mutator on account.
+And that's as far as we go.
+OK, so there's one other thing to think about when
+we are specifying our modifies clause, and that is not just
+if it's changing this data abstraction-- this account
+data abstraction-- but also if it changes any other data abstractions.
+So our original deposit method did not change anything besides the account.
+It just added the amount that was being passed into the balance.
+But I've now changed the deposit method so that it takes a second parameter.
+And that second parameter is a list of deposits called deposits.
+And so what happens here, if we make a call to deposit and pass in say,
+the number 5, what'll happen is we'll have a list like this,
+and the number 5 will be put into the list.
+And then if we make a second call, then the number 3 will be passed in.
+And then a third call, the number 1 will be passed in, or whatever.
+So that means that this deposits list actually persists
+outside of the scope of this method.
+So we are making lasting change to this object as well-- to this list object.
+And to capture that, we also include that in the modifies list.
+So we don't just put when we are modifying this abstraction,
+we also make sure to include any external data
+abstractions or any external objects that we're changing.
+So here we would write modifies this, but also modifies deposits.
+And we just name the parameter in that case,
+to indicate that this is the thing that is going to be changing.
+And if there was anything else that was going to be changing, like a field
+in the abstraction that's of a different object type,
+then we would list that, too.
+But for now, this is about as complicated as we need to consider.

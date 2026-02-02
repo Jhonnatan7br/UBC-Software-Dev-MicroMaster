@@ -1,0 +1,89 @@
+
+GREGOR KICZALES: OK.
+Let's do some examples.
+Well, let's start with the base case.
+We know that in this case, the base case is the dash loe function called
+with empty for the loe, that's where the mutual reference
+and self-reference cycles all stop.
+So we'll say check-expect, find-loe.
+Let's say we're looking for F3 in the empty.
+And, of course, we can't find a F3 in empty,
+because there's not anything in empty at all.
+So that'll produce false.
+Now let's do another simple case.
+Let's say check-expect.
+Let's look for it's find--Loe and find--element.
+Let's say we're looking for something named F3 in F1.
+Well, that's false, because nothing named F3 in F1.
+
+And most of these other tests are going to be find an element.
+So we'll make something we copy.
+We'll what if we look for F3 in F3?
+If we look for F3 in F3, we do find it.
+We find it right away, because F3 is F3.
+And so we return the data, which is three.
+OK.
+So that's the base case and two very simple immediate success
+or immediate failure cases.
+Let's try to do another case.
+Let's look for F3 in D4.
+Well, that's false.
+We don't find F3 in D4, but what about looking for F1 in D4?
+Well, we do find that F1 is the first child of D4.
+So this is going to produce one.
+But what about a case where what we're looking for
+is not the first child of D4, but one of the later childs of D4?
+We should try that case, because it kind of corresponds to searching in a list
+and making sure we search beyond the first element.
+So if I look for F2 in D4, I'm going to find it so the data will be two.
+
+Seems like we should also try a case where
+we're looking in an element that has subs of this,
+but what we're looking for is actually the element itself.
+So let's see what happens when we look for D4 in D4.
+
+Well, anything that has subs has data zero.
+So this is going to produce zero.
+
+And let's try it one more big one, find--element.
+
+Let's try looking for F3 in D6.
+That's the far right child, and that would produce three.
+
+So that seems like a pretty exhaustive set of tests.
+Let's run those tests to make sure there well-formed.
+They're all running and most are failing.
+So they are well-formed.
+And let's save that.
+OK.
+Now let's go get the template.
+
+Two of them, of course, here they are.
+We'll go back down to the function that we're working on.
+We'll comment out the two stubs, paste in the templates, uncomment those.
+And I'll do renaming fine element is that and here
+is the natural mutual recursion, copy that.
+Here is the function name.
+Here is the natural recursion, and here's the natural mutual recursion.
+And there's one more thing to do here.
+These are functions that consume two arguments.
+They consume the element or the list of element
+and also the name of the element we're looking for.
+So we have to add a parameter n there, and we have to add a parameter n there.
+And remember, I said, whenever you have recursion,
+and it also applies for mutual recursion, when you add a parameter,
+you should be sure to go put a note to yourself at each recursive or mutually
+recursive call to say, hey, you're going to need something here,
+you're going to need a parameter.
+Now we can wait until later to fill in those question marks.
+But in this case, I know that once I start
+looking for a given n, the whole down the tree,
+I'm going to be looking for the same n.
+So n's never going to change. n is always the same value.
+So I'm just going to keep passing n in all the recursive calls.
+I can fill it in now.
+Now if that's not clear to you now or if you
+don't think it would have been clear to you this early, that's fine.
+You could leave the question marks and fill n in later.
+I could just tell now that this function doesn't change the n as it goes.
+So I might as well fill it in now.

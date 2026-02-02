@@ -1,0 +1,79 @@
+
+REID HOLMES: There are a diverse set of processes available for structuring
+the development of software products.
+And these can be broken into two high level categories.
+So the traditional category includes things like waterfall and spiral,
+whereas the more modern category includes
+processes like XP, TDD, and Scrum.
+Now one thing that's really important to note
+is that there is no one true process.
+The process that any team chooses to follow
+is going to vary based on their own constraints,
+experience, and what needs to happen within the product itself.
+And we're going to step through today and talk about all
+of these different processes in a little bit more detail.
+The Waterfall model is considered a classic software development
+methodology that's been adapted from more traditional engineering fields.
+In the Waterfall model, what we're going to do
+is we're going to go from one step to the next to the next in the development
+process without ever stepping back.
+So we want to make sure that each step is
+finished to completion before we carry on with the next phase of the project.
+So in the refinements phase, what we're going to do
+is we're going to collect all of the requirements for the system.
+And once everything is together and we've
+built a comprehensive specification document,
+we're going to move onto design.
+In the design step what we're going to do
+is we're going to consume that specification document
+and design the system, and come up with all the different components
+classes, methods, fields, and all the different parts of the system
+and figure out what they are advanced before we start building.
+And once that's ready we'll move on to implementation.
+So implementation, we'll take all of this design documentation
+and be given to the development team.
+And they'll use that to go and actually write the code to the system
+and get it all ready to hand off for verification.
+So once the system is entirely written, it'll
+be passed down to a verification team who will then go and take
+the specification defined earlier, come up with a set of test plans,
+and use it to verify that the implementation is correct.
+And once we have a working implementation,
+it will be passed off and down to the maintenance team who will go and evolve
+the system over time.
+Now, one huge downside of this process is
+it's not until we get to the very end that we know that the system that we've
+built is actually useful in practice.
+And if we have a long running system, for instance that runs or takes
+five years to develop, it can take an extremely long time for us
+to realize that we've made some problem back of the requirements phase.
+One other challenge of the Waterfall model
+is that the resistance to moving back to a previous stage
+can be really problematic in practice.
+For instance, if business conditions change,
+we're not going to want to go back and step back and change the requirements.
+But that can be really detrimental the end product.
+Or if the company itself is reorganized in some way,
+this can also be problematic.
+So the Waterfall model is extremely resistant to change in practice.
+Because all of the phases in the Waterfall model are extremely distinct,
+it's really easy to understand what's actually
+happening in the development of the system at any given time.
+The other nice thing is it's really nice of a waterfall
+is that there's a clear and explicit hand-off between each of these phases.
+When we hand the specification from requirements to design,
+we know exactly what that document is.
+And it's explicitly signed off for, both by the design team for receiving it
+and the requirements team for passing it on.
+The same way we moved from design to implementation,
+the implementation team doesn't get to jump the gun and start early.
+They get a complete and well thought out design that gets handed to them.
+And they can explicitly start with the knowledge that what they've been given
+is the complete design of the system.
+So the clarity between each of these phases is extremely nice.
+Of course, this again feeds back into the negative aspects of waterfall
+in that the clarity makes it really hard to revisit
+prior steps to change the design or requirements later on in the process.
+So there really is a trade off that makes waterfall a challenging
+prospect with many modern systems that want
+to be more agile and responsive to customer and user needs.

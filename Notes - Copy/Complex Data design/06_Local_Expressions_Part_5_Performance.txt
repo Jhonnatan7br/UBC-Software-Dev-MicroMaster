@@ -1,0 +1,174 @@
+
+GREGOR KICZALES: So far in this course, we've
+avoided talking about performance, or program efficiency.
+And we've done that quite deliberately.
+The reason is that it's very easy for programmers
+to worry too much about efficiency, too soon about efficiency,
+or, to be honest, to worry just plain incorrectly about efficiency.
+As a general rule, it's a better idea to design a simple program that's
+easy to understand and easy to change.
+And then, worry about the efficiency later, once the program's running.
+What you can do, then, is you can run the program against a sample data set
+and measure its performance and see where the real performance
+problems are.
+What you'll find is you often get surprised.
+Some of the things you thought would be a performance problem
+get taken care of automatically by the programming language implementation.
+Other things you might have thought would be a performance problem
+turn out not to be.
+And then, unfortunately, there's some other things
+that you didn't think would be performance problems that
+turn out to be performance problems.
+With that said, there's one category of performance problem
+you really need to fix as part of the design.
+That has to do with problems of exponential growth
+in the time it takes your program to run as the data gets larger.
+Right?
+Exponential growth in performance is not going
+to be a good property for your program to have.
+So what we're going to do in this video is
+look at how you can use local to deal with an important category
+of these problems.
+I'm back in a version of the filesystem program, FSV 6.
+And in this version, the data definitions are the same.
+I've got this function, make skinny.
+And what make-skinny does is it makes trees that are very skinny.
+They're not bushy at all.
+Each element just has one child until it gets down to the leaf.
+And if I say make-skinny of two, for example,
+I get a tree that looks like this.
+There's an element called x at the top.
+It has one child called x.
+And it has one child called y, which is the leaf.
+So it's x, x, x, x, x, and then it's y at the bottom.
+So make-skinny of 10 is 10 x's and a y.
+Make-skinny of 100 is 100 x's and y.
+That's all make-skinny does.
+And then find is the function that we design before that just tries
+to find an element with a given name.
+So what I'm going to do now is, I'm going
+to call find of y on some trees of different depths.
+And I'm using a new BSL primitive here.
+It's a very special thing.
+It's more like an if than a function, because it evaluates its operands
+in a special way.
+But what time does is, it evaluates its operand,
+sees how long it takes, and gives us back the time.
+So what you can see here is, I'm timing how long it
+takes to find y in a tree 10-deep, a tree 11-deep 12, 13, 14, and so on.
+So here we go.
+If I run that, then the times I get-- let
+me scroll this top so you can see-- the time
+it takes in a tree that's 10-- so y is the 11th-- is 2 milliseconds.
+This is in milliseconds.
+In the next one it's 3 milliseconds.
+In the next one it's 7.
+Then it's 20, 35, 57.
+
+So now what I'm going to do is plot that.
+So let's look at this plot.
+
+A bad thing is happening here, isn't it?
+Each time we make 1 deeper, what's happening
+to the time it takes for this to run?
+It's increasing by what?
+It's increasing by pretty close to a factor of 2.
+Let me just add a couple more to see.
+
+We'll make that 16 and 17.
+
+If we extend the plot-- the numbers changed
+a little bit-- that's because it doesn't always compute the exact same time.
+It turns out that measuring how long a program takes to run
+is a very complicated thing.
+But these numbers are a good indication of how long it takes to run.
+So with this now extended plot-- scroll it a bit so we can see all the data--
+it's a really clear that it seems to be taking about twice as long
+to run when we make the tree one deeper.
+Now that's a serious performance problem.
+The tree gets deeper by 1-- 5 takes twice as long-- that's
+an exponential performance problem.
+Because as the tree gets deeper and deeper,
+it's basically 2 to the depth of the tree.
+That's bad.
+So why is that happening?
+Well here's why it's happening right here in find.
+
+Look at what find does here.
+It says, well, go look for n in the first child.
+And if that doesn't produce false, then that's the value you want.
+So produce that value.
+
+And from the perspective of producing the right value,
+this program is perfectly correct, and good, and wonderful.
+
+But the problem it has is that in a branch where
+it finds the value it's looking for, it searches in that branch twice.
+So in this particular degenerate case of the tree-- where
+the tree is one long first branch-- at the very top,
+we search the next level down twice.
+And then for each of those, we search the next level down twice.
+Because each time we first do this to see if it's there--
+and when we find out it is there, we search it again to produce the result.
+So we search this level twice, we search this level four times.
+Each time, it's two times more, and there's the exponential growth.
+So right there-- there it is.
+There's the exponential growth.
+We can see why it's a factor of 2 each time.
+So how do we fix that?
+Well it's really easy fix that with local.
+Local is exactly what we want to use here.
+Basically, we're calling a function here,
+and then we're calling it here again to recompute the same value.
+And what we can do is we can use local to avoid recomputing the same value.
+Now watch, here is the systematic way I do it.
+I find the enclosing expression that contains both computations.
+So here's one, and here's another one, and I find the nearest
+enclosing expression that does it.
+In that case, it's this "if".
+I wrap that in a local.
+And I say define and-- you know, I have to think of some name here--
+I could call it try.
+And I take this value here-- this expression--
+and I name its result, try.
+So now I'm saying, hey, go do this find and let's name it try.
+And then each place I used to have the expression, I put try.
+
+And I need to close that local, so that's going to be right there.
+The if-- I add one more parend, I do a command i to fix the indentation.
+And now what says is, it says, hey, go look in the first child.
+And let's call the result we get from that "try".
+And now, I can look at the value try as many times as I want-- in this case,
+potentially twice-- without recomputing the value.
+I computed it only once here.
+I call it try, and then each time I use try, I don't compute it.
+So if we try this version of the program-- ha, sorry pardon the pun--
+if we run this version the program and look the performance numbers
+we get-- look, no exponential growth.
+So this is a case where we use local to avoid recomputation.
+Now I want to be really clear here.
+The reason this recomputation matters is because it's recursive.
+This recomputation leads to exponential growth, because of the recursion.
+Here's the thing I would encourage you not to do.
+If you, for example, are going to take an argument that you consume,
+and add one to it, and use that twice-- using
+local to avoid the computation of adding one twice isn't worth doing.
+That's going to make your program harder to read for little
+and, perhaps-- to be honest with you-- no performance gain at all.
+Because programming language implementations
+are good at spotting things like that and doing them for you.
+But here, because we have a recursive function,
+if we do the recomputation at each level, we get the exponential growth.
+Exponential performance problems are definitely bad.
+No one's ever going to say that's not a problem.
+So here, it's worth using local to avoid the recomputation.
+So there you go.
+That's our second important use of local.
+We use it to avoid recomputing values, especially in recursive functions.
+Because in those recursive functions, that recomputation
+could lead to exponential performance problems.
+And the general refactoring is, you find the nearest expression that
+encloses all of the recomputed values, you wrap a local right
+around that expression, you give the value some name like try or something
+else, and then use that name in place of each of the original expressions
+that recomputed the value.

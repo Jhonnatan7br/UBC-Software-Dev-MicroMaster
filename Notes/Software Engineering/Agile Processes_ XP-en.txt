@@ -1,0 +1,220 @@
+
+{
+
+  "summary": "Overview of Agile principles and Extreme Programming (XP), including its five core principles: communication, simplicity, feedback, courage, and respect, all aiming for a continuously buildable system.",
+
+  "keywords": ["Agile", "Extreme Programming", "XP", "Agile Manifesto", "communication", "simplicity", "feedback", "courage", "respect", "software development"]
+
+}
+
+
+
+REID HOLMES: Agile methodologies emerged in the early 2000s as a direct response
+
+to more traditional development methodologies.
+
+Agile methodologies are really all about tightening
+
+the feedback loop between the development team and customers.
+
+Enabling developers to be more flexible and achieve higher development
+
+velocity.
+
+So one of the core documents that really emerged
+
+as a part of the agile methodology revolution
+
+is known as the agile manifesto.
+
+The agile manifesto has 12 key tenets, but I think four of them
+
+really illustrate the intent of the document.
+
+So let's talk about them right now.
+
+So the first is to favor individual interactions over processes and tools.
+
+But this is really about valuing the stakeholders who are involved
+
+in the software development process.
+
+The next is favoring working software over extensive documentation.
+
+So in agile approaches, one common theme we'll see
+
+is that the software should always be build-able and executable.
+
+Next we want to favor customer interactions
+
+over contract negotiations.
+
+And this is really all about bringing the customer into the development team
+
+so that we can receive feedback from them
+
+and respond to it quickly and effectively.
+
+And finally we want to favor agility over planning.
+
+What this is really about is about being flexible to the kinds of feedback
+
+that those customers are giving you and responding
+
+by building a product that more accurately reflects their needs
+
+and wishes.
+
+These principles were really developed to increase customer accountability
+
+within the development team.
+
+By bringing them in and getting them involved in the development process,
+
+we're able to both respond to their needs,
+
+but also keep them really carefully apprised of what's going on
+
+as the product is being developed.
+
+The other great thing about agile methodologies
+
+is they increase development velocity by decreasing the amount of time
+
+that development teams spend building the wrong thing.
+
+And the reason we avoid building the wrong thing
+
+is again by having the customers in the loop,
+
+and giving us feedback along the way.
+
+This also allows development teams to experiment
+
+more by trying different design alternatives and figuring out
+
+which ones work best for the customer.
+
+So it gives the developers a little bit more flexibility
+
+to try different things out and see how they work in practice.
+
+Extreme programming, or XP, was one of the first really influential
+
+agile development methodologies.
+
+At its core, extreme programming was all about having a billable system
+
+at all times.
+
+So the development team would start really small
+
+and slowly grow their system over time in response to customer feedback.
+
+And this is in contrast to the more traditional approaches
+
+where we started upfront with a huge planning effort in the beginning
+
+and built our systems from the top down.
+
+So in XP we really are starting at the bottom
+
+and building our systems up, from the bottom up.
+
+Systems that are built with XP follow five key principles.
+
+So the first is communication.
+
+When we think about communication what we want to do
+
+is we want to encourage the various stakeholders to talk to each other,
+
+essentially at all times.
+
+We want to make it so that the developers can get feedback
+
+from the customers as quickly as possible.
+
+And the customers also have access to the development team.
+
+Next, XP based projects often favor the simplest solution that's possible.
+
+So rather than over-engineering large complicated solutions, what
+
+we want to do is we want to build a simple solution,
+
+try it with the customers and see if it works.
+
+Because if it does, that's great, it's good enough.
+
+Then we can move forward onto other development tasks.
+
+The next is feedback.
+
+So in the feedback phase, what we want to do
+
+is we want to encourage the customers and the developers
+
+to talk to each other.
+
+The expectation here, of course, is that once the development
+
+team receives feedback from the customer, they will try to act on it.
+
+But also that the development team can push back on the customer and let
+
+them know when their feedback isn't going to work
+
+or is going to be really overwhelming or expensive.
+
+So this feedback works both ways.
+
+Both from the customer to the developer, but also from the development
+
+team back to the customers.
+
+Next we have courage, which seems like an odd principal
+
+to have for development methodology.
+
+But what courage is all about is empowering the development
+
+team to try out different experiments.
+
+We want them to try these different experiments
+
+so that we can get feedback on the experiments
+
+with the customer to see if they make the product better.
+
+If they don't, we can throw them away.
+
+But we don't view these as a sunk cost.
+
+We view these as an opportunity to learn about the system, to make it better.
+
+And finally we have respect.
+
+Which is all about respecting all stakeholders opinions and their time.
+
+The most obvious way that this gets codified within XP
+
+is this moniker "don't break the bill".
+
+So when developers commit code to the repository
+
+there's an expectation that the code that they've committed always works,
+
+That it doesn't break the bills, that the rest of the development team
+
+isn't slowed down.
+
+This again goes back to one of the core founding ideas of XP,
+
+which is about always having a billable system.
+
+So XP based projects all follow these five key principals
+
+and keep them in mind for all the development decisions
+
+that they encounter along the way.

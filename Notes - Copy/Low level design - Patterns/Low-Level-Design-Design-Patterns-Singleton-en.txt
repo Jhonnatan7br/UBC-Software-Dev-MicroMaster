@@ -1,0 +1,103 @@
+
+REID HOLMES: The singleton pattern is the simplest design
+pattern of them all.
+The problem that the singleton tries to solve
+is cases where we have an object that we want to use widely
+throughout our system but we don't want to have
+to pass an instance of that object to each place we want to use it.
+Also, it is often the case that we want to have
+only a single instance of an object.
+The singleton is a pattern, a creational pattern,
+that is designed to control exactly this type of use case.
+Let's take a look at the canonical example of the singleton design
+pattern.
+So, here, we have a client who wants to make a call on an object that
+is a singleton without calling its constructor
+because it might already exist already.
+And, remember before, one of the design goals of the singleton
+is to make sure that there's only one instance of an object.
+Also, we can see that the constructor is made private.
+That's what the minus sign is, as we recall from before.
+So we can't actually call the constructor.
+Instead, what the client does is it calls
+the static method calls get instance, and that returns
+in an instance of the singleton object.
+Now, here, where get instance-- if you think about the implementation--
+where it gets the instance from is this field instance.
+And what really happens in this method is if this field is null,
+if the object hasn't been allocated before,
+it will go and call the private constructor.
+Because it's within its singleton itself, it will set the field,
+and it will return it.
+Now, one important caveat to be aware of with the singleton pattern
+is that there are some complications that arise here if you're
+using a multi-threaded language.
+So there's extra little steps that you'll have to take within get instance
+to make sure that you're returning only one copy of this object.
+Now, let's take a look at how the singleton can apply to our Mario game.
+So whenever Mario goes and jumps, or gets hit, or wants to fire,
+he needs to go and play a sound.
+So he wants access to the sound manager.
+But whenever enemies die, or if they bounce into specific things,
+or a coin gets collected, or a block explodes,
+they need to be the play sounds too.
+So there are a lot of different types within the game that
+want the ability to play a sound.
+Now, one thing we could do is we could pass
+a instance of sound manager all around to all of these different types.
+But when you don't know which type is being created first,
+that might be tricky.
+The other thing with sound manager is, we only
+want the sounds to be played by one instance of this object.
+So if two sounds come in at the same time,
+the sound manager will figure out how to deal with that.
+So we want to make sure we only have one instance of this class.
+So the singleton really does make sense here.
+So what Mario does when he wants to play a sound
+is he's just going to say sound manager dot get instance,
+and then he's going to play the sound.
+Singletons are often used by other design patterns
+as well, such as the builder and abstract factory,
+although we won't be looking at those directly.
+Now, there's a huge caution you should be
+aware of when you're thinking about using the singleton pattern.
+And that is that each singleton really is just a global variable.
+And we know-- we've known for a long time
+that global variables are just terrible.
+They're terrible from an evolutionary point of view.
+They're terrible from an understanding point of view.
+And they're terrible for really keeping track of what the state in our systems
+are.
+So if you find yourself spreading singletons throughout your design,
+you probably want to take a step back and really reason about whether or not
+those make sense.
+Another challenge with the singleton is that they rely on
+that static get instance method.
+And statics are, again, another concern for designs, as they make
+your system harder to evolve as well.
+So when you start to spread statics around, you need to think about them.
+In this case, the role that static get instance method plays
+is relatively limited and fixed.
+So we usually accept that as being an OK situation to use a static.
+One other problem with the singleton is they really
+do also spread dependencies to singleton classes throughout your system.
+So if we think about the sound manager, every single class
+within the Mario game can play a sound, and that might not
+be what we actually want.
+And those dependencies will also be hidden within the code,
+because they're never passed as parameters or set as fields.
+Finally, singletons make it a lot harder to test your code because we're not
+passing the objects around as parameters or setting them
+as fields, which would be easier for us to mock up
+or to set different stubs for.
+So this can be a real challenge when we're
+trying to design a comprehensive test suite in a system that
+uses a lot of singletons.
+Now, in the end, if your only solution is to use a global variable,
+the singleton might make sense.
+And if you need to be able to control the total number of instances
+of that variable, again, the singleton might be the thing to use for you.
+So I'm not trying to say never use a singleton.
+But when you do, really make sure that you're using it for the right reasons
+and you're thinking hard about whether or not
+having that global type is something that you're willing to endure.

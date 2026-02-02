@@ -1,0 +1,105 @@
+
+ELISA BANIASSAD OK, so now let's look at a statement
+that you haven't seen before in Java.
+That you're familiar with from functional programming,
+but is a little different here.
+And that is the if statement.
+And that's the way that we execute conditional behavior.
+So here we have our if statement.
+And I use the word statement very precisely,
+because this if statement is a statement.
+It is not a function.
+It's not an if function.
+This whole block of things does not have a value of its own.
+Instead, this portion does have a value.
+So the if is just a statement to say, if what is evaluated inside here is true,
+then execute everything that is inside here.
+And if this does not evaluate to true, then just skip it.
+That's all it says.
+So we can depict this behavior using our flowcharts
+so that it makes it really clear exactly how execution
+flows through an if statement.
+So again, we do it for the whole method.
+So we're going to say start, and that's this.
+And then our first line of code is our if statement-- if i equals 3.
+And then if i equals 3, then what is inside of these curly braces
+will execute.
+So then if this is true, we would see print, yup.
+We don't actually need the brackets inside these bubbles.
+These just need to make the point of what line of code they're referring to.
+You can even use the line numbers if you want to.
+And then print, yay.
+
+So that's the entire true block, and that's
+everything that's inside of this curly brackets.
+And once this true block is executed, it's
+like a compound statement in a way.
+And then we just keep going down the list of statements in the method.
+So we would come down here and say print done.
+
+Great.
+Don't even really need the quotes, but you get the idea.
+And then the method ends, so end.
+So that's what happens if the if statement is true.
+Not the if statement is true-- if the condition evaluates to true,
+then we follow into this block.
+But if it is not true, then we wrap all the way around the block,
+skipping it entirely, ignoring it, and this is just false.
+And then we keep executing from print done, and then
+keep going down the list of statements.
+So that is a simple if statement, and that helps us with conditional behavior
+in Java.
+So now we can look at a slightly more complicated conditional statement--
+not that much more complicated--
+which is actually a look-- maybe you're going
+to feel a little bit more familiar, because it's the if else statement.
+And an if else statement still has one condition
+that it tests whether it's true or not.
+But if it's not true, then it has a special block of behavior
+that executes.
+So we still have our true block that we always had.
+But then, now we also have a false block that
+will execute if this condition returns false, or if this condition fails.
+And between the true and the false block,
+between this curly bracket and this word else, you cannot have anything at all.
+So this has to be just empty space-- if you have a space.
+Often, people don't put a space at all.
+They just put the else directly underneath this curly bracket,
+because these are really supposed to be one compound statement.
+So let's just depict the execution flow through an if else statement.
+So we'll start at the beginning again.
+So we have our start statement, which is our curly bracket.
+And then our first line of code is our if statement--
+if i equals 3.
+And then we come down and we have the true block.
+So we'll do this one first.
+So true, and then it just has one statement inside of the true block.
+So we just have print the word three.
+
+And then, after the true block has finished executing,
+it skips over the entire else block.
+So it's like this doesn't exist at all.
+It just skips all the way down to the bottom of here,
+and then keeps executing with the remaining lines of code in the method.
+So we're going to skip right down to print done.
+And then, of course, print done keeps going
+to the end of the method, which is when it returns.
+So that's the true block.
+This is the little true block.
+Then we have the false block.
+So with this, i equals 3 evaluates to false.
+Then we have these lines of code executed instead.
+So we have print not 3, and then print i.
+So this one has two lines of code in it.
+And then that one's done.
+And then we go down to this line of code, because it just keeps going.
+And then it continues execution through the method.
+So we have these two pathways now, because we
+have this conditional statement.
+And we have the if block--
+what we would call the if block and the else block.
+They would never execute at the same time.
+You would never have any kind of feedback from the if block
+into the else block.
+So that the code would never run in a sequence like this.
+It is always that either this executes, or this executes.

@@ -1,0 +1,35 @@
+
+Reid Holmes: In addition to MVC and MVP, one
+of the most popular other compound patterns in this space
+is MVVM, or model view, view model.
+And you can really think of this as a specialization
+of MVP, where the view and the presenter have been more tightly bound, using
+something called two-way data-binding.
+Ultimately, if you understand how MVC and MVP works,
+you can translate that knowledge into any
+of these other patterns in this space, if they all really try
+to decouple the views from their underlying models and business logic.
+Ultimately, there's nothing magical about these patterns.
+The reason that they are popular is they've just forced designers
+to think really hard about what their models are,
+what views they want in their system, and how
+they can pull functionality out of the views
+into some type of controller or presenter mechanism.
+So model view controller, and model view presenter,
+and all of the other meta models in this space
+have really been popularized, because they
+have forced developers and designers to make good design decisions.
+And those good design decisions are really driven by decoupling.
+By thinking about your model, and thinking about your views,
+and thinking about your controllers or presenters,
+you're forced to think about what these parts are independently
+from one another.
+And this increases their re-usability.
+It increases your ability to fix bugs quickly.
+And it makes it much easier to add new features to your system.
+So by taking this step back and really trying
+to decouple these three main aspects of your systems,
+over time, the model view controller, model view presenter, model view, view
+model, meta models, all of these different approaches
+have shown great strength in helping designers make good design decisions
+that have stood up to the test of time.

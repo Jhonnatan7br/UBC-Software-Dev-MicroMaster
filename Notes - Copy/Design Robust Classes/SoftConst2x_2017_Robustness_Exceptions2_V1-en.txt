@@ -1,0 +1,45 @@
+
+ELISA BANIASSAD: Another thing that you can do inside a catch block
+when recovering from an exception is actually throw another exception.
+So the manager might, for instance, say oh wow,
+this whole zoo management thing is so complicated,
+and I am running out of money.
+So they might throw an additional exception
+that indicates that they're going broke because it's just above their pay grade
+to deal with it.
+The zoo, however, might want to deal with that before the fact that they're
+going broke puts them out of business.
+So the zoo would then catch that exception,
+so that the zoo could continue running.
+So let's implement this new exception.
+We can call it a broke exception.
+And we'll do that the exact same way as before.
+We'll make a new class that extends exception.
+And now we go to where we want to throw the exception, which
+is inside of Manage.
+So right inside of our catch statement, we also
+want to say throw new BrokeException.
+Once again, Java will complain, so we'll add that to the method signatures
+so that the exception can be thrown.
+And then we go back up to where it's called
+and see that the call to manager.manage is upset inside of zoo.main.
+Now zoo.main could pass it on and allow the zoo to totally die,
+but since the zoo is self-preserving, instead, it
+wants to actually handle the exception.
+So we're going to surround the call to manager.manage
+within zoo.main with the try catch.
+And then we'll have it scream out something like, reduce costs,
+and I'll take out the stack traces so our output is just a little neater.
+So let's see what we get when we run the code.
+The zoo is open.
+The manager is managing.
+The keeper is feeding.
+And now we see our exception behavior.
+We see the manager catch the not hungry exception, and scream, FEED LESS OFTEN.
+And we see the zoo catching the broke exception and saying, Reduce Costs.
+Once again, we can place a breakpoint for the piece of this
+that we haven't seen.
+And we see our new broke exception being thrown,
+and we catch it inside of zoo.main.
+And then we print out reduce costs, and then the program ends successfully
+because we caught the exception.

@@ -1,0 +1,125 @@
+
+{
+  "summary": "Explains representing graphs with cycles using the 'shared' construct in Advanced Student language. Addresses challenges of circular data definitions and inspection.",
+  "keywords": ["graphs", "circular data", "shared construct", "Advanced Student language", "data representation", "cycles", "rooms", "exits"]
+}
+
+GREGOR KICZALES: Now we've learned about this new information structure called
+a graph, and what we need to do is go off and design a data definition
+so that we can represent graphs using data.
+Well I already said that graphs look a bit like arbitrary-arity trees,
+except they have these additional properties that you could
+go in circles, and their can potentially be two ways
+to get to a given note in the graph.
+But they do look a bit like arbitrary area trees.
+Each node has a name and zero more path to get to other nodes.
+Or since these aren't general graphs, but these are rooms,
+each room has a name and zero or more doors that lead to other rooms.
+So let's design it that way.
+We'll say that in a node or room is compound data,
+so we'll use define=struct.
+And each room has a name and doors going out of it.
+Since they're going out, let's call it exits to reinforce that they go out.
+And we need a type comment here, so room is
+make room is the string for the name, and a list of room
+for where you can go to next.
+Interpretation is the room's name, and list of rooms that the exits lead to.
+Now let's do some examples.
+And in fact we're asked to do an example for all of the ones above.
+So let's do an example for house one.
+And that looks relatively straight forward.
+Let's see there's a room, make room called A,
+and it has a single exit, which leads to a room, make room
+called B, which has no exits.
+And what I'm going to do is I'm going to take all of these here,
+and I'm going to copy them down to here except I'll move this first one back up
+ahead of it just to reinforce what room that
+is so that when the other things scrolls off the screen they can still see it.
+So that's the first house H 1.
+Now, let's try to do this one.
+
+Let's see.
+There's a room called A, and it has a single exit
+that leads to a room called B, and that has a single exit-- wait a minute.
+Because there's a cycle here in the graph, we got a problem.
+Which is, what I really want to do is somehow manage to put all of this right
+there.
+But it can't because the way we write value expressions
+in this language is that we need to be able to write make room
+with its name and the list, and all the other rooms right in there.
+But we can't in this case because A kind of contains B, and B
+kind of contains A.
+And so, there's no notion of which is the enclosing one.
+They enclose each other.
+Our way of writing values in the teaching languages
+that has this notion of enclosing corresponding
+to the nesting of the parentheses, isn't going to let us do this.
+So how can we get out of this problem?
+What we're about to do now is we're going
+to switch to the last of the teaching languages called advanced student.
+And advanced student is going to include a special new construct called shared.
+And what shared is going to let us do is it's going to let's say, in a case
+like this, it's going to say, well let me have a kind of special name, dash
+zero dash, for A. So I'm going to make this room,
+and there's going to be this special name for it,
+and that name is going to be kind of a promise to refer to this room later.
+And here, what I'm going to let myself do is say dash zero dash.
+
+And now I'll just produce that row.
+So read this as saying there's a shared expression.
+
+Here is a special kind of promise name-- it's
+a name that we're going to use in circular structure--
+for make room A of list make room B, of list--
+and then here I'm allowed to use the special promise name dash zero dash.
+
+And what the advanced student language is going to do behind the scenes
+is it's going to make this work out to produce exactly that structure.
+Let's look at.
+Let's try running this now.
+And let's look at H 2.
+
+Well H 2 is exactly that.
+For the same reason we can't write an expression
+in the old-fashioned way that produces H 2, racket can't
+show us its value in the old-fashioned way
+because there's this circular structure.
+Because A contains B contains A, it's got
+to use a shared expression to print it out.
+Now you may find that thing a little bit confusing to read,
+and you wouldn't be the only person who finds
+it a little bit confusing to read.
+So sometimes when we look at the value of circular structure,
+instead of trying to read the shared expression that racket shows us,
+what we do is instead we say, well this room H 2,
+what's it's name-- room name of H 2.
+Now it's like OK, that's the room named A. We say,
+well how many exits does H 2 have?
+Well it has a single exit.
+We say what are the names of all those rooms?
+
+And now I kind of have a notion of what A is.
+It's this room that has a single exit to a room called
+B. I can look at it this way if I want, I
+could look at it that way if I want, just a little bit harder to read.
+Although I can pick all of that out.
+Let's see.
+There's a shared.
+There is a special promise name dash zero dash.
+There's a room called A, which has a list of exits that's
+a single room called B, which has a list of exits to a single room which
+is dash zero dash, in other words, the A itself.
+So that dash zero dash kind of creates a circular line,
+right here on the screen.
+That's what it does.
+And then the shared expression says that I've giving you back A.
+So you can read that more complicated structure
+if you think of the promise names as basically making cycles back
+in the structure.
+Or you can use selectors to pick the structure apart and understand it
+that way.
+Both are valid.
+What I want you to do now is write an expression
+to produce this third example.
+So write an expression right here, to find H 3.
+Finish this out right here to produce that third example.

@@ -1,0 +1,210 @@
+
+REID HOLMES: Another kind of extension is
+to add varying kinds of behaviors to a system.
+The decorator pattern was designed to do exactly this What the decorator does
+is it allows us to add arbitrary combinations of behaviors
+to individual instances of objects.
+Rather than adding them to every instance of a class.
+The way the decorator does this is it allows
+instances of an object to be wrapped with new behavioral responsibilities.
+This is nice because it means all possible combinations of behaviors
+do not need to be compiled in advance.
+The decorator pattern is a classic example
+of composition over inheritance.
+While the pattern does use inheritance internally,
+all of the power, or most of the power of the pattern
+really comes from these encapsulated fields
+that are used through delegation.
+Here we have the canonical depiction of the decorator design pattern.
+Now the first thing you might notice looking
+at the structure of this pattern, is it looks exactly
+like the composite pattern, which you would have seen in a prior course.
+Just like strategy and state varied in their intent,
+the decorator and composite patterns also vary by their intents.
+The intent of the decorator pattern is not to aggregate functions,
+as we saw in the composite pattern.
+The intent of the decorator pattern is to be
+able to wrap new behaviors onto an instance of an object.
+The component interface declares the high level actions
+that need to be performed on all class instances within the decorator pattern.
+So what you see here between the component and the concrete components
+is just normal inheritance.
+For the concrete components are our objects within our class
+that need to perform the action that we care about.
+But we also want the ability to layer on new behaviors at runtime.
+And that's where the decorator comes in.
+Now, the first thing to notice about the decorator
+is that it has this dependency back on component.
+And we can see that reflected also in the parameter wrap here.
+The parameter is of type component and all of the subtypes of decorator
+also have the same action method associated with it.
+All decorated objects will have the same type as the concrete components.
+That is, they all implement the component interface.
+This is useful for a client's point of view
+because it means they don't need to be aware of what type of wrapping
+has taken place on top of the concrete components.
+Or that they have a concrete component, or a concrete component that's
+been wrapped in a decorator one or a decorator or two, or both of them,
+they don't need to be aware of that distinction.
+Let's take a look at how we would go and use the decorator.
+So to instantiate a concrete component, you do exactly what you'd expect.
+You just say, new concrete component.
+And when you call c.action, this action is going to be performed.
+But the magic in the decorator pattern happens
+when we start to wrap the object.
+So let's take a look at what that looks like.
+So first we go and just re-assign seat with the new wrapped type.
+And the way that we do this is we just create a new decorator
+and pass in the existing object into that constructor.
+
+So what we've done here is we've gone and enclosed
+the existing instance of concrete component within decorator 1.
+This is where the composition part of the decorator really starts to kick in.
+So when we call c.action, what ends up happening?
+Well, the first thing that happens is that decorator 1's action method
+here gets invoked and does whatever that action is going to do.
+And at the end of this method, what it's going to do
+is it's going to call this.wrap.action.
+And since we know that decorator 1 is wrapping
+a concrete component, what it will end up doing
+is calling this action method here.
+Now this allows us to provide multiple layers of decorator as well.
+If we wrapped this C in another decorator 1 and a decorator 2,
+it would go through all of those action methods
+successively, by accessing the object through this wrap field.
+Let's take a look at a design problem within the Mario game
+that could be helped by using the decorator pattern.
+So here we have a game frame.
+And sometimes we might have behaviors that we
+want to layer in front of the view of the game frame
+to add a bit more visual appeal to the game.
+So here we have the lightning event.
+The lightening event is when there's a lightning action that
+causes the screen to blink brightly.
+The power event is when one of those power blocks
+gets hit and the whole screen kind of shakes.
+And finally there's this squid event, which happens in some Mario games.
+Where a squid creature goes and squirts black ink on the screen so
+you can't actually see.
+Now if you only had to deal with these three behaviors independently,
+it would be fine.
+But what about if we wanted to layer them on at the same time?
+What if there was a lightning, and while lightning was happening,
+someone hit pow?
+Or if a pow was shaking the screen and someone
+invoked the squid at the same time.
+This would start to add to many, many more static types.
+So it looks something like this.
+
+Right.
+And each of these types would have to go and be implemented as well.
+So we have lightning pow, lightning squid, power squid, and of course, we
+need, who could forget lightning power squid.
+
+And we could quickly see how this adds a whole bunch more types to our system.
+So what the decorator is designed to do is
+it makes it so we can go and layer these independently,
+without having to think about all of these different combinations.
+Now this only has three options.
+What if we had more?
+As soon as we add another potential decoratable object here,
+the number of classes we need is going to grow significantly.
+And it turns out in the game this actually happens.
+Right.
+Because we don't just have a regular game frame.
+We have three types of game frames.
+So it's the normal game frame, the underwater game frame,
+and the lava game frame.
+And so all of these different types would
+need to be encapsulated for those three different types of frames as well.
+And this would grow completely unmanageable, extremely quickly.
+What would this look like at runtime?
+So here we have a game frame object instance.
+Someone's created a game frame.
+And we want to go ahead and layer one of these behaviors on top of it
+without having to do this whole combinatorial explosion problem.
+So on top of the game frame, we're just going to go and wrap it in a lightning.
+
+And this is what our object now looks like.
+We have a game frame and it's encapsulated within a lightening.
+And if a lightning is currently flashing and someone hits a pow,
+we can encapsulate it again.
+
+And in this way, what we've done is, we've gone and layered on new behaviors
+on top of the game frame, without having to go and create
+all of these different independent subclasses.
+And to the game, whatever has that reference
+to the game frame in the first place, it has the same type as well.
+It is always going to be of type game frame.
+So let's draw up the whole pattern and see how it applies to this example.
+What we've done here is we've applied the decorator
+pattern to that previous design.
+So we can see that we have the frame decorator.
+With its three main decorator concrete decorator objects,
+the lightning decorator, the power decorator, and the squid decorator.
+And these are the three things that can be layered on top of the game frame.
+And we've gone and actually extended that design
+to allow for the normal level, underwater level, and lava level.
+So we could capture these decorators in all of these different kinds of levels.
+Now the thing to keep in mind here is that we can layer these arbitrarily.
+So again, we can have a lightning inside a pow,
+inside a squid, while we're in an underwater level.
+We can have that, no problem.
+We don't have to add any new types.
+And these can be dynamically changed at runtime.
+So whatever client object has the reference to game frame,
+can go and layer these new behaviors on dynamically.
+And that's a real strength of the pattern.
+Now it's important to keep in mind that the reason this works
+is all because of this one field here, this wrap field.
+Because it is what allows the behaviors to be forwarded
+on to the encapsulated objects.
+Instantiating this pattern is exactly as we saw earlier
+with the canonical example.
+So here we have a game frame for the lava level.
+And the client, whatever has the reference to game frame here,
+has gone and said, hey we're going to encapsulate the current game
+frame in a pow and a squid.
+And we can do these, actually at the same time.
+And when we go and actually run this at runtime
+we'll deal with the pow's render method, and then the squid's render method,
+and then it will come back and run the lab as a render method.
+Now one thing to note right here is that sometimes we
+might want to have a different behavior if you have
+multiple layerings of the same type.
+For instance, if there's a pow and another pow,
+maybe we want to shake the screen extra.
+And we can't actually do that within the decorator pattern
+because a decorated object shouldn't be aware of what kinds of sub objects
+have been decorated within it.
+The same thing if we have an ordering problem.
+If there's any kind of implied ordering constraint within the wrapping,
+it's not actually going to work.
+So we have to be careful about how we construct
+structure our objects if those kinds of properties matter to us.
+In summary, the decorator pattern provides a mechanism for us
+to layer behaviors onto an instance of an object.
+From the point of view of our solid design principles,
+the decorator pattern is particularly strong in terms
+of the single responsibility principle.
+In this example here, game frame is able to concentrate
+on rendering, without worrying about things like lightning, pow, and squid.
+It leaves those behaviors to the sub-classes over here.
+The decorator pattern also supports the open/closed principle.
+If we want to extend our system with a new behavior, all we need to do
+is implement the decorator type itself.
+And our existing concrete types will remain
+oblivious to these new behaviors that have been added.
+The decorator pattern is a well understood example of using composition
+to extend your system.
+Now there are a few things to be aware of.
+The first is that if your decorated behaviors end up being heavyweight,
+you might want to look at a strategy pattern instead of using a decorator.
+Also, some people find the decorator difficult for the same reason
+we might have seen in the state or a strategy pattern,
+because you do end up with a proliferation of these small classes.
+Finally, debugging the decorator pattern can sometimes be tricky.
+Because when you're looking at an object,
+it's hard to see all the different layer objects inside of it.
+So the debugging process can be a little bit more finicky, than if you just
+had a plain bare object.

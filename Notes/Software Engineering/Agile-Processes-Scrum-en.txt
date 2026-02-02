@@ -1,0 +1,128 @@
+{
+  "summary": "Comprehensive overview of Scrum: product/sprint backlogs, 1-3 week sprints, roles (Product Owner, Scrum Master, Team), and key events (planning, daily stand-ups, sprint/process retrospectives).",
+  "keywords": ["Scrum", "Agile", "software development", "product backlog", "sprint", "product owner", "scrum master", "stand-up", "retrospective"]
+}
+
+REID HOLMES: Scrum-based methodologies represent
+the most common form of Agile methodology used in practice today.
+In Scrum, we have a product backlog, which represents all of the issues--
+those are features and bugs--
+that remain to be fixed for a product.
+And then we work through a series of sprints that
+are usually one to three weeks long.
+In each sprint, we're working on what's known as the sprint backlog.
+So this is a subset of the product backlog, which
+contains just those specific issues that we want
+to work on in the individual sprint.
+Scrum-based methodologies don't-prescribe specific engineering
+practices that a team needs to follow.
+The team themselves will figure out what makes the most sense for the product
+that they're trying to build.
+But all Scrum-based teams do have these three high level stakeholder roles.
+So first, we have the product owner.
+The product owner is the person who acts as the proxy for the client,
+or is the client themselves.
+So their primary role is to prioritize issues
+that are being worked on in a sprint, and to evaluate the team's output
+to make sure that the work they've made on specific issues
+matches their expectations.
+Next, we have the Scrum Master.
+The Scrum Master's job is to manage the development process.
+So they're not the manager of the team, but they're the manager of the process.
+They make sure that the team is on track,
+and is working specifically on the issues for that sprint
+that the product owner has prioritized as being important.
+And finally, we have the team themselves.
+So Scrum-based teams are typically five to seven people,
+and span a variety of disciplines.
+So we might have developers, QA, and ops all on the same Scrum team,
+working together to build a product.
+So as we mentioned before, the product backlog
+is all of the issues that are assigned to a development team.
+And an important part of the Scrum process
+is to go through the product backlog and figure out
+through a comprehensive planning process what this subset is that you're going
+to address in an individual sprint.
+Because at the end of your sprint-- which is one to three weeks long,
+but has a fixed direction.
+So it's important to note that each team will know how long their sprints are.
+At the end of the sprint, the product needs to be shippable.
+So you need to make sure that the issues that you choose from the product
+backlog to deliver in an individual sprint
+are achievable within the timeline allocated for that sprint.
+So this planning process is an important step.
+We're going to be going through all of these issues.
+And this is going to be done in conjunction with the product owner,
+because the product owner is going to have some notion, based
+on their own priorities, which ones of the features in the product
+backlog that are most important to them, will give them the most value.
+But at the same time, the technical team is going to know how hard--
+or they're going to talk about how hard it
+is to actually deliver those features.
+Because if they ask for a feature, if the product owner asks
+for a feature that will take more than one sprint,
+or they ask for too many features to deliver in one sprint,
+it's the team's role-- and a crucial role-- for them
+to push back and say that this is too much to be done,
+and we need to find a happy medium that works for both stakeholders.
+So planning process is all about taking this product backlog,
+figuring out what we can build, and turning it into this sprint backlog,
+right?
+To figure out what that subset is.
+And that's what flows into our individual sprints.
+So it's the subset of issues that we--
+the development team essentially guarantees
+that they're going to deliver over the course of a sprint.
+So once we have the sprint backlog, what we
+need to do next is to start working on our individual sprints.
+Now one aspect that is common across all Scrum methodologies
+is this notion of a stand-up meeting.
+So the stand-up meeting is something that happens frequently, every day,
+in fact.
+Where the team comes together, stands up, and goes over their progress.
+This is the opportunity for all of the team members
+to say what's blocking them, what they worked on last,
+and what they're working on next.
+So this is really only a 10 to 15 minute status update for the team,
+so that everyone knows how they're doing as a collective group.
+Now these meetings are where the Scrum Master
+takes a particularly important role.
+It's their job to make sure that everyone on the team
+is delivering what they said the day before they were going to do, and make
+sure that the team works together to figure out how to resolve
+any problems if they come up.
+So if I say that I'm behind, and I'm having
+a lot of trouble with the feature that I'm building,
+it's the Scrum Master's job to help figure
+out how the team can adjust and make it so that we can collectively
+deliver this feature on time.
+And again, these happen absolutely every single day.
+And at the end of the sprint, we have this notion or this phase
+called the ceremony phase.
+And in the ceremony phase, a variety of different things happen.
+But the first thing that happens is we'll have the sprint retrospective.
+And this is where the technical team will go and demo
+all of the features they added to the product to the product owner.
+So it's a chance for the product owner to concretely reflect and see
+what has been built over the course of the sprint,
+and provide really good feedback for the team
+so they can use that to inform their development and planning
+process for the next phase.
+There's also an opportunity for a process retrospective.
+This is where the team goes and looks at how did their planning process go?
+How did the development process go?
+How did they overcome obstacles that they encountered?
+And really think about whether or not they
+need to change their whole internal processes,
+so they can be more effective as a team in the next sprint.
+So this is an important notion, where the team will actually
+be reflective on how they did, and use this reflection
+to make themselves better as a team.
+And this is, again, why Scrum doesn't lay out
+a lot of specific recommendations about how each team should operate.
+It instead empowers the team to really think about what they did
+and make things better.
+And then at the end of this ceremony phase
+is actually where we go and we do this planning, right?
+So we plan for the next sprint after we've
+gone and gone through and reflected on how this sprint has gone itself.
