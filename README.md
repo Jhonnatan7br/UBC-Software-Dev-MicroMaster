@@ -1,8 +1,5 @@
+# Software Dev and Programming Core Concepts
 ================================================
-Software Dev and Programming Core Concepts
-================================================
-
-![image](https://github.com/user-attachments/assets/351e9acd-10e7-4856-86f4-d05c24578e4e)
 
 # Design Funtions, Data, high Order Functions & Self/Mutual Ref
 HTDF Step-by-Step Explanation: (Signature, Purpose, Stub)
@@ -28,148 +25,260 @@ A measure of **time** or **space** an algorithm needs as input size grows.
 - **O(2ⁿ)** – exponential  
 - **O(n!)** – factorial
 
+<img width="849" height="570" alt="image" src="https://github.com/user-attachments/assets/91bde37c-8c6a-4aef-b8ad-bd1b4ff454ab" />
 
-================================================
-Software Engineering and Arch Diagram Core Structure
+# Software Engineering and Arch Diagram Core Structure
 ================================================
 
-Software Engineering
-|
-+-- 1. Base Concepts
-|   |   Keywords: Syntax, Semantics, Interpreted, Compiled, Static Typing, Dynamic Typing, Concurrency, Asynchronous, Event Loop
-|   |
-|   +-- Programming Languages (Syntax vs. Semantics)
-|   +-- Execution Models (Interpreted vs. Compiled)
-|   +-- Typing (Static vs. Dynamic)
-|   +-- Concurrency vs. Asynchronous
-|
-+-- 2. Software Processes
-|   |   Keywords: Waterfall, Spiral, Agile, XP, TDD, Scrum, Sprints, Backlog
-|   |   [Connects to: 3. Requirements Engineering, 4. Software Testing, 7. Software Construction & Quality]
-|   |
-|   +-- Traditional Models
-|   |   +-- Waterfall (Sequential, Rigid)
-|   |   +-- Spiral (Iterative, Risk Analysis)
-|   |
-|   +-- Agile Methodologies
-|   |   +-- Extreme Programming (XP) (Communication, Simplicity, Feedback, Courage, Respect)
-|   |   +-- Test-Driven Development (TDD) (Red-Green-Refactor) -> [Connects to: 4. Software Testing, 7.3 Refactoring]
-|   |   +-- Scrum (Sprints, Roles: Product Owner, Scrum Master, Team)
-|   |
-|   +-- 2.1 Complex Data Design
-|   |   |   Keywords: Encapsulation, Mutual Recursion, Generative Recursion, Backtracking, Graphs, Accumulators
-|   |   |   [Connects to: 2.2 Data Abstraction, 5. High-Level Software Design]
-|   |   |
-|   |   +-- Local Expressions (`local`) for Encapsulation & Performance
-|   |   +-- Advanced Recursion (Mutual, Generative, Backtracking)
-|   |   +-- Advanced Data Structures (Graphs with Cycles, Accumulators)
-|   |
-|   +-- 2.2 Data Abstraction
-|       |   Keywords: Abstraction, Encapsulation, Public, Private, Interface, TDD
-|       |   [Connects to: 2.1 Complex Data Design, 5.1 Core Principles, 5.3 API Design]
-|       |
-|       +-- Core Idea (Hiding implementation)
-|       +-- Four-Phase Design Process (Specify, Use, Test, Implement)
-|       +-- Method Specification (`requires`, `modifies`, `effects`)
-|
-+-- 3. Requirements Engineering
-|   |   Keywords: Functional, Non-functional, User Stories, INVEST, Elicitation, Validation
-|   |   [Connects to: 2. Software Processes, 4. Software Testing]
-|   |
-|   +-- Types of Requirements (Functional vs. Non-functional)
-|   +-- User Stories (As a [role], I want [goal], so that [benefit])
-|   +-- INVEST Principles for User Stories
-|
-+-- 4. Software Testing
-|   |   Keywords: White Box, Black Box, Unit, Integration, System, Acceptance, TDD, Coverage, Assertions, Testability
-|   |   [Connects to: 2. Software Processes (TDD), 8. Designing Robust Classes (Assertions, Testing for Exceptions)]
-|   |
-|   +-- Testing Approaches (White Box vs. Black Box)
-|   +-- The Test Pyramid (Unit, Integration, System, Acceptance)
-|   |
-|   +-- 4.1. Assertions
-|   |   |   Keywords: BDD (Given-When-Then), Four Phase Test
-|   |
-|   +-- 4.2. Testability Properties
-|       |   Keywords: Automatability, Controllability, Isolateability, Observability
-|       |   [Connects to: 5. High-Level Software Design, 7.4 Automation]
-|
-+-- 5. High-Level Software Design
-|   |   Keywords: Decomposition, Abstraction, Encapsulation, Coupling, Cohesion, SOLID, UML, API, REST
-|   |   [Connects to: 2.1 & 2.2 (Abstraction/Encapsulation), 6. Low-Level Design, 9. Extracting & Implementing OO Design]
-|   |
-|   +-- 5.1. Core Principles
-|   |   |   +-- Decomposition, Abstraction, Encapsulation, Information Hiding
-|   |   |   +-- Coupling (Low) & Cohesion (High)
-|   |   |   +-- SOLID Principles (SRP, OCP, LSP, ISP, DIP) -> [Connects to: 6. Low-Level Design, 9. Extracting & Implementing OO Design]
-|   |
-|   +-- 5.2. Technical Representations (UML)
-|   |   |   +-- Structural Views (Class, Deployment Diagrams)
-|   |   |   +-- Behavioral Views (State Machine, Sequence Diagrams) -> [Connects to: 9.2 Modeling Dynamic Behavior]
-|   |
-|   +-- 5.3. API Design
-|   |   |   Keywords: Focused, Minimal, Immutable, Private by Default, Usability
-|   |   |   [Connects to: 2.2 Data Abstraction]
-|   |
-|   +-- 5.4. REST APIs
-|   |   |   Keywords: Resources, Verbs, Idempotency, Statelessness, Versioning
-|   |
-|   +-- 5.5. Symptoms of Poor Design (Code Smells) -> [Connects to: 7.2 Code Quality & Static Analysis]
-|
-+-- 6. Low-Level Design & Design Patterns
-|   |   Keywords: Composition over Inheritance, Creational, Structural, Behavioral, Singleton, Facade, Decorator, Strategy, State, MVC, MVP
-|   |   [Connects to: 5. High-Level Software Design, 9. Extracting & Implementing OO Design, 10. Design Principles & Patterns Summary]
-|   |
-|   +-- 6.1. Low-Level Design Guidelines
-|   +-- 6.2. Design Patterns Overview (Categories)
-|   +-- 6.3. Creational Patterns (e.g., Singleton)
-|   +-- 6.4. Structural Patterns (e.g., Facade, Decorator)
-|   +-- 6.5. Behavioral Patterns (e.g., Strategy, State)
-|   +-- 6.6. Architectural (Compound) Patterns (MVC, MVP)
-|
-+-- 7. Software Construction & Quality
-|   |   Keywords: Readability, Code Smells, Static Analysis, Linters, Refactoring, Technical Debt, Automation, CI/CD
-|   |   [Connects to: 5.5 Symptoms of Poor Design, 4.2 Testability Properties, 10. Core Principles & Refactoring]
-|   |
-|   +-- 7.1. Readability & Core Concepts
-|   +-- 7.2. Code Quality & Static Analysis (Linters, Code Smells)
-|   +-- 7.3. Refactoring & Technical Debt (Rule of Threes)
-|   +-- 7.4. Automation (CI/CD Pipeline)
-|
-+-- 8. Designing Robust Classes
-|   |   Keywords: Robustness, Exception Handling, `try-catch-finally`, Checked vs. Unchecked Exceptions, Assertions
-|   |   [Connects to: 4. Software Testing]
-|   |
-|   +-- 8.1. What is Robustness?
-|   +-- 8.2. Exception Handling
-|   +-- 8.3. Assertions (for development/debugging)
-|   +-- 8.4. Testing for Exceptions
-|
-+-- 9. Extracting & Implementing OO Design
-|   |   Keywords: Nouns-to-Classes, Verbs-to-Associations, Multiplicity, Aggregation, Sequence Diagrams, `equals()` & `hashCode()`
-|   |   [Connects to: 5. High-Level Software Design, 6. Low-Level Design & Design Patterns]
-|   |
-|   +-- 9.1. From Requirements to Class Diagram
-|   +-- 9.2. Modeling Dynamic Behavior with Sequence Diagrams
-|   +-- 9.3. Implementing the Design
-|
-+-- 10. Design Principles & Patterns Summary
-|   |   Keywords: Iterator, Observer, Composite, SRP, Coupling, LSP, Refactoring
-|   |   [Connects to: 6. Low-Level Design & Design Patterns, 7.3 Refactoring & Technical Debt]
-|   |
-|   +-- Key Patterns (Iterator, Observer, Composite)
-|   +-- Core Principles Recap (SRP, Coupling, LSP, Refactoring)
-|
-+-- 11. Control & Execution Summary
-|   |   Keywords: Sequential Execution, Flowcharts, Conditionals, Loops, `for`, `foreach`, `this` keyword, Call Graphs, Debugging
-|   |   [Connects to: 1. Core Concepts]
-|
-+-- 12. Software Engineering Summary
-    |   Keywords: SDLC, Waterfall, Spiral, Agile, XP, Scrum, TDD, Requirements, User Stories, INVEST, Readability, Static Analysis, Technical Debt, Refactoring, Automation
-    |   [Connects to: All other sections, as it is a summary of the whole document]
+<details>
+<summary><strong>1. Base Concepts</strong></summary>
 
-================================================
-Expantion of core concepts (Notes.txt)
+**Keywords:** Syntax, Semantics, Interpreted, Compiled, Static Typing, Dynamic Typing, Concurrency, Asynchronous, Event Loop
+
+- Programming Languages (Syntax vs. Semantics)
+- Execution Models (Interpreted vs. Compiled)
+- Typing (Static vs. Dynamic)
+- Concurrency vs. Asynchronous
+
+</details>
+
+---
+
+<details>
+<summary><strong>2. Software Processes</strong></summary>
+
+**Keywords:** Waterfall, Spiral, Agile, XP, TDD, Scrum, Sprints, Backlog  
+**Connects to:** 3. Requirements Engineering, 4. Software Testing, 7. Software Construction & Quality
+
+<details>
+<summary>Traditional Models</summary>
+
+- Waterfall (Sequential, Rigid)
+- Spiral (Iterative, Risk Analysis)
+
+</details>
+
+<details>
+<summary>Agile Methodologies</summary>
+
+- Extreme Programming (XP) (Communication, Simplicity, Feedback, Courage, Respect)
+- Test-Driven Development (TDD) (Red-Green-Refactor) → Connects to: 4. Software Testing, 7.3 Refactoring
+- Scrum (Sprints, Roles: Product Owner, Scrum Master, Team)
+
+</details>
+
+<details>
+<summary>2.1 Complex Data Design</summary>
+
+**Keywords:** Encapsulation, Mutual Recursion, Generative Recursion, Backtracking, Graphs, Accumulators  
+**Connects to:** 2.2 Data Abstraction, 5. High-Level Software Design
+
+- Local Expressions (`local`) for Encapsulation & Performance
+- Advanced Recursion (Mutual, Generative, Backtracking)
+- Advanced Data Structures (Graphs with Cycles, Accumulators)
+
+</details>
+
+<details>
+<summary>2.2 Data Abstraction</summary>
+
+**Keywords:** Abstraction, Encapsulation, Public, Private, Interface, TDD  
+**Connects to:** 2.1 Complex Data Design, 5.1 Core Principles, 5.3 API Design
+
+- Core Idea (Hiding implementation)
+- Four-Phase Design Process (Specify, Use, Test, Implement)
+- Method Specification (`requires`, `modifies`, `effects`)
+
+</details>
+
+</details>
+
+---
+
+<details>
+<summary><strong>3. Requirements Engineering</strong></summary>
+
+**Keywords:** Functional, Non-functional, User Stories, INVEST, Elicitation, Validation  
+**Connects to:** 2. Software Processes, 4. Software Testing
+
+- Types of Requirements (Functional vs. Non-functional)
+- User Stories (As a [role], I want [goal], so that [benefit])
+- INVEST Principles for User Stories
+
+</details>
+
+---
+
+<details>
+<summary><strong>4. Software Testing</strong></summary>
+
+**Keywords:** White Box, Black Box, Unit, Integration, System, Acceptance, TDD, Coverage, Assertions, Testability  
+**Connects to:** 2. Software Processes (TDD), 8. Designing Robust Classes
+
+- Testing Approaches (White Box vs. Black Box)
+- The Test Pyramid (Unit, Integration, System, Acceptance)
+
+<details>
+<summary>4.1 Assertions</summary>
+
+**Keywords:** BDD (Given-When-Then), Four Phase Test
+
+</details>
+
+<details>
+<summary>4.2 Testability Properties</summary>
+
+**Keywords:** Automatability, Controllability, Isolateability, Observability  
+**Connects to:** 5. High-Level Software Design, 7.4 Automation
+
+</details>
+
+</details>
+
+---
+
+<details>
+<summary><strong>5. High-Level Software Design</strong></summary>
+
+**Keywords:** Decomposition, Abstraction, Encapsulation, Coupling, Cohesion, SOLID, UML, API, REST  
+**Connects to:** 2.1 & 2.2, 6. Low-Level Design, 9. OO Design
+
+<details>
+<summary>5.1 Core Principles</summary>
+
+- Decomposition, Abstraction, Encapsulation, Information Hiding
+- Coupling (Low) & Cohesion (High)
+- SOLID Principles (SRP, OCP, LSP, ISP, DIP) → Connects to: 6, 9
+
+</details>
+
+<details>
+<summary>5.2 Technical Representations (UML)</summary>
+
+- Structural Views (Class, Deployment Diagrams)
+- Behavioral Views (State Machine, Sequence Diagrams) → Connects to: 9.2
+
+</details>
+
+<details>
+<summary>5.3 API Design</summary>
+
+**Keywords:** Focused, Minimal, Immutable, Private by Default, Usability  
+**Connects to:** 2.2 Data Abstraction
+
+</details>
+
+<details>
+<summary>5.4 REST APIs</summary>
+
+**Keywords:** Resources, Verbs, Idempotency, Statelessness, Versioning
+
+</details>
+
+<details>
+<summary>5.5 Symptoms of Poor Design (Code Smells)</summary>
+
+**Connects to:** 7.2 Code Quality & Static Analysis
+
+</details>
+
+</details>
+
+---
+
+<details>
+<summary><strong>6. Low-Level Design & Design Patterns</strong></summary>
+
+**Keywords:** Composition over Inheritance, Creational, Structural, Behavioral, Singleton, Facade, Decorator, Strategy, State, MVC, MVP  
+**Connects to:** 5. High-Level Software Design, 9. OO Design, 10. Design Principles Summary
+
+<details><summary>6.1 Low-Level Design Guidelines</summary></details>
+<details><summary>6.2 Design Patterns Overview</summary></details>
+<details><summary>6.3 Creational Patterns (e.g., Singleton)</summary></details>
+<details><summary>6.4 Structural Patterns (e.g., Facade, Decorator)</summary></details>
+<details><summary>6.5 Behavioral Patterns (e.g., Strategy, State)</summary></details>
+<details><summary>6.6 Architectural Patterns (MVC, MVP)</summary></details>
+
+</details>
+
+---
+
+<details>
+<summary><strong>7. Software Construction & Quality</strong></summary>
+
+**Keywords:** Readability, Code Smells, Static Analysis, Linters, Refactoring, Technical Debt, Automation, CI/CD  
+**Connects to:** 5.5, 4.2, 10
+
+<details><summary>7.1 Readability & Core Concepts</summary></details>
+<details><summary>7.2 Code Quality & Static Analysis (Linters, Code Smells)</summary></details>
+<details><summary>7.3 Refactoring & Technical Debt (Rule of Threes)</summary></details>
+<details><summary>7.4 Automation (CI/CD Pipeline)</summary></details>
+
+</details>
+
+---
+
+<details>
+<summary><strong>8. Designing Robust Classes</strong></summary>
+
+**Keywords:** Robustness, Exception Handling, `try-catch-finally`, Checked vs. Unchecked Exceptions, Assertions  
+**Connects to:** 4. Software Testing
+
+- 8.1. What is Robustness?
+- 8.2. Exception Handling
+- 8.3. Assertions (for development/debugging)
+- 8.4. Testing for Exceptions
+
+</details>
+
+---
+
+<details>
+<summary><strong>9. Extracting & Implementing OO Design</strong></summary>
+
+**Keywords:** Nouns-to-Classes, Verbs-to-Associations, Multiplicity, Aggregation, Sequence Diagrams, `equals()` & `hashCode()`  
+**Connects to:** 5. High-Level Software Design, 6. Low-Level Design
+
+<details><summary>9.1 From Requirements to Class Diagram</summary></details>
+<details><summary>9.2 Modeling Dynamic Behavior with Sequence Diagrams</summary></details>
+<details><summary>9.3 Implementing the Design</summary></details>
+
+</details>
+
+---
+
+<details>
+<summary><strong>10. Design Principles & Patterns Summary</strong></summary>
+
+**Keywords:** Iterator, Observer, Composite, SRP, Coupling, LSP, Refactoring  
+**Connects to:** 6. Low-Level Design, 7.3 Refactoring
+
+- Key Patterns (Iterator, Observer, Composite)
+- Core Principles Recap (SRP, Coupling, LSP, Refactoring)
+
+</details>
+
+---
+
+<details>
+<summary><strong>11. Control & Execution Summary</strong></summary>
+
+**Keywords:** Sequential Execution, Flowcharts, Conditionals, Loops, `for`, `foreach`, `this`, Call Graphs, Debugging  
+**Connects to:** 1. Core Concepts
+
+</details>
+
+---
+
+<details>
+<summary><strong>12. Software Engineering Summary</strong></summary>
+
+**Keywords:** SDLC, Waterfall, Spiral, Agile, XP, Scrum, TDD, Requirements, User Stories, INVEST, Readability, Static Analysis, Technical Debt, Refactoring, Automation  
+**Connects to:** All other sections
+
+</details>
+
+# Expantion of Software Engineering and Arch Diagram Core Structure (Notes.txt)
 ================================================
 
 ## 1. Base Concepts
