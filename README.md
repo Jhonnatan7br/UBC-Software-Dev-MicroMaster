@@ -1,4 +1,4 @@
-# Software Dev and Programming Core Concepts
+<img width="3054" height="2268" alt="image" src="https://github.com/user-attachments/assets/bf4109ed-7d36-4a6b-aa5a-fe8bacf604a0" /># Software Dev and Programming Core Concepts
 
 <details>
 <summary><strong>Design Funtions, Data, high Order Functions & Self/Mutual Ref</strong></summary>
@@ -37,7 +37,202 @@ A measure of **time** or **space** an algorithm needs as input size grows.
 <img width="849" height="570" alt="image" src="https://github.com/user-attachments/assets/91bde37c-8c6a-4aef-b8ad-bd1b4ff454ab" />
 
 # Software Engineering and Arch Diagram Core Structure
+```mermaid
+%%{init: {
+  "theme": "default",
+  "themeVariables": {
+    "fontFamily": "Inter, Segoe UI, Helvetica, Arial, sans-serif",
+    "fontSize": "13px",
+    "primaryColor": "#F5F7FF",
+    "primaryTextColor": "#1F2937",
+    "primaryBorderColor": "#93C5FD",
+    "lineColor": "#94A3B8"
+  }
+}}%%
+graph LR
 
+  %% ========= NODES WITH DETAILS =========
+  A["1. Base Concepts<br/>Keywords: Syntax, Semantics, Interpreted, Compiled, Static/Dynamic Typing, Concurrency, Async, Event Loop<br/>Includes: Syntax vs Semantics; Interpreted vs Compiled; Static vs Dynamic; Concurrency vs Asynchronous"]
+
+  B["2. Software Processes<br/>Keywords: Waterfall, Spiral, Agile, XP, TDD, Scrum, Sprints, Backlog<br/>Connects to: 3 Requirements, 4 Testing, 7 Construction & Quality"]
+
+  B1["2.1 Complex Data Design<br/>Keywords: Encapsulation, Mutual/Generative Recursion, Backtracking, Graphs, Accumulators<br/>Includes: Local expressions for encapsulation/perf; Advanced recursion; Graphs with cycles; Accumulators<br/>Connects to: 2.2 Data Abstraction; 5 High-Level Design"]
+
+  B2["2.2 Data Abstraction<br/>Keywords: Abstraction, Encapsulation, Public/Private, Interface, TDD<br/>Includes: Core idea—hide implementation; Four-phase: Specify → Use → Test → Implement; Method specs: requires, modifies, effects<br/>Connects to: 2.1; 5.1 Core Principles; 5.3 API Design"]
+
+  C["3. Requirements Engineering<br/>Keywords: Functional, Non-functional, User Stories, INVEST, Elicitation, Validation<br/>Includes: Types (Functional vs Non-functional); User story template; INVEST principles<br/>Connects to: 2 Processes; 4 Testing"]
+
+  D["4. Software Testing<br/>Keywords: White/Black Box, Unit, Integration, System, Acceptance, TDD, Coverage, Assertions, Testability<br/>Includes: Test pyramid; Approaches (white vs black box)<br/>Connects to: 2 Processes (TDD); 8 Robust Classes"]
+
+  D1["4.1 / 4.2 Details<br/>Assertions: BDD (Given–When–Then), Four-phase test<br/>Testability: Automatability, Controllability, Isolateability, Observability<br/>Connects to: 5 High-Level Design; 7.4 Automation"]
+
+  E["5. High‑Level Software Design<br/>Keywords: Decomposition, Abstraction, Encapsulation, Coupling, Cohesion, SOLID, UML, API, REST<br/>Includes: 5.1 Core principles; 5.2 UML (structural/behavioral); 5.3 API design; 5.4 REST; 5.5 Code smells<br/>Connects to: 2.1 & 2.2; 6 Low-Level Design; 9 OO Design"]
+
+  E1["5.1 Core Principles<br/>Decomposition, Abstraction, Encapsulation, Information Hiding<br/>Coupling (low) & Cohesion (high)<br/>SOLID: SRP, OCP, LSP, ISP, DIP<br/>Connects to: 6 Low-Level; 9 OO Design"]
+
+  E2["5.2 Technical Representations (UML)<br/>Structural: Class, Deployment<br/>Behavioral: State Machine, Sequence<br/>Connects to: 9.2 Modeling Dynamic Behavior"]
+
+  E3["5.3 API Design<br/>Keywords: Focused, Minimal, Immutable, Private by default, Usability<br/>Connects to: 2.2 Data Abstraction"]
+
+  E5["5.5 Symptoms of Poor Design (Code Smells)<br/>Examples: Long method, God class, Feature envy, Shotgun surgery<br/>Connects to: 7.2 Code Quality & Static Analysis"]
+
+  F["6. Low‑Level Design & Patterns<br/>Keywords: Composition over Inheritance; Creational, Structural, Behavioral; Singleton, Facade, Decorator, Strategy, State; MVC, MVP<br/>Includes: 6.1 Guidelines; 6.2 Overview; 6.3 Creational; 6.4 Structural; 6.5 Behavioral; 6.6 Architectural"]
+
+  G["7. Software Construction & Quality<br/>Keywords: Readability, Code Smells, Static Analysis, Linters, Refactoring, Technical Debt, Automation, CI/CD<br/>Includes: 7.1 Readability; 7.2 Code Quality; 7.3 Refactoring (Rule of Threes); 7.4 Automation (CI/CD)<br/>Connects to: 5.5 Smells; 4.2 Testability; 10 Principles & Refactoring"]
+
+  G2["7.2 Code Quality & Static Analysis<br/>Linters, style checks, smell detection, metrics"]
+
+  G3["7.3 Refactoring & Technical Debt<br/>Rule of Threes; incremental design improvement"]
+
+  G4["7.4 Automation (CI/CD Pipeline)<br/>Build, test, analyze, deploy, monitor"]
+
+  H["8. Designing Robust Classes<br/>Keywords: Robustness, Exception handling, try–catch–finally, Checked vs Unchecked, Assertions<br/>Includes: 8.1 What is robustness; 8.2 Handling; 8.3 Assertions; 8.4 Testing exceptions<br/>Connects to: 4 Testing"]
+
+  I["9. Extracting & Implementing OO Design<br/>Keywords: Nouns→Classes, Verbs→Associations, Multiplicity, Aggregation, Sequence diagrams, equals() & hashCode()<br/>Includes: 9.1 From requirements to classes; 9.2 Sequence behavior; 9.3 Implementation<br/>Connects to: 5 High-level; 6 Low-level"]
+
+  I2["9.2 Sequence Diagrams<br/>Model dynamic behavior; interactions & lifelines"]
+
+  J["10. Design Principles & Patterns Summary<br/>Keywords: Iterator, Observer, Composite, SRP, Coupling, LSP, Refactoring<br/>Includes: Key patterns; Core principles recap<br/>Connects to: 6 Patterns; 7.3 Refactoring"]
+
+  K["11. Control & Execution Summary<br/>Keywords: Sequential execution, Flowcharts, Conditionals, Loops (for/foreach), this, Call graphs, Debugging<br/>Connects to: 1 Core Concepts"]
+
+  L["12. Software Engineering Summary<br/>Keywords: SDLC, Waterfall, Spiral, Agile, XP, Scrum, TDD, Requirements, User stories, INVEST, Readability, Static analysis, Technical debt, Refactoring, Automation<br/>Connects to: All sections (holistic summary)"]
+
+  E_API["5.3 API Design (xref)<br/>Focused, minimal, immutable, private-by-default, usable"]
+  subgraph SG_Process[Processes]
+    direction LR
+    B
+    C
+  end
+
+  subgraph SG_Design[Design]
+    direction LR
+    E
+    E1
+    E2
+    E3
+    E5
+    F
+    I
+    I2
+  end
+
+  subgraph SG_Quality[Quality & Testing]
+    direction LR
+    D
+    D1
+    G
+    G2
+    G3
+    G4
+    H
+  end
+
+  %% ========= EDGES (unchanged structure) =========
+  B --- C
+  B --- D
+  B --- G
+
+  B1 --> B2
+  B1 --> E
+
+  B2 --> B1
+  B2 --> E
+  B2 --> E_API
+
+  C --- B
+  C --- D
+
+  D --- B
+  D --- H
+
+  D1 --- E
+  D1 --- G4
+
+  E --- B1
+  E --- B2
+  E --- F
+  E --- I
+
+  E1 --> F
+  E1 --> I
+
+  E2 --> I2
+
+  E3 --> B2
+
+  E5 --> G2
+
+  F --- E
+  F --- I
+  F --- J
+
+  G --- E5
+  G --- D1
+  G --- J
+
+  H --- D
+
+  I --- E
+  I --- F
+
+  J --- F
+  J --- G3
+
+  K --- A
+
+  L --- A
+  L --- B
+  L --- C
+  L --- D
+  L --- E
+  L --- F
+  L --- G
+  L --- H
+  L --- I
+  L --- J
+  L --- K
+
+  %% ========= STYLES =========
+  classDef base fill:#E0F2FE,stroke:#0284C7,color:#0F172A,stroke-width:1.5px;
+  classDef process fill:#FEF3C7,stroke:#D97706,color:#0F172A,stroke-width:1.5px;
+  classDef design fill:#EDE9FE,stroke:#7C3AED,color:#0F172A,stroke-width:1.5px;
+  classDef testing fill:#DCFCE7,stroke:#16A34A,color:#0F172A,stroke-width:1.5px;
+  classDef quality fill:#F1F5F9,stroke:#64748B,color:#0F172A,stroke-width:1.5px;
+  classDef summary fill:#FFE4E6,stroke:#E11D48,color:#0F172A,stroke-width:1.5px;
+  classDef aux fill:#FFFFFF,stroke:#94A3B8,color:#0F172A,stroke-dasharray:3 3;
+
+  class A base
+  class B,B1,B2,C process
+  class D,D1 testing
+  class E,E1,E2,E3,E5,F,I,I2 design
+  class G,G2,G3,G4 quality
+  class H testing
+  class J summary
+  class K base
+  class L summary
+  class E_API aux
+
+  linkStyle default stroke:#64748B,stroke-width:1px;
+
+  %% ========= LEGEND =========
+  subgraph Legend[Legend]
+    direction LR
+    L1[Base / Fundamentals]
+    L2[Processes & Requirements]
+    L3["Design (High/Low/OO)"]
+    L4[Testing]
+    L5[Quality / Tooling]
+    L6[Summaries]
+  end
+  class L1 base
+  class L2 process
+  class L3 design
+  class L4 testing
+  class L5 quality
+  class L6 summary
+```
+```mermaid
 flowchart LR
   subgraph Agile["Agile (Scrum/XP)"]
     BA[Backlog]
@@ -65,7 +260,7 @@ flowchart LR
   TDD --> U
   DEV --> IN --> SY --> AC
   DEV --> CI --> CT --> CD --> MON
-
+```
 <details>
 <summary><strong>1. Base Concepts</strong></summary>
 
