@@ -1,4 +1,4 @@
-<img width="3054" height="2268" alt="image" src="https://github.com/user-attachments/assets/bf4109ed-7d36-4a6b-aa5a-fe8bacf604a0" /># Software Dev and Programming Core Concepts
+# Software Dev and Programming Core Concepts
 
 <details>
 <summary><strong>Design Funtions, Data, high Order Functions & Self/Mutual Ref</strong></summary>
@@ -34,19 +34,23 @@ A measure of **time** or **space** an algorithm needs as input size grows.
 
 ---
 
-<img width="849" height="570" alt="image" src="https://github.com/user-attachments/assets/91bde37c-8c6a-4aef-b8ad-bd1b4ff454ab" />
 
 # Software Engineering and Arch Diagram Core Structure
 ```mermaid
+%% Force white background + neutral base so it looks the same in light/dark GitHub themes
+%% (Mermaid respects these init variables when rendered on GitHub)
 %%{init: {
-  "theme": "default",
+  "theme": "base",
   "themeVariables": {
+    "background": "#FFFFFF",
     "fontFamily": "Inter, Segoe UI, Helvetica, Arial, sans-serif",
     "fontSize": "13px",
-    "primaryColor": "#F5F7FF",
-    "primaryTextColor": "#1F2937",
-    "primaryBorderColor": "#93C5FD",
-    "lineColor": "#94A3B8"
+    "primaryColor": "#FFFFFF",
+    "secondaryColor": "#FFFFFF",
+    "tertiaryColor": "#FFFFFF",
+    "primaryTextColor": "#0F172A",
+    "primaryBorderColor": "#94A3B8",
+    "lineColor": "#64748B"
   }
 }}%%
 graph LR
@@ -128,7 +132,7 @@ graph LR
     H
   end
 
-  %% ========= EDGES (unchanged structure) =========
+  %% ========= EDGES =========
   B --- C
   B --- D
   B --- G
@@ -193,13 +197,13 @@ graph LR
   L --- J
   L --- K
 
-  %% ========= STYLES =========
-  classDef base fill:#E0F2FE,stroke:#0284C7,color:#0F172A,stroke-width:1.5px;
-  classDef process fill:#FEF3C7,stroke:#D97706,color:#0F172A,stroke-width:1.5px;
-  classDef design fill:#EDE9FE,stroke:#7C3AED,color:#0F172A,stroke-width:1.5px;
-  classDef testing fill:#DCFCE7,stroke:#16A34A,color:#0F172A,stroke-width:1.5px;
-  classDef quality fill:#F1F5F9,stroke:#64748B,color:#0F172A,stroke-width:1.5px;
-  classDef summary fill:#FFE4E6,stroke:#E11D48,color:#0F172A,stroke-width:1.5px;
+  %% ========= STYLES (white fills + colored borders) =========
+  classDef base fill:#FFFFFF,stroke:#0284C7,color:#0F172A,stroke-width:1.5px;
+  classDef process fill:#FFFFFF,stroke:#D97706,color:#0F172A,stroke-width:1.5px;
+  classDef design fill:#FFFFFF,stroke:#7C3AED,color:#0F172A,stroke-width:1.5px;
+  classDef testing fill:#FFFFFF,stroke:#16A34A,color:#0F172A,stroke-width:1.5px;
+  classDef quality fill:#FFFFFF,stroke:#64748B,color:#0F172A,stroke-width:1.5px;
+  classDef summary fill:#FFFFFF,stroke:#E11D48,color:#0F172A,stroke-width:1.5px;
   classDef aux fill:#FFFFFF,stroke:#94A3B8,color:#0F172A,stroke-dasharray:3 3;
 
   class A base
@@ -233,34 +237,155 @@ graph LR
   class L6 summary
 ```
 ```mermaid
+%% ---------------------------------------------------------
+%% CI/CD + DevOps + GitHub Flow (white background)
+%% Paste directly into GitHub README.md
+%% ---------------------------------------------------------
+%% Theme: white background
+%% Note: GitHub supports Mermaid. This uses the 'base' theme with white bg.
+%% ---------------------------------------------------------
+%%{init: {'theme':'base','themeVariables': { 'background': 'white' }}}%%
+
 flowchart LR
+  %% Direction
+  %% flow LR
+
+  %% ========= Agile & Product =========
   subgraph Agile["Agile (Scrum/XP)"]
     BA[Backlog]
+    RF[Backlog Refinement]
     SP[Sprint Planning]
     DEV[Implementation]
     TDD[Test-Driven Development]
     REV[Review & Retrospective]
   end
 
+  %% ========= GitHub Flow =========
+  subgraph VCS["Version Control (GitHub Flow)"]
+    MB[main branch]
+    FB[feature/* branch]
+    PR[Pull Request]
+    CR["Code Review<br/>(& PR checks)"]
+    MR[Merge to main]
+  end
+
+  %% ========= Testing (Pyramid) =========
   subgraph Testing["Testing (Pyramid)"]
     U[Unit Tests]
     IN[Integration Tests]
-    SY[System Tests]
+    SY[System/End-to-End Tests]
     AC[Acceptance Tests]
+    NFR[Non-Functional:<br/>Perf/Sec/Resilience]
   end
 
-  subgraph Pipeline["Automation (CI/CD)"]
+  %% ========= Security & Quality Gates =========
+  subgraph SecQual["Security & Quality Gates"]
+    SAST["Static App Sec Testing (SAST)"]
+    SCA["Dependency/License Scan (SCA)"]
+    LINT[Linting & Style]
+    COV[Coverage Thresholds]
+    SEC_POL[Security Policies & Secret Scan]
+  end
+
+  %% ========= Build & Artifacts =========
+  subgraph Build["Build & Package"]
     CI[Build & Static Analysis]
-    CT[Continuous Testing]
-    CD[Deploy]
-    MON[Monitor]
+    ART["Artifact Packaging<br/>(JAR/NPM/Wheel/etc.)"]
+    IMG[Container Image Build]
+    SBOM[SBOM & Provenance]
+    REG[Artifact/Container Registry]
   end
 
-  BA --> SP --> TDD --> DEV --> REV
-  TDD --> U
-  DEV --> IN --> SY --> AC
-  DEV --> CI --> CT --> CD --> MON
+  %% ========= Environments & Delivery =========
+  subgraph Delivery["Continuous Delivery/Deployment"]
+    DIR["Infra as Code (IaC)<br/>Terraform/Bicep/ARM/CloudFormation"]
+    DEV_ENV[Dev Environment]
+    STG_ENV[Staging / Pre-Prod]
+    CANARY[Canary/Blue-Green Strategy]
+    PROD_ENV[Production]
+    APPR["Manual Approval (if required)"]
+  end
+
+  %% ========= Observability & Ops =========
+  subgraph Ops["Operate & Improve"]
+    MON[Monitoring & Alerting]
+    LOG[Centralized Logs]
+    TRC[Tracing & Metrics]
+    FEED[User Feedback & Telemetry]
+    IM[Incident Mgmt & Postmortems]
+    RK[Runbooks & SRE Practices]
+  end
+
+  %% ========= Flow: Agile =========
+  BA --> RF --> SP --> TDD --> DEV --> REV
+
+  %% ========= Flow: GitHub Flow =========
+  DEV --> FB --> PR --> CR --> MR --> MB
+
+  %% ========= CI Trigger =========
+  MR -->|push/tag| CI
+
+  %% ========= Testing & Quality Gates in CI =========
+  CI --> LINT --> U --> IN --> SY --> AC --> NFR
+  CI --> SAST
+  CI --> SCA
+  CI --> SEC_POL
+  U --> COV
+
+  %% ========= Build & Artifacts =========
+  CI --> ART --> SBOM --> REG
+  ART --> IMG --> REG
+
+  %% ========= Delivery (CD) =========
+  MR --> DIR
+  DIR --> DEV_ENV
+  REG --> DEV_ENV
+  DEV_ENV --> STG_ENV
+
+  %% Optional approval gate
+  STG_ENV --> APPR --> CANARY --> PROD_ENV
+  STG_ENV -->|no-approval -> progressive delivery| CANARY --> PROD_ENV
+
+  %% ========= Observability & Feedback =========
+  PROD_ENV --> MON
+  PROD_ENV --> LOG
+  PROD_ENV --> TRC
+  MON --> IM --> RK
+  LOG --> IM
+  TRC --> IM
+  MON --> FEED
+  LOG --> FEED
+  TRC --> FEED
+  FEED --> BA
+
+  %% ========= Notes =========
+  %% Pull Request checks typically run the same pipeline subset:
+  PR -. triggers .-> CI
+  CR -. status checks .-> SecQual
+  CR -. status checks .-> Testing
+
+  %% ========= Styling (subtle, still white bg) =========
+  classDef light fill:#ffffff,stroke:#d0d7de,stroke-width:1,color:#24292f;
+  classDef accent fill:#f6f8fa,stroke:#d0d7de,stroke-width:1,color:#24292f;
+  classDef green fill:#e6ffec,stroke:#26a641,stroke-width:1,color:#24292f;
+  classDef blue fill:#eef6ff,stroke:#0969da,stroke-width:1,color:#24292f;
+  classDef orange fill:#fff1e5,stroke:#d97706,stroke-width:1,color:#24292f;
+  classDef purple fill:#f6f0ff,stroke:#8250df,stroke-width:1,color:#24292f;
+  classDef red fill:#ffebe9,stroke:#cf222e,stroke-width:1,color:#24292f;
+
+  class Agile,Testing,Build,Delivery,Ops,SecQual,VCS light;
+
+  class BA,RF,SP,DEV,TDD,REV accent;
+  class MB,FB,PR,CR,MR blue;
+  class CI,ART,IMG,SBOM,REG green;
+  class U,IN,SY,AC,NFR purple;
+  class SAST,SCA,LINT,COV,SEC_POL orange;
+  class DIR,DEV_ENV,STG_ENV,CANARY,APPR,PROD_ENV blue;
+  class MON,LOG,TRC,FEED,IM,RK red
 ```
+
+<img width="849" height="570" alt="image" src="https://github.com/user-attachments/assets/91bde37c-8c6a-4aef-b8ad-bd1b4ff454ab" />
+
 <details>
 <summary><strong>1. Base Concepts</strong></summary>
 
