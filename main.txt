@@ -1,6 +1,4 @@
-# Software Engineering Condensed Summary
-
-## 1. Core Concepts
+## 1. Base Concepts
 - **Programming Languages**: Bridge human ideas to computer execution, balancing **syntax** (structure) and **semantics** (meaning).
 - **Execution Models**:
   - **Interpreted**: Executes top-down.
